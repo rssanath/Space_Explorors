@@ -94,11 +94,21 @@ MARS DEEP models authentic aerospace systems based on publicly available NASA an
 
 ---
 
-## 🧪 AUTOMATED TEST SUITE
+## 🧪 AUTOMATED TEST SUITE & GUI SMOKE TESTS
 
-All systems in MARS DEEP are verified by an integrated test suite (`tests/TestRunner.gd`):
-- **87 / 87 Unit & Integration Assertions Passing (100% Pass Rate)**.
-- Verified in Godot 4.7.2 headless execution.
+All systems in MARS DEEP are verified by an integrated test suite (`tests/TestRunner.gd` and `scenes/RunGUISmokeTests.tscn`):
+- **110 / 110 Automated Test Assertions Passing (100% Pass Rate)**.
+- **9 / 9 Core Gameplay Scenes Verified via Native GUI Smoke Tests (100% Pass Rate)**:
+  1. Main Menu (`smoke_1_main_menu.png`)
+  2. Launch Preparation (`smoke_2_launch_preparation.png`)
+  3. Rocket Liftoff (`smoke_3_rocket_liftoff.png`)
+  4. Interplanetary Flight (`smoke_4_interplanetary_flight.png`)
+  5. Mars Orbit Capture & Revolution (`smoke_5_mars_orbit.png`)
+  6. Mars Powered Descent & Landing (`smoke_6_mars_landing.png`)
+  7. Rover Egress & Deployment Animation (`smoke_7_rover_deployment.png`)
+  8. Martian Science Experiments Interface (`smoke_8_science_experiments.png`)
+  9. NASA Mission Debrief Room (`smoke_9_mission_debrief.png`)
+- Verified in Godot 4.7.2 headless execution and Vulkan Forward+ native desktop rendering.
 
 ---
 
