@@ -432,10 +432,14 @@ func _set_time_warp(scale_factor: float) -> void:
 
 func _step_throttle(delta_pct: float) -> void:
 	if space_3d:
+		if space_3d.current_phase == 0 and delta_pct > 0.0:
+			space_3d.set_flight_phase(1)
 		space_3d.step_throttle(delta_pct)
 
 func _on_throttle_slider_changed(val: float) -> void:
 	if space_3d:
+		if space_3d.current_phase == 0 and val > 5.0:
+			space_3d.set_flight_phase(1)
 		space_3d.set_throttle(val / 100.0)
 
 func _toggle_arm_burn() -> void:
@@ -452,10 +456,11 @@ func _toggle_arm_burn() -> void:
 		btn_execute_burn.modulate = Color.WHITE
 
 func _on_execute_burn_pressed() -> void:
-	if not is_propulsion_armed:
-		return
-	_step_throttle(1.0) # Full thrust
-	print("[MissionSimulation] Player executed armed manual burn.")
+	if space_3d and space_3d.current_phase == 0:
+		space_3d.set_flight_phase(1)
+	if space_3d:
+		space_3d.set_throttle(1.0)
+	print("[MissionSimulation] Player executed manual burn.")
 
 # =========================================================================
 # MISSION WORKFLOW & DECISION EVENTS
@@ -465,6 +470,7 @@ func _on_confirm_departure_pressed() -> void:
 	modal_departure.visible = false
 	if space_3d:
 		space_3d.set_flight_phase(1) # EARTH_DEPARTURE (TMI)
+		space_3d.set_throttle(1.0)
 	_broadcast_radio("CAPCOM", "Earth departure confirmed. Trans-Mars Injection burn active. Godspeed Mars Deep!")
 	
 	# Prompt player with upcoming maneuver braking window after departure acceleration

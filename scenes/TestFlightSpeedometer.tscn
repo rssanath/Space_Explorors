@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://testspeedometer001"]
+
+[ext_resource type="Script" path="res://scripts/TestFlightSpeedometer.gd" id="1_spd"]
+
+[node name="TestFlightSpeedometer" type="Node"]
+script = ExtResource("1_spd")

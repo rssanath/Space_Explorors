@@ -410,6 +410,10 @@ func _update_simulation_physics(delta: float) -> void:
 	# 1. Smooth throttle response
 	throttle = move_toward(throttle, target_throttle, delta * 2.0)
 	
+	# Auto-engage Trans-Mars Injection if player increases throttle in Earth orbit
+	if current_phase == FlightPhase.EARTH_ORBIT and (throttle > 0.02 or target_throttle > 0.02):
+		set_flight_phase(FlightPhase.EARTH_DEPARTURE)
+	
 	# Update 3D Throttle lever in cockpit (-0.65 to +0.65 rad)
 	if throttle_lever_pivot:
 		throttle_lever_pivot.rotation.x = lerpf(-0.65, 0.65, throttle)
@@ -457,6 +461,8 @@ func _update_simulation_physics(delta: float) -> void:
 			maneuver_countdown_s = 0.0
 			if not (is_retrograde_burning or retrograde_throttle > 0.01):
 				maneuver_missed = true
+				# Auto-recover so the player is never trapped or frozen in departure!
+				recover_maneuver_burn()
 				
 	# Attitude alignment calculation
 	update_attitude_guidance()
@@ -488,17 +494,22 @@ func _update_simulation_physics(delta: float) -> void:
 					audio_engine.stop()
 					
 	# 4. Advance Mission Time & Trajectory Progress
-	# Both during burn AND during coasting, interplanetary time advances!
+	# Both during burn AND during coasting, interplanetary journey advances continuously!
 	var sim_dt := minf(delta, 10.0) * base_days_per_second * time_warp_scale
-	if is_engine_burning and current_phase == FlightPhase.INTERPLANETARY_CRUISE:
-		sim_dt *= (1.0 + throttle * 0.4) # Burns hasten trajectory transit
+	if is_engine_burning and (current_phase == FlightPhase.INTERPLANETARY_CRUISE or current_phase == FlightPhase.EARTH_DEPARTURE):
+		sim_dt *= (1.0 + throttle * 1.5) # Burns hasten trajectory transit
 		
 	if current_phase == FlightPhase.EARTH_DEPARTURE:
-		mission_day = minf(1.0, mission_day + delta * 0.35 * time_warp_scale)
-		trajectory_progress = mission_day / total_transit_days
+		mission_day += delta * 0.5 * (1.0 + throttle * 1.0) * time_warp_scale
+		trajectory_progress = clampf(mission_day / total_transit_days, 0.0, 1.0)
+		if mission_day >= 2.0:
+			set_flight_phase(FlightPhase.INTERPLANETARY_CRUISE)
 	elif current_phase >= FlightPhase.INTERPLANETARY_CRUISE and current_phase <= FlightPhase.MARS_APPROACH:
 		mission_day = minf(total_transit_days, mission_day + sim_dt)
 		trajectory_progress = clampf(mission_day / total_transit_days, 0.0, 1.0)
+		# When within 2% of destination, auto-enter Mars Approach
+		if trajectory_progress >= 0.98 and current_phase == FlightPhase.INTERPLANETARY_CRUISE:
+			set_flight_phase(FlightPhase.MARS_APPROACH)
 	elif current_phase >= FlightPhase.MARS_ORBIT_INSERTION:
 		mission_day = total_transit_days
 		trajectory_progress = 1.0
@@ -524,11 +535,11 @@ func _update_simulation_physics(delta: float) -> void:
 		distance_from_earth_km = 420.0
 		distance_to_mars_km = maxf(150000000.0, mars_dist_au * AU_KM)
 	elif current_phase == FlightPhase.EARTH_DEPARTURE:
-		distance_from_earth_km = maxf(420.0, 12500.0 + (mission_day * 1500000.0))
-		distance_to_mars_km = maxf(140000000.0, mars_dist_au * AU_KM)
+		distance_from_earth_km = lerpf(420.0, 2500000.0, clampf(mission_day / 2.0, 0.0, 1.0))
+		distance_to_mars_km = maxf(120000000.0, mars_dist_au * AU_KM)
 	elif current_phase == FlightPhase.MARS_APPROACH:
 		distance_from_earth_km = maxf(180000000.0, earth_dist_au * AU_KM)
-		distance_to_mars_km = lerpf(15000.0, 3500.0, (mission_day - (total_transit_days - 2.0)) / 2.0)
+		distance_to_mars_km = lerpf(30000.0, 350.0, clampf((trajectory_progress - 0.98) / 0.02, 0.0, 1.0))
 	elif current_phase == FlightPhase.MARS_ORBIT_INSERTION:
 		distance_from_earth_km = maxf(180000000.0, earth_dist_au * AU_KM)
 		distance_to_mars_km = 350.0
@@ -766,6 +777,8 @@ func _fire_rcs_burst(is_positive: bool) -> void:
 
 func set_throttle(val: float) -> void:
 	target_throttle = clampf(val, 0.0, 1.0)
+	if target_throttle > 0.02 and current_phase == FlightPhase.EARTH_ORBIT:
+		set_flight_phase(FlightPhase.EARTH_DEPARTURE)
 
 func step_throttle(delta_pct: float) -> void:
 	set_throttle(target_throttle + delta_pct)
