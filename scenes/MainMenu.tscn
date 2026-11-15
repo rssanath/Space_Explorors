@@ -1,0 +1,667 @@
+[gd_scene load_steps=22 format=3]
+
+[ext_resource type="Script" path="res://scenes/MainMenu.gd" id="1_main"]
+
+[sub_resource type="Environment" id="Environment_1"]
+background_mode = 1
+background_color = Color(0.015, 0.02, 0.035, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.05, 0.08, 0.12, 1)
+ambient_light_energy = 0.5
+glow_enabled = true
+glow_intensity = 0.6
+glow_bloom = 0.15
+
+[sub_resource type="SphereMesh" id="SphereMesh_mars"]
+radius = 2.4
+height = 4.8
+radial_segments = 64
+rings = 32
+
+[sub_resource type="SphereMesh" id="SphereMesh_atmo"]
+radius = 2.48
+height = 4.96
+radial_segments = 64
+rings = 32
+
+[sub_resource type="StandardMaterial3D" id="Mat_CraftBus"]
+albedo_color = Color(0.85, 0.88, 0.92, 1)
+metallic = 0.8
+roughness = 0.2
+
+[sub_resource type="BoxMesh" id="BoxMesh_CraftBus"]
+material = SubResource("Mat_CraftBus")
+size = Vector3(0.5, 0.5, 0.8)
+
+[sub_resource type="StandardMaterial3D" id="Mat_SolarPanel"]
+albedo_color = Color(0.05, 0.2, 0.5, 1)
+metallic = 0.4
+roughness = 0.2
+emission_enabled = true
+emission = Color(0.1, 0.3, 0.7, 1)
+emission_energy_multiplier = 0.4
+
+[sub_resource type="BoxMesh" id="BoxMesh_SolarWing"]
+material = SubResource("Mat_SolarPanel")
+size = Vector3(1.4, 0.04, 0.6)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Plume"]
+albedo_color = Color(0, 0.9, 1, 1)
+emission_enabled = true
+emission = Color(0, 0.9, 1, 1)
+emission_energy_multiplier = 1.2
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_Plume"]
+material = SubResource("Mat_Plume")
+top_radius = 0.12
+bottom_radius = 0.02
+height = 0.6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_menu_panel"]
+bg_color = Color(0.04, 0.065, 0.09, 0.94)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0.898, 1, 0.6)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_start"]
+bg_color = Color(0, 0.45, 0.6, 0.85)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0.9, 1, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_demo"]
+bg_color = Color(0.45, 0.25, 0.05, 0.85)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 0.65, 0, 0.9)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_normal"]
+bg_color = Color(0.06, 0.09, 0.13, 0.9)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.2, 0.3, 0.4, 0.7)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_exit"]
+bg_color = Color(0.12, 0.05, 0.05, 0.8)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.6, 0.2, 0.2, 0.6)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_modal"]
+bg_color = Color(0.03, 0.05, 0.08, 0.98)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0.9, 1, 0.85)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="MainMenu" type="Node3D"]
+script = ExtResource("1_main")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866, -0.25, 0.433, 0, 0.866, 0.5, -0.5, -0.433, 0.75, 0, 0, 0)
+light_color = Color(1, 0.95, 0.88, 1)
+light_energy = 1.6
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, 0.1, 5.4)
+current = true
+fov = 60.0
+
+[node name="MarsAnchor" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8, -0.1, 0)
+
+[node name="MarsMesh" type="MeshInstance3D" parent="MarsAnchor"]
+mesh = SubResource("SphereMesh_mars")
+
+[node name="AtmosphereMesh" type="MeshInstance3D" parent="MarsAnchor"]
+mesh = SubResource("SphereMesh_atmo")
+
+[node name="CraftOrbitPivot" type="Node3D" parent="MarsAnchor"]
+
+[node name="OrbitingCraft" type="Node3D" parent="MarsAnchor/CraftOrbitPivot"]
+transform = Transform3D(0.866, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866, 3.8, 0.4, 0)
+
+[node name="Bus" type="MeshInstance3D" parent="MarsAnchor/CraftOrbitPivot/OrbitingCraft"]
+mesh = SubResource("BoxMesh_CraftBus")
+
+[node name="LeftWing" type="MeshInstance3D" parent="MarsAnchor/CraftOrbitPivot/OrbitingCraft"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0, 0, 0)
+mesh = SubResource("BoxMesh_SolarWing")
+
+[node name="RightWing" type="MeshInstance3D" parent="MarsAnchor/CraftOrbitPivot/OrbitingCraft"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0, 0, 0)
+mesh = SubResource("BoxMesh_SolarWing")
+
+[node name="Plume" type="MeshInstance3D" parent="MarsAnchor/CraftOrbitPivot/OrbitingCraft"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0.6)
+mesh = SubResource("CylinderMesh_Plume")
+
+[node name="Starfield" type="MultiMeshInstance3D" parent="."]
+
+[node name="AudioPlayer" type="AudioStreamPlayer" parent="."]
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="MainMenuPanel" type="PanelContainer" parent="UI"]
+anchors_preset = -1
+anchor_left = 0.04
+anchor_top = 0.05
+anchor_right = 0.42
+anchor_bottom = 0.95
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_menu_panel")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/MainMenuPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/MainMenuPanel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="MissionBadge" type="Label" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.898, 1, 1)
+theme_override_font_sizes/font_size = 10
+text = "[ NASA SPACE APPS CHALLENGE 2026 // FLIGHT DIRECTORATE ]"
+
+[node name="Title" type="Label" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.97, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0.898, 1, 0.5)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/shadow_outline_size = 6
+theme_override_font_sizes/font_size = 28
+text = "MARS DEEP"
+
+[node name="Tagline" type="Label" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.75, 0.3, 1)
+theme_override_font_sizes/font_size = 12
+text = "DESIGN.  LAUNCH.  EXPLORE."
+
+[node name="Subtitle" type="Label" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.75, 0.85, 1)
+theme_override_font_sizes/font_size = 10
+text = "Interactive 3D Aerospace Engineering & Astrobiology Simulation"
+autowrap_mode = 3
+
+[node name="HSeparator" type="HSeparator" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ButtonsVBox" type="VBoxContainer" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 6
+alignment = 1
+
+[node name="BtnStart" type="Button" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer/ButtonsVBox"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_start")
+text = "START NEW MISSION"
+
+[node name="BtnContinue" type="Button" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer/ButtonsVBox"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+text = "CONTINUE MISSION"
+
+[node name="BtnDemoMode" type="Button" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer/ButtonsVBox"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.4, 1)
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_demo")
+text = "★ HACKATHON DEMO (JUDGES)"
+
+[node name="BtnBriefing" type="Button" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer/ButtonsVBox"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+text = "MISSION BRIEFING"
+
+[node name="BtnControls" type="Button" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer/ButtonsVBox"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+text = "CONTROLS GUIDE"
+
+[node name="BtnSettings" type="Button" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer/ButtonsVBox"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+text = "SETTINGS"
+
+[node name="BtnCredits" type="Button" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer/ButtonsVBox"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+text = "NASA TECH & CREDITS"
+
+[node name="BtnExit" type="Button" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer/ButtonsVBox"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_exit")
+text = "EXIT GAME"
+
+[node name="FooterLabel" type="Label" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.5, 0.6, 1)
+theme_override_font_sizes/font_size = 9
+text = "Godot 4.7.2 Forward+ • NASA/JPL Data Integration"
+horizontal_alignment = 1
+
+[node name="ModalDemo" type="Control" parent="UI"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="UI/ModalDemo"]
+custom_minimum_size = Vector2(580, 480)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -290.0
+offset_top = -240.0
+offset_right = 290.0
+offset_bottom = 240.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_modal")
+
+[node name="Margin" type="MarginContainer" parent="UI/ModalDemo/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 18
+
+[node name="VBox" type="VBoxContainer" parent="UI/ModalDemo/Panel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="UI/ModalDemo/Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.75, 0.2, 1)
+theme_override_font_sizes/font_size = 16
+text = "★ HACKATHON DEMO & PRESENTATION MODE"
+horizontal_alignment = 1
+
+[node name="Desc" type="Label" parent="UI/ModalDemo/Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.85, 0.9, 1)
+theme_override_font_sizes/font_size = 10
+text = "Designed for Hackathon Judges & Evaluators. Instantly jump to any phase of the MARS DEEP campaign without progression locks or mandatory task prerequisites:"
+autowrap_mode = 3
+
+[node name="Grid" type="GridContainer" parent="UI/ModalDemo/Panel/Margin/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 8
+columns = 2
+
+[node name="BtnStage1" type="Button" parent="UI/ModalDemo/Panel/Margin/VBox/Grid"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1. Mission Briefing"
+
+[node name="BtnStage2" type="Button" parent="UI/ModalDemo/Panel/Margin/VBox/Grid"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "2. 3D Spacecraft Designer"
+
+[node name="BtnStage3" type="Button" parent="UI/ModalDemo/Panel/Margin/VBox/Grid"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "3. Engineering Lab & Math"
+
+[node name="BtnStage4" type="Button" parent="UI/ModalDemo/Panel/Margin/VBox/Grid"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "4. Pad 39A Launch & Cockpit"
+
+[node name="BtnStage5" type="Button" parent="UI/ModalDemo/Panel/Margin/VBox/Grid"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "5. Interplanetary Spaceflight"
+
+[node name="BtnStage6" type="Button" parent="UI/ModalDemo/Panel/Margin/VBox/Grid"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "6. Mars Powered Descent"
+
+[node name="BtnStage7" type="Button" parent="UI/ModalDemo/Panel/Margin/VBox/Grid"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "7. Surface Rover & Science"
+
+[node name="BtnStage8" type="Button" parent="UI/ModalDemo/Panel/Margin/VBox/Grid"]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "8. Mission Debrief & Report"
+
+[node name="BtnCloseDemo" type="Button" parent="UI/ModalDemo/Panel/Margin/VBox"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+text = "CLOSE DEMO SELECTOR"
+
+[node name="ModalCredits" type="Control" parent="UI"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="UI/ModalCredits"]
+custom_minimum_size = Vector2(620, 520)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -310.0
+offset_top = -260.0
+offset_right = 310.0
+offset_bottom = 260.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_modal")
+
+[node name="Margin" type="MarginContainer" parent="UI/ModalCredits/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 22
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 22
+theme_override_constants/margin_bottom = 18
+
+[node name="VBox" type="VBoxContainer" parent="UI/ModalCredits/Panel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="UI/ModalCredits/Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 16
+text = "NASA TECHNOLOGIES, DATA SOURCES & CREDITS"
+horizontal_alignment = 1
+
+[node name="Scroll" type="ScrollContainer" parent="UI/ModalCredits/Panel/Margin/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CreditsText" type="Label" parent="UI/ModalCredits/Panel/Margin/VBox/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.85, 0.9, 0.95, 1)
+theme_override_font_sizes/font_size = 10
+text = "MARS DEEP: DESIGN. LAUNCH. EXPLORE.
+NASA Space Apps Challenge 2026 Submission
+
+1. EDUCATIONAL CHALLENGE & VISION
+MARS DEEP makes real-world aerospace engineering and astrobiological exploration understandable and exciting for students and players of all ages. By connecting genuine mathematical formulas (Tsiolkovsky rocket equation, antenna link budgets, solar irradiance decay, and hyperbolic atmospheric entry energy) directly to playable 3D flight mechanics, players learn through direct agency.
+
+2. NASA TECHNOLOGIES & INSTRUMENTS REPRESENTED
+• Perseverance (Mars 2020) & Curiosity Rovers (Rocker-Bogie 6-Wheel Kinematics)
+• SuperCam Laser-Induced Breakdown Spectrometer (LIBS & Raman Optics)
+• PIXL Planetary Instrument for X-ray Lithochemistry
+• SHERLOC Deep UV Raman & Luminescence Spectrometer
+• MOXIE Mars Oxygen In-Situ Resource Utilization Experiment (5.8 g/h O2)
+• RIMFAX Radar Imager for Mars' Subsurface Experiment (GPR 10m depth)
+• MEDA Mars Environmental Dynamics Analyzer (Meteorology & Dust)
+• Atlas V 541, Falcon Heavy & Space Launch System (SLS Block 1B)
+• UltraFlex Circular Solar Arrays & MMRTG Radioisotope Power
+
+3. OFFICIAL NASA/JPL DATASETS UTILIZED
+• NASA Planetary Fact Sheets: Mars gravitational acceleration (3.721 m/s²), atmospheric boundary conditions, and orbital eccentricity.
+• NASA JPL Horizons Ephemerides: Earth-Mars Hohmann transfer geometries (180d & 260d).
+• NASA PDS (Planetary Data System): Jezero Crater delta mineralogy and smectite clay compositions.
+
+4. SCIENTIFIC & LEGAL DISCLAIMER
+This educational game simulation was created independently for the NASA Space Apps Challenge hackathon. While based rigorously on open NASA and JPL scientific datasets, MARS DEEP is an educational simulation game and does not represent an official endorsement or direct software product of the National Aeronautics and Space Administration."
+autowrap_mode = 3
+
+[node name="BtnCloseCredits" type="Button" parent="UI/ModalCredits/Panel/Margin/VBox"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+text = "CLOSE CREDITS"
+
+[node name="ModalControls" type="Control" parent="UI"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="UI/ModalControls"]
+custom_minimum_size = Vector2(560, 480)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -280.0
+offset_top = -240.0
+offset_right = 280.0
+offset_bottom = 240.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_modal")
+
+[node name="Margin" type="MarginContainer" parent="UI/ModalControls/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 22
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 22
+theme_override_constants/margin_bottom = 18
+
+[node name="VBox" type="VBoxContainer" parent="UI/ModalControls/Panel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="UI/ModalControls/Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 16
+text = "COMPLETE ASTRONAUT & ROVER CONTROLS"
+horizontal_alignment = 1
+
+[node name="Scroll" type="ScrollContainer" parent="UI/ModalControls/Panel/Margin/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ControlsText" type="Label" parent="UI/ModalControls/Panel/Margin/VBox/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.85, 0.9, 0.95, 1)
+theme_override_font_sizes/font_size = 10
+text = "• GLOBAL:
+[ESC]: Toggle in-game Pause Menu across all stages.
+
+• STAGE 1: SPACECRAFT DESIGNER
+- Mouse Left-Click: Select structural body, power source, engines, antenna, and science payloads.
+- Right-Click + Drag: Orbit 3D spacecraft camera.
+- Mouse Wheel: Zoom in and out.
+
+• STAGE 2: MATHEMATICAL ENGINEERING LAB
+- Mouse Left-Click: Select calculation field.
+- Keypad / Keyboard: Input numeric answers.
+- Calculator Button: Open integrated scientific expression evaluator.
+- Mission AI Button: Query local aerospace assistant for contextual hints.
+
+• STAGE 3: PAD 39A ROCKET LAUNCH
+- Throttle Lever / [W]/[S]: Move throttle lever.
+- Engine Ignition: Clamps release automatically above 90% throttle.
+- [1], [2], [3]: Toggle Launch Tower, Under-Rocket Trench, and Ascent Tracking cameras.
+
+• STAGE 4: INTERPLANETARY SPACEFLIGHT
+- [W]/[S]: Adjust main bipropellant propulsion throttle.
+- [A]/[D]: Yaw spacecraft attitude.
+- [Q]/[E]: Roll spacecraft attitude.
+- [C]: Cycle Cockpit, Exterior, Nav Transfer Map, and Mars Arrival cameras.
+- Time Warp: [1x], [100x], [10,000x] simulation acceleration.
+
+• STAGE 5: MARS POWERED DESCENT & ROVER DRIVING
+- Descent Retro-Thrust: [W]/[S] keys or right-side thrust slider.
+- Attitude Drift: [A]/[D] keys to counter lateral surface drift.
+- Target Touchdown Speed: Under 1.5 m/s for nominal score.
+- 6-Wheel Rover Driving: [W]/[S] drive forward/reverse, [A]/[D] steering, [Space] handbrake.
+- [E]: Examine geological target and deploy robotic arm / sample cache."
+autowrap_mode = 3
+
+[node name="BtnCloseControls" type="Button" parent="UI/ModalControls/Panel/Margin/VBox"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+text = "BACK TO MENU"
+
+[node name="ModalSettings" type="Control" parent="UI"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="UI/ModalSettings"]
+custom_minimum_size = Vector2(480, 360)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -240.0
+offset_top = -180.0
+offset_right = 240.0
+offset_bottom = 180.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_modal")
+
+[node name="Margin" type="MarginContainer" parent="UI/ModalSettings/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 22
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 22
+theme_override_constants/margin_bottom = 18
+
+[node name="VBox" type="VBoxContainer" parent="UI/ModalSettings/Panel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="UI/ModalSettings/Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 16
+text = "AUDIO & DISPLAY SETTINGS"
+horizontal_alignment = 1
+
+[node name="MasterBox" type="HBoxContainer" parent="UI/ModalSettings/Panel/Margin/VBox"]
+layout_mode = 2
+
+[node name="Lbl" type="Label" parent="UI/ModalSettings/Panel/Margin/VBox/MasterBox"]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+text = "Master Volume:"
+
+[node name="SliderMaster" type="HSlider" parent="UI/ModalSettings/Panel/Margin/VBox/MasterBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+value = 85.0
+
+[node name="SFXBox" type="HBoxContainer" parent="UI/ModalSettings/Panel/Margin/VBox"]
+layout_mode = 2
+
+[node name="Lbl" type="Label" parent="UI/ModalSettings/Panel/Margin/VBox/SFXBox"]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+text = "SFX & Engine Vol:"
+
+[node name="SliderSFX" type="HSlider" parent="UI/ModalSettings/Panel/Margin/VBox/SFXBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+value = 90.0
+
+[node name="CheckFullscreen" type="CheckBox" parent="UI/ModalSettings/Panel/Margin/VBox"]
+layout_mode = 2
+text = "Fullscreen Desktop Display"
+
+[node name="BtnCloseSettings" type="Button" parent="UI/ModalSettings/Panel/Margin/VBox"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+text = "SAVE & RETURN"

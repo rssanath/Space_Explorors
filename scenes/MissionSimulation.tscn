@@ -1,0 +1,950 @@
+[gd_scene load_steps=12 format=3 uid="uid://missionsimulation01"]
+
+[ext_resource type="Script" path="res://scenes/MissionSimulation.gd" id="1_sim"]
+[ext_resource type="PackedScene" path="res://scenes/SpaceFlight3D.tscn" id="2_space3d"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hud_panel"]
+bg_color = Color(0.03, 0.05, 0.08, 0.88)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0.85, 1, 0.5)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_console_panel"]
+bg_color = Color(0.04, 0.06, 0.1, 0.92)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 0.48, 0, 0.6)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_modal_panel"]
+bg_color = Color(0.02, 0.04, 0.07, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0.85, 1, 0.85)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_banner_panel"]
+bg_color = Color(0.02, 0.08, 0.06, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.15, 0.85, 0.5, 0.95)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_normal"]
+bg_color = Color(0, 0.35, 0.48, 0.7)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0.85, 1, 0.8)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_orange"]
+bg_color = Color(0.85, 0.35, 0.05, 0.8)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 0.55, 0.15, 0.95)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_green"]
+bg_color = Color(0.1, 0.55, 0.3, 0.85)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.2, 0.9, 0.5, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_badge"]
+bg_color = Color(0.05, 0.1, 0.15, 0.85)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0.85, 1, 0.6)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_nav"]
+bg_color = Color(0.06, 0.08, 0.12, 0.8)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.4, 0.5, 0.6, 0.5)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="MissionSimulation" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_sim")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.008, 0.012, 0.02, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 12
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Header" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TitleVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Header"]
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/Header/TitleVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = "MARS DEEP • INTERPLANETARY SPACEFLIGHT SIMULATOR"
+
+[node name="Subtitle" type="Label" parent="MarginContainer/VBoxContainer/Header/TitleVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.48, 0, 1)
+theme_override_font_sizes/font_size = 11
+text = "Hohmann Transfer Cruise, Deep Space Events & Mars Orbit Insertion"
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TopNav" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Header"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="PhaseBadge" type="Label" parent="MarginContainer/VBoxContainer/Header/TopNav"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_badge")
+text = " PHASE: EARTH ORBIT • PRE-INJECTION "
+
+[node name="RouteBadge" type="Label" parent="MarginContainer/VBoxContainer/Header/TopNav"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.55, 0.15, 1)
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_badge")
+text = " TRAJECTORY: HOHMANN TRANSFER (260d) "
+
+[node name="BtnBackLaunch" type="Button" parent="MarginContainer/VBoxContainer/Header/TopNav"]
+custom_minimum_size = Vector2(130, 32)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.9, 0.95, 1)
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_nav")
+text = "< LAUNCH PREP"
+
+[node name="BtnToExploration" type="Button" parent="MarginContainer/VBoxContainer/Header/TopNav"]
+custom_minimum_size = Vector2(160, 32)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+disabled = true
+text = "MARS EXPLORATION >"
+
+[node name="MainBody" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ViewportContainer" type="SubViewportContainer" parent="MarginContainer/VBoxContainer/MainBody"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="MarginContainer/VBoxContainer/MainBody/ViewportContainer"]
+handle_input_locally = false
+size = Vector2i(1248, 640)
+render_target_update_mode = 4
+
+[node name="SpaceFlight3D" parent="MarginContainer/VBoxContainer/MainBody/ViewportContainer/SubViewport" instance=ExtResource("2_space3d")]
+
+[node name="OverlayHUD" type="Control" parent="MarginContainer/VBoxContainer/MainBody"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="CameraBar" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -270.0
+offset_top = 8.0
+offset_right = 270.0
+offset_bottom = 40.0
+grow_horizontal = 2
+theme_override_constants/separation = 6
+
+[node name="BtnCamCockpit" type="Button" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/CameraBar"]
+custom_minimum_size = Vector2(130, 32)
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+text = "[1] COCKPIT VIEW"
+
+[node name="BtnCamExterior" type="Button" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/CameraBar"]
+custom_minimum_size = Vector2(130, 32)
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+text = "[2] EXTERIOR CRAFT"
+
+[node name="BtnCamNavMap" type="Button" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/CameraBar"]
+custom_minimum_size = Vector2(130, 32)
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+text = "[3] ORBITAL MAP"
+
+[node name="BtnCamMars" type="Button" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/CameraBar"]
+custom_minimum_size = Vector2(130, 32)
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+text = "[4] MARS CINEMATIC"
+
+[node name="WarpBar" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -290.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 40.0
+grow_horizontal = 0
+theme_override_constants/separation = 6
+
+[node name="BtnWarp1x" type="Button" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/WarpBar"]
+custom_minimum_size = Vector2(60, 32)
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+text = "1x"
+
+[node name="BtnWarp10x" type="Button" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/WarpBar"]
+custom_minimum_size = Vector2(60, 32)
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+text = "10x"
+
+[node name="BtnWarpEvent" type="Button" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/WarpBar"]
+custom_minimum_size = Vector2(150, 32)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.75, 0.2, 1)
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_orange")
+text = "WARP TO EVENT >>"
+
+[node name="RadioPanel" type="PanelContainer" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD"]
+layout_mode = 1
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 380.0
+offset_bottom = 116.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_hud_panel")
+
+[node name="Margin" type="MarginContainer" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/RadioPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 8
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/RadioPanel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="LblSpeaker" type="Label" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/RadioPanel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 11
+text = "• FLIGHT DIRECTOR (HOUSTON)"
+
+[node name="LblMessage" type="Label" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/RadioPanel/Margin/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.9, 0.95, 1, 1)
+theme_override_font_sizes/font_size = 11
+text = "Earth orbital insertion confirmed. Spacecraft systems nominal. Prepare for Trans-Mars Injection (TMI)."
+autowrap_mode = 2
+
+[node name="TelemetryPanel" type="PanelContainer" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -300.0
+offset_top = 48.0
+offset_right = -8.0
+offset_bottom = 208.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_hud_panel")
+
+[node name="Margin" type="MarginContainer" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/TelemetryPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/TelemetryPanel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Header" type="Label" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/TelemetryPanel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 11
+text = "FLIGHT TELEMETRY & DYNAMICS"
+
+[node name="Grid" type="GridContainer" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/TelemetryPanel/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 4
+columns = 2
+
+[node name="LblSpeed" type="Label" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/TelemetryPanel/Margin/VBox/Grid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.8, 0.9, 1)
+theme_override_font_sizes/font_size = 10
+text = "VELOCITY:"
+
+[node name="LblSpeedVal" type="Label" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/TelemetryPanel/Margin/VBox/Grid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 11
+text = "7.78 km/s"
+
+[node name="LblDistEarth" type="Label" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/TelemetryPanel/Margin/VBox/Grid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.8, 0.9, 1)
+theme_override_font_sizes/font_size = 10
+text = "DIST EARTH:"
+
+[node name="LblDistEarthVal" type="Label" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/TelemetryPanel/Margin/VBox/Grid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 11
+text = "420 km"
+
+[node name="LblDistMars" type="Label" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/TelemetryPanel/Margin/VBox/Grid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.8, 0.9, 1)
+theme_override_font_sizes/font_size = 10
+text = "DIST MARS:"
+
+[node name="LblDistMarsVal" type="Label" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/TelemetryPanel/Margin/VBox/Grid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 11
+text = "225.00 M km"
+
+[node name="LblPropellant" type="Label" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/TelemetryPanel/Margin/VBox/Grid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.8, 0.9, 1)
+theme_override_font_sizes/font_size = 10
+text = "PROPELLANT:"
+
+[node name="LblPropellantVal" type="Label" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/TelemetryPanel/Margin/VBox/Grid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.75, 0.2, 1)
+theme_override_font_sizes/font_size = 11
+text = "850.0 kg (100%)"
+
+[node name="LblMET" type="Label" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/TelemetryPanel/Margin/VBox/Grid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.8, 0.9, 1)
+theme_override_font_sizes/font_size = 10
+text = "MISSION DAY:"
+
+[node name="LblMETVal" type="Label" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/TelemetryPanel/Margin/VBox/Grid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 11
+text = "DAY 000 / 260"
+
+[node name="LblPower" type="Label" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/TelemetryPanel/Margin/VBox/Grid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.8, 0.9, 1)
+theme_override_font_sizes/font_size = 10
+text = "POWER BUS:"
+
+[node name="LblPowerVal" type="Label" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/TelemetryPanel/Margin/VBox/Grid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.9, 0.5, 1)
+theme_override_font_sizes/font_size = 11
+text = "+275 W (Net)"
+
+[node name="FlightConsolePanel" type="PanelContainer" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -280.0
+offset_top = -240.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_console_panel")
+
+[node name="Margin" type="MarginContainer" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/FlightConsolePanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/FlightConsolePanel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ConsoleHeader" type="Label" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/FlightConsolePanel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.6, 0.1, 1)
+theme_override_font_sizes/font_size = 11
+text = "MANUAL PROPULSION CONSOLE"
+
+[node name="HBoxThrottle" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/FlightConsolePanel/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="SliderThrottle" type="VSlider" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/FlightConsolePanel/Margin/VBox/HBoxThrottle"]
+custom_minimum_size = Vector2(30, 80)
+layout_mode = 2
+step = 5.0
+
+[node name="VBoxLabels" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/FlightConsolePanel/Margin/VBox/HBoxThrottle"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 2
+
+[node name="LblThrot" type="Label" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/FlightConsolePanel/Margin/VBox/HBoxThrottle/VBoxLabels"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.8, 0.9, 1)
+theme_override_font_sizes/font_size = 10
+text = "THROTTLE:"
+
+[node name="LblThrottleVal" type="Label" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/FlightConsolePanel/Margin/VBox/HBoxThrottle/VBoxLabels"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "0%"
+
+[node name="LblThrust" type="Label" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/FlightConsolePanel/Margin/VBox/HBoxThrottle/VBoxLabels"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.8, 0.9, 1)
+theme_override_font_sizes/font_size = 10
+text = "THRUST:"
+
+[node name="LblThrustVal" type="Label" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/FlightConsolePanel/Margin/VBox/HBoxThrottle/VBoxLabels"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.75, 0.2, 1)
+theme_override_font_sizes/font_size = 12
+text = "0 kN"
+
+[node name="VBoxButtons" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/FlightConsolePanel/Margin/VBox/HBoxThrottle"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="BtnThrottleUp" type="Button" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/FlightConsolePanel/Margin/VBox/HBoxThrottle/VBoxButtons"]
+custom_minimum_size = Vector2(40, 36)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+text = "▲"
+
+[node name="BtnThrottleDown" type="Button" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/FlightConsolePanel/Margin/VBox/HBoxThrottle/VBoxButtons"]
+custom_minimum_size = Vector2(40, 36)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+text = "▼"
+
+[node name="BtnArmBurn" type="Button" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/FlightConsolePanel/Margin/VBox"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_nav")
+text = "ARM PROPULSION"
+
+[node name="BtnExecuteBurn" type="Button" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/FlightConsolePanel/Margin/VBox"]
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_orange")
+text = "EXECUTE BURN [SPACE]"
+
+[node name="ModalDeparture" type="PanelContainer" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -110.0
+offset_right = 220.0
+offset_bottom = 110.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_modal_panel")
+
+[node name="Margin" type="MarginContainer" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalDeparture"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalDeparture/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalDeparture/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "EARTH ORBIT • TRANS-MARS INJECTION (TMI)"
+
+[node name="Desc" type="Label" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalDeparture/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.95, 1, 1)
+theme_override_font_sizes/font_size = 11
+text = "Spacecraft is in stable 420 km parking orbit. Earth is visible below. Trajectory window to Mars is aligned. Confirm propulsion readiness and initiate departure burn."
+autowrap_mode = 2
+
+[node name="BtnConfirmDeparture" type="Button" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalDeparture/Margin/VBox"]
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_orange")
+text = "IGNITE TRANS-MARS INJECTION BURN (100% THRUST)"
+
+[node name="ModalManeuver" type="PanelContainer" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -240.0
+offset_top = -120.0
+offset_right = 240.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_modal_panel")
+
+[node name="Margin" type="MarginContainer" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalManeuver"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalManeuver/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalManeuver/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.75, 0.1, 1)
+theme_override_font_sizes/font_size = 15
+text = "APPROACHING MANEUVER WINDOW"
+
+[node name="Desc" type="Label" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalManeuver/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.95, 1, 1)
+theme_override_font_sizes/font_size = 11
+text = "Prepare to reduce forward thrust and initiate the required retrograde burn."
+autowrap_mode = 2
+
+[node name="LblManeuverCountdown" type="Label" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalManeuver/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 12
+text = "WINDOW T-MINUS: 12.0s • TARGET CUTOFF: 9.85 km/s"
+
+[node name="LblManeuverStatus" type="Label" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalManeuver/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.4, 0.3, 1)
+theme_override_font_sizes/font_size = 11
+text = "WARNING: Reduce forward throttle to 0%, then engage retrograde burn."
+
+[node name="HBoxButtons" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalManeuver/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="BtnRetrogradeBurn" type="Button" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalManeuver/Margin/VBox/HBoxButtons"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_orange")
+text = "ACTIVATE RETROGRADE BURN"
+
+[node name="BtnRecoverManeuver" type="Button" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalManeuver/Margin/VBox/HBoxButtons"]
+visible = false
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_green")
+text = "EXECUTE RECOVERY BURN"
+
+[node name="ModalMidcourse" type="PanelContainer" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -260.0
+offset_top = -140.0
+offset_right = 260.0
+offset_bottom = 140.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_modal_panel")
+
+[node name="Margin" type="MarginContainer" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalMidcourse"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalMidcourse/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalMidcourse/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.75, 0.2, 1)
+theme_override_font_sizes/font_size = 13
+text = "TRAJECTORY CORRECTION MANEUVER (TCM-1)"
+
+[node name="Desc" type="Label" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalMidcourse/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.95, 1, 1)
+theme_override_font_sizes/font_size = 11
+text = "Day 35 nav tracking detected a +42,000 km Mars periapsis drift. Choose a correction burn to realign trajectory:"
+autowrap_mode = 2
+
+[node name="OptionsVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalMidcourse/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="BtnOpt1" type="Button" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalMidcourse/Margin/VBox/OptionsVBox"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+text = "[RECOMMENDED] LIGHT TRIM: 15.0 m/s • 12.1 kg Hydrazine • Nominal 350km Orbit"
+
+[node name="BtnOpt2" type="Button" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalMidcourse/Margin/VBox/OptionsVBox"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+text = "CONSERVATIVE TRIM: 10.0 m/s • 8.1 kg Hydrazine • Wide 520km Orbit"
+
+[node name="BtnOpt3" type="Button" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalMidcourse/Margin/VBox/OptionsVBox"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+text = "AGGRESSIVE REALIGNMENT: 25.0 m/s • 20.1 kg Hydrazine • Precision 280km Orbit"
+
+[node name="AdvVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalMidcourse/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="LblAdv" type="Label" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalMidcourse/Margin/VBox/AdvVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.8, 0.9, 1)
+theme_override_font_sizes/font_size = 10
+text = "Advanced Mode: M_prop = M_total * (1 - exp(-Delta_V / (Isp * g0))) (kg):"
+
+[node name="HBox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalMidcourse/Margin/VBox/AdvVBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="InputAdvAnswer" type="LineEdit" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalMidcourse/Margin/VBox/AdvVBox/HBox"]
+custom_minimum_size = Vector2(160, 30)
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+placeholder_text = "e.g. 12.1"
+
+[node name="BtnSubmitAdv" type="Button" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalMidcourse/Margin/VBox/AdvVBox/HBox"]
+custom_minimum_size = Vector2(120, 30)
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+text = "SUBMIT TASK 04-02"
+
+[node name="ModalEvents" type="PanelContainer" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -90.0
+offset_right = 220.0
+offset_bottom = 90.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_modal_panel")
+
+[node name="Margin" type="MarginContainer" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalEvents"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalEvents/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LblEventTitle" type="Label" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalEvents/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.48, 0, 1)
+theme_override_font_sizes/font_size = 13
+text = "EVENT: SOLAR ARRAY TRACKING DRIFT"
+
+[node name="LblEventDesc" type="Label" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalEvents/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.95, 1, 1)
+theme_override_font_sizes/font_size = 11
+text = "Solar array sun-tracking servo has drifted off the Sun vector. Power generation reduced to 180W. Realign panels to restore full charging."
+autowrap_mode = 2
+
+[node name="BtnResolveEvent" type="Button" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalEvents/Margin/VBox"]
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_orange")
+text = "REALIGN SOLAR PANELS TO SUN"
+
+[node name="ModalMarsArrival" type="PanelContainer" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -260.0
+offset_top = -140.0
+offset_right = 260.0
+offset_bottom = 140.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_modal_panel")
+
+[node name="Margin" type="MarginContainer" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalMarsArrival"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalMarsArrival/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalMarsArrival/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.45, 0.15, 1)
+theme_override_font_sizes/font_size = 14
+text = "MARS ORBIT INSERTION WINDOW APPROACHING"
+
+[node name="Desc" type="Label" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalMarsArrival/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.95, 1, 1)
+theme_override_font_sizes/font_size = 11
+text = "Prepare spacecraft orientation for Mars orbital capture. Rotate spacecraft to retrograde insertion vector."
+autowrap_mode = 2
+
+[node name="LblAttitudeGuidance" type="Label" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalMarsArrival/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 11
+text = "TARGET ATTITUDE: Pitch -18.0°, Yaw +25.0° | CURRENT: Pitch 0.0°, Yaw 0.0°"
+
+[node name="LblAttitudeStatus" type="Label" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalMarsArrival/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.4, 0.2, 1)
+theme_override_font_sizes/font_size = 11
+text = "STATUS: ATTITUDE MISALIGNED • Steer with A/D (Yaw) and W/S (Pitch)"
+
+[node name="BtnAlignAttitudeHelper" type="Button" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalMarsArrival/Margin/VBox"]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.95, 1, 1)
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_nav")
+text = "ASSIST: ALIGN TO RETROGRADE ATTITUDE"
+
+[node name="ProgressBarMOI" type="ProgressBar" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalMarsArrival/Margin/VBox"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+value = 0.0
+
+[node name="HBoxMOIActions" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalMarsArrival/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="BtnArmMOI" type="Button" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalMarsArrival/Margin/VBox/HBoxMOIActions"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_nav")
+text = "ARM PROPULSION"
+
+[node name="BtnExecuteMOI" type="Button" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalMarsArrival/Margin/VBox/HBoxMOIActions"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_orange")
+text = "PERFORM RETROGRADE MOI BURN"
+
+[node name="BannerOrbitAchieved" type="PanelContainer" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -90.0
+offset_right = 250.0
+offset_bottom = 90.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_banner_panel")
+
+[node name="Margin" type="MarginContainer" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/BannerOrbitAchieved"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 16
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/BannerOrbitAchieved/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/BannerOrbitAchieved/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.95, 0.5, 1)
+theme_override_font_sizes/font_size = 15
+text = "MARS ORBIT ACHIEVED • CAPTURE CERTIFIED!"
+
+[node name="Desc" type="Label" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/BannerOrbitAchieved/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.95, 1, 1)
+theme_override_font_sizes/font_size = 11
+text = "Stable elliptical capture orbit achieved (350 km x 24,000 km). All Level 04 milestones validated. Surface landing preparation ready."
+autowrap_mode = 2
+
+[node name="BtnContinueMars" type="Button" parent="MarginContainer/VBoxContainer/MainBody/OverlayHUD/BannerOrbitAchieved/Margin/VBox"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_green")
+text = "CONTINUE TO MARS EXPLORATION >"

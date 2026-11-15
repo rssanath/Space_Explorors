@@ -1,0 +1,460 @@
+[gd_scene load_steps=8 format=3 uid="uid://marsdeepmissionbriefing01"]
+
+[ext_resource type="Script" path="res://scenes/MissionBriefing.gd" id="1_briefing"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.024, 0.035, 0.063, 0.9)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0.85, 1, 0.4)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_task_card"]
+bg_color = Color(0.035, 0.05, 0.09, 0.85)
+border_width_left = 2
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0.75, 0.9, 0.5)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_normal"]
+bg_color = Color(0, 0.4, 0.55, 0.6)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0.85, 1, 0.8)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_hover"]
+bg_color = Color(0, 0.6, 0.85, 0.85)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.4, 1, 1, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_back"]
+bg_color = Color(0.08, 0.1, 0.15, 0.8)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.5, 0.6, 0.7, 0.5)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_badge"]
+bg_color = Color(0, 0.25, 0.35, 0.7)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0.85, 1, 0.8)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[node name="MissionBriefing" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_briefing")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.012, 0.016, 0.03, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 48
+theme_override_constants/margin_top = 28
+theme_override_constants/margin_right = 48
+theme_override_constants/margin_bottom = 28
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="HeaderBar" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TitleVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HeaderBar"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="LblLevelTitle" type="Label" parent="MarginContainer/VBoxContainer/HeaderBar/TitleVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "LEVEL 01: MISSION ARCHITECT"
+
+[node name="LblLevelSubtitle" type="Label" parent="MarginContainer/VBoxContainer/HeaderBar/TitleVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.48, 0, 1)
+theme_override_font_sizes/font_size = 13
+text = "Mission Profile & Trajectory Foundations"
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/HeaderBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ProgressBadge" type="Label" parent="MarginContainer/VBoxContainer/HeaderBar"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_badge")
+text = "  MANDATORY TASKS: 0 / 5 COMPLETED  "
+vertical_alignment = 1
+
+[node name="HSeparator1" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="BriefingPanel" type="PanelContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/BriefingPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 14
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/BriefingPanel/MarginContainer"]
+layout_mode = 2
+
+[node name="TxtDescription" type="Label" parent="MarginContainer/VBoxContainer/BriefingPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.9, 0.95, 1)
+theme_override_font_sizes/font_size = 13
+text = "Establish the foundational parameters of your Mars expedition. Select your science payload architecture, calculate astronomical distances, solar flux, and communications delay."
+autowrap_mode = 2
+
+[node name="TasksScroll" type="ScrollContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TasksVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TasksScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="Task1Panel" type="PanelContainer" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_task_card")
+
+[node name="Margin" type="MarginContainer" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task1Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 12
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task1Panel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task1Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "TASK 01: Primary Scientific Objective Selection"
+
+[node name="Desc" type="Label" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task1Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.8, 0.85, 1)
+theme_override_font_sizes/font_size = 12
+text = "Designate the primary mission archetype for exploring Martian surface geology and astrobiology."
+
+[node name="HBox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task1Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="OptArchitecture" type="OptionButton" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task1Panel/Margin/VBox/HBox"]
+custom_minimum_size = Vector2(240, 36)
+layout_mode = 2
+
+[node name="BtnSubmit1" type="Button" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task1Panel/Margin/VBox/HBox"]
+custom_minimum_size = Vector2(100, 36)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+text = "SUBMIT"
+
+[node name="LblStatus1" type="Label" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task1Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 1)
+theme_override_font_sizes/font_size = 12
+text = "Pending selection submission."
+
+[node name="Task2Panel" type="PanelContainer" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_task_card")
+
+[node name="Margin" type="MarginContainer" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task2Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 12
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task2Panel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task2Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "TASK 02: Mars Semi-Major Orbital Axis Calculation"
+
+[node name="Desc" type="Label" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task2Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.8, 0.85, 1)
+theme_override_font_sizes/font_size = 12
+text = "Calculate Mars mean orbital radius (AU) from perihelion (1.381 AU) and aphelion (1.666 AU). Formula: a = (r_peri + r_aph) / 2"
+
+[node name="HBox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task2Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="InputTask2" type="LineEdit" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task2Panel/Margin/VBox/HBox"]
+custom_minimum_size = Vector2(180, 36)
+layout_mode = 2
+placeholder_text = "e.g. 1.524"
+
+[node name="Unit" type="Label" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task2Panel/Margin/VBox/HBox"]
+layout_mode = 2
+text = "AU"
+
+[node name="BtnSubmit2" type="Button" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task2Panel/Margin/VBox/HBox"]
+custom_minimum_size = Vector2(100, 36)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+text = "SUBMIT"
+
+[node name="LblStatus2" type="Label" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task2Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 1)
+theme_override_font_sizes/font_size = 12
+text = "Pending engineering calculation."
+
+[node name="Task3Panel" type="PanelContainer" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_task_card")
+
+[node name="Margin" type="MarginContainer" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task3Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 12
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task3Panel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task3Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "TASK 03: One-Way Radio Communication Latency"
+
+[node name="Desc" type="Label" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task3Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.8, 0.85, 1)
+theme_override_font_sizes/font_size = 12
+text = "Compute latency (seconds) at distance d = 225,000,000 km (speed of light c = 299,792 km/s). Formula: t = d / c"
+
+[node name="HBox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task3Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="InputTask3" type="LineEdit" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task3Panel/Margin/VBox/HBox"]
+custom_minimum_size = Vector2(180, 36)
+layout_mode = 2
+placeholder_text = "e.g. 750.5"
+
+[node name="Unit" type="Label" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task3Panel/Margin/VBox/HBox"]
+layout_mode = 2
+text = "seconds"
+
+[node name="BtnSubmit3" type="Button" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task3Panel/Margin/VBox/HBox"]
+custom_minimum_size = Vector2(100, 36)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+text = "SUBMIT"
+
+[node name="LblStatus3" type="Label" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task3Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 1)
+theme_override_font_sizes/font_size = 12
+text = "Pending engineering calculation."
+
+[node name="Task4Panel" type="PanelContainer" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_task_card")
+
+[node name="Margin" type="MarginContainer" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task4Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 12
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task4Panel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task4Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "TASK 04: Martian Solar Irradiance at Mean Distance"
+
+[node name="Desc" type="Label" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task4Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.8, 0.85, 1)
+theme_override_font_sizes/font_size = 12
+text = "Calculate solar flux (W/m²) at 1.524 AU with Earth solar constant S0 = 1361 W/m². Formula: S = S0 / (r_AU)²"
+
+[node name="HBox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task4Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="InputTask4" type="LineEdit" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task4Panel/Margin/VBox/HBox"]
+custom_minimum_size = Vector2(180, 36)
+layout_mode = 2
+placeholder_text = "e.g. 586.0"
+
+[node name="Unit" type="Label" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task4Panel/Margin/VBox/HBox"]
+layout_mode = 2
+text = "W/m²"
+
+[node name="BtnSubmit4" type="Button" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task4Panel/Margin/VBox/HBox"]
+custom_minimum_size = Vector2(100, 36)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+text = "SUBMIT"
+
+[node name="LblStatus4" type="Label" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task4Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 1)
+theme_override_font_sizes/font_size = 12
+text = "Pending engineering calculation."
+
+[node name="Task5Panel" type="PanelContainer" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_task_card")
+
+[node name="Margin" type="MarginContainer" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task5Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 12
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task5Panel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task5Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "TASK 05: Science Payload Structural Mass Fraction"
+
+[node name="Desc" type="Label" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task5Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.8, 0.85, 1)
+theme_override_font_sizes/font_size = 12
+text = "Establish target science payload mass allocation percentage relative to total dry mass (standard NASA range: 15-20%). Target: 18.0%"
+
+[node name="HBox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task5Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="InputTask5" type="LineEdit" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task5Panel/Margin/VBox/HBox"]
+custom_minimum_size = Vector2(180, 36)
+layout_mode = 2
+placeholder_text = "e.g. 18.0"
+
+[node name="Unit" type="Label" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task5Panel/Margin/VBox/HBox"]
+layout_mode = 2
+text = "%"
+
+[node name="BtnSubmit5" type="Button" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task5Panel/Margin/VBox/HBox"]
+custom_minimum_size = Vector2(100, 36)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+text = "SUBMIT"
+
+[node name="LblStatus5" type="Label" parent="MarginContainer/VBoxContainer/TasksScroll/TasksVBox/Task5Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 1)
+theme_override_font_sizes/font_size = 12
+text = "Pending engineering calculation."
+
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="FooterBar" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="BtnBack" type="Button" parent="MarginContainer/VBoxContainer/FooterBar"]
+custom_minimum_size = Vector2(200, 42)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.9, 0.95, 1)
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_back")
+text = "< RETURN TO MAIN MENU"
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/FooterBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BtnProceed" type="Button" parent="MarginContainer/VBoxContainer/FooterBar"]
+custom_minimum_size = Vector2(250, 42)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+text = "ADVANCE TO MISSION DESIGN >"

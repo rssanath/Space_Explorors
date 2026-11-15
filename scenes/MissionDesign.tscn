@@ -1,0 +1,648 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/MissionDesign.gd" id="1_design"]
+[ext_resource type="PackedScene" path="res://scenes/SpacecraftPreview3D.tscn" id="2_preview"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel_card"]
+bg_color = Color(0.0666667, 0.0901961, 0.0980392, 0.94)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.18, 0.25, 0.28, 0.7)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_viewport_panel"]
+bg_color = Color(0.0313726, 0.0431373, 0.0470588, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0.898039, 1, 0.45)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_nav"]
+bg_color = Color(0.0901961, 0.121569, 0.133333, 0.9)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.18, 0.25, 0.28, 0.7)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+content_margin_left = 12.0
+content_margin_top = 6.0
+content_margin_right = 12.0
+content_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_reset"]
+bg_color = Color(0.12, 0.05, 0.05, 0.85)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.5, 0.18, 0.18, 0.6)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+content_margin_left = 12.0
+content_margin_top = 6.0
+content_margin_right = 12.0
+content_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_primary"]
+bg_color = Color(0, 0.42, 0.55, 0.8)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0.898039, 1, 0.9)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+content_margin_left = 14.0
+content_margin_top = 6.0
+content_margin_right = 14.0
+content_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_telemetry_card"]
+bg_color = Color(0.0666667, 0.0901961, 0.0980392, 0.92)
+border_width_left = 2
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0.898039, 1, 0.5)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_status_card"]
+bg_color = Color(0.0666667, 0.0901961, 0.0980392, 0.94)
+border_width_left = 2
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.152941, 0.85098, 0.501961, 0.7)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="MissionDesign" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_design")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0313726, 0.0431373, 0.0470588, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Header" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TitleVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Header"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/Header/TitleVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.94902, 0.960784, 0.960784, 1)
+theme_override_font_sizes/font_size = 18
+text = "MARS DEEP // SPACECRAFT DESIGNER"
+
+[node name="Subtitle" type="Label" parent="MarginContainer/VBoxContainer/Header/TitleVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.898039, 1, 1)
+theme_override_font_sizes/font_size = 11
+text = "BUILD YOUR SPACECRAFT • INTUITIVE SUBSYSTEM ASSEMBLY & LIVE TELEMETRY"
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TopNav" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Header"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="BtnBack" type="Button" parent="MarginContainer/VBoxContainer/Header/TopNav"]
+custom_minimum_size = Vector2(90, 32)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.94902, 0.960784, 0.960784, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_nav")
+text = "< BRIEFING"
+
+[node name="BtnReset" type="Button" parent="MarginContainer/VBoxContainer/Header/TopNav"]
+custom_minimum_size = Vector2(90, 32)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.7, 0.7, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_reset")
+text = "RESET SHIP"
+
+[node name="BtnEngLab" type="Button" parent="MarginContainer/VBoxContainer/Header/TopNav"]
+custom_minimum_size = Vector2(130, 32)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.94902, 0.960784, 0.960784, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_nav")
+text = "ENGINEERING LAB"
+
+[node name="BtnContinue" type="Button" parent="MarginContainer/VBoxContainer/Header/TopNav"]
+custom_minimum_size = Vector2(160, 32)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_primary")
+text = "PROCEED TO LAUNCH ->"
+
+[node name="MainBody" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+
+[node name="LeftPanel" type="PanelContainer" parent="MarginContainer/VBoxContainer/MainBody"]
+custom_minimum_size = Vector2(360, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel_card")
+
+[node name="CatalogueScroll" type="ScrollContainer" parent="MarginContainer/VBoxContainer/MainBody/LeftPanel"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="CatalogueVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/LeftPanel/CatalogueScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[node name="CenterPanel" type="PanelContainer" parent="MarginContainer/VBoxContainer/MainBody"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_viewport_panel")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel"]
+layout_mode = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel/SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(540, 620)
+render_target_update_mode = 4
+
+[node name="SpacecraftPreview3D" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel/SubViewportContainer/SubViewport" instance=ExtResource("2_preview")]
+
+[node name="PreviewOverlay" type="Control" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="TopBadge" type="Label" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel/PreviewOverlay"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.02
+anchor_top = 0.02
+offset_right = 260.0
+offset_bottom = 24.0
+theme_override_colors/font_color = Color(0, 0.898039, 1, 0.85)
+theme_override_font_sizes/font_size = 11
+text = "[ 3D PROCEDURAL SPACECRAFT PREVIEW ]"
+
+[node name="BottomBar" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel/PreviewOverlay"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.02
+anchor_top = 0.94
+anchor_right = 0.98
+anchor_bottom = 0.98
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 10
+
+[node name="BtnResetCam" type="Button" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel/PreviewOverlay/BottomBar"]
+custom_minimum_size = Vector2(90, 24)
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "RESET VIEW"
+
+[node name="BtnToggleTurntable" type="Button" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel/PreviewOverlay/BottomBar"]
+custom_minimum_size = Vector2(90, 24)
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "TURNTABLE"
+
+[node name="LblTurntableStatus" type="Label" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel/PreviewOverlay/BottomBar"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.152941, 0.85098, 0.501961, 1)
+theme_override_font_sizes/font_size = 10
+text = "TURNTABLE: ON"
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel/PreviewOverlay/BottomBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Hint" type="Label" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel/PreviewOverlay/BottomBar"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.631373, 0.678431, 0.694118, 0.8)
+theme_override_font_sizes/font_size = 10
+text = "Drag mouse to rotate • Scroll to zoom"
+
+[node name="RightPanel" type="PanelContainer" parent="MarginContainer/VBoxContainer/MainBody"]
+custom_minimum_size = Vector2(330, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel_card")
+
+[node name="RightScroll" type="ScrollContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="RightVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="PanelHeader" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.898039, 1, 1)
+theme_override_font_sizes/font_size = 12
+text = "FLIGHT TELEMETRY DASHBOARD"
+
+[node name="WeightCard" type="PanelContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_telemetry_card")
+
+[node name="Margin" type="MarginContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/WeightCard"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 8
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/WeightCard/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Header" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/WeightCard/Margin/VBox"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/WeightCard/Margin/VBox/Header"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.631373, 0.678431, 0.694118, 1)
+theme_override_font_sizes/font_size = 11
+text = "SPACECRAFT WEIGHT"
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/WeightCard/Margin/VBox/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Tag" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/WeightCard/Margin/VBox/Header"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.898039, 1, 0.7)
+theme_override_font_sizes/font_size = 9
+text = "[DRY / WET]"
+
+[node name="Explanation" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/WeightCard/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.898039, 1, 0.9)
+theme_override_font_sizes/font_size = 10
+text = "How heavy is your spacecraft?"
+
+[node name="Readout" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/WeightCard/Margin/VBox"]
+layout_mode = 2
+
+[node name="Val" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/WeightCard/Margin/VBox/Readout"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.94902, 0.960784, 0.960784, 1)
+theme_override_font_sizes/font_size = 15
+text = "573.6 kg"
+
+[node name="Bar" type="ProgressBar" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/WeightCard/Margin/VBox"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+show_percentage = false
+
+[node name="Sub" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/WeightCard/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45098, 0.521569, 0.54902, 1)
+theme_override_font_sizes/font_size = 9
+text = "Wet: 893.6 kg | Payload: 14.6 kg / 900 kg max"
+
+[node name="ElectricityCard" type="PanelContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_telemetry_card")
+
+[node name="Margin" type="MarginContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/ElectricityCard"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 8
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/ElectricityCard/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Header" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/ElectricityCard/Margin/VBox"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/ElectricityCard/Margin/VBox/Header"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.631373, 0.678431, 0.694118, 1)
+theme_override_font_sizes/font_size = 11
+text = "AVAILABLE ELECTRICITY"
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/ElectricityCard/Margin/VBox/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Tag" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/ElectricityCard/Margin/VBox/Header"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.898039, 1, 0.7)
+theme_override_font_sizes/font_size = 9
+text = "[NET POWER]"
+
+[node name="Explanation" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/ElectricityCard/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.898039, 1, 0.9)
+theme_override_font_sizes/font_size = 10
+text = "Does your spacecraft have enough electricity?"
+
+[node name="Readout" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/ElectricityCard/Margin/VBox"]
+layout_mode = 2
+
+[node name="Val" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/ElectricityCard/Margin/VBox/Readout"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.152941, 0.85098, 0.501961, 1)
+theme_override_font_sizes/font_size = 15
+text = "+357.6 W (Positive)"
+
+[node name="Bar" type="ProgressBar" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/ElectricityCard/Margin/VBox"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+show_percentage = false
+
+[node name="Sub" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/ElectricityCard/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45098, 0.521569, 0.54902, 1)
+theme_override_font_sizes/font_size = 9
+text = "Generating: 420 W • Consuming: 62 W"
+
+[node name="BudgetCard" type="PanelContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_telemetry_card")
+
+[node name="Margin" type="MarginContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/BudgetCard"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 8
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/BudgetCard/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Header" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/BudgetCard/Margin/VBox"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/BudgetCard/Margin/VBox/Header"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.631373, 0.678431, 0.694118, 1)
+theme_override_font_sizes/font_size = 11
+text = "MISSION BUDGET"
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/BudgetCard/Margin/VBox/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Tag" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/BudgetCard/Margin/VBox/Header"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.898039, 1, 0.7)
+theme_override_font_sizes/font_size = 9
+text = "[CAP: $450M]"
+
+[node name="Explanation" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/BudgetCard/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.898039, 1, 0.9)
+theme_override_font_sizes/font_size = 10
+text = "Can you afford your mission?"
+
+[node name="Readout" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/BudgetCard/Margin/VBox"]
+layout_mode = 2
+
+[node name="Val" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/BudgetCard/Margin/VBox/Readout"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.94902, 0.960784, 0.960784, 1)
+theme_override_font_sizes/font_size = 15
+text = "$181.0 M"
+
+[node name="Bar" type="ProgressBar" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/BudgetCard/Margin/VBox"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+show_percentage = false
+
+[node name="Sub" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/BudgetCard/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45098, 0.521569, 0.54902, 1)
+theme_override_font_sizes/font_size = 9
+text = "Budget Cap: $450.0M | Remaining: $269.0M"
+
+[node name="ScienceCard" type="PanelContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_telemetry_card")
+
+[node name="Margin" type="MarginContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/ScienceCard"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 8
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/ScienceCard/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Header" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/ScienceCard/Margin/VBox"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/ScienceCard/Margin/VBox/Header"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.631373, 0.678431, 0.694118, 1)
+theme_override_font_sizes/font_size = 11
+text = "SCIENCE CAPABILITY"
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/ScienceCard/Margin/VBox/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Tag" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/ScienceCard/Margin/VBox/Header"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.784314, 0.341176, 0.8)
+theme_override_font_sizes/font_size = 9
+text = "[PAYLOAD]"
+
+[node name="Explanation" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/ScienceCard/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.898039, 1, 0.9)
+theme_override_font_sizes/font_size = 10
+text = "How much scientific research can your spacecraft perform?"
+
+[node name="Readout" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/ScienceCard/Margin/VBox"]
+layout_mode = 2
+
+[node name="Val" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/ScienceCard/Margin/VBox/Readout"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.784314, 0.341176, 1)
+theme_override_font_sizes/font_size = 15
+text = "60 Science Pts"
+
+[node name="Bar" type="ProgressBar" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/ScienceCard/Margin/VBox"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+show_percentage = false
+
+[node name="Sub" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/ScienceCard/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45098, 0.521569, 0.54902, 1)
+theme_override_font_sizes/font_size = 9
+text = "2 of 7 Tools Mounted • 195 MB/sol"
+
+[node name="StatusCard" type="PanelContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_status_card")
+
+[node name="Margin" type="MarginContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/StatusCard"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 8
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/StatusCard/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Headline" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/StatusCard/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.152941, 0.85098, 0.501961, 1)
+theme_override_font_sizes/font_size = 12
+text = "✅ SPACECRAFT READY FOR LAUNCH"
+
+[node name="WarningsVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/StatusCard/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="BtnToggleAdvanced" type="Button" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox"]
+custom_minimum_size = Vector2(0, 26)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.631373, 0.678431, 0.694118, 1)
+theme_override_font_sizes/font_size = 10
+text = "[+] MORE DETAILS & SPECS"
+
+[node name="AdvancedSpecsPanel" type="PanelContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox"]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_telemetry_card")
+
+[node name="Margin" type="MarginContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/AdvancedSpecsPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 8
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/AdvancedSpecsPanel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/AdvancedSpecsPanel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.898039, 1, 1)
+theme_override_font_sizes/font_size = 10
+text = "ADVANCED ENGINEERING TELEMETRY"
+
+[node name="Grid" type="GridContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/RightScroll/RightVBox/AdvancedSpecsPanel/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 3
+columns = 2
+
+[node name="BottomBar" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="BtnBack" type="Button" parent="MarginContainer/VBoxContainer/BottomBar"]
+custom_minimum_size = Vector2(170, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.94902, 0.960784, 0.960784, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_nav")
+text = "< BACK TO BRIEFING"
+
+[node name="BtnReset" type="Button" parent="MarginContainer/VBoxContainer/BottomBar"]
+custom_minimum_size = Vector2(150, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.7, 0.7, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_reset")
+text = "↺ RESET DESIGN"
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/BottomBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BtnMoreDetails" type="Button" parent="MarginContainer/VBoxContainer/BottomBar"]
+custom_minimum_size = Vector2(160, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.631373, 0.678431, 0.694118, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_nav")
+text = "[+] MORE DETAILS"
+
+[node name="BtnContinue" type="Button" parent="MarginContainer/VBoxContainer/BottomBar"]
+custom_minimum_size = Vector2(260, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_primary")
+text = "CONTINUE TO ENGINEERING LAB >"
+
+[node name="ResetConfirmDialog" type="ConfirmationDialog" parent="."]
+title = "RESET SPACECRAFT CONFIGURATION"
+initial_position = 2
+size = Vector2i(380, 110)
+ok_button_text = "CONFIRM RESET"
+dialog_text = "Reset all components and science instruments to factory default?"

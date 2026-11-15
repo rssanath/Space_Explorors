@@ -1,0 +1,60 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scenes/ui/DemoModeHUD.gd" id="1_dm"]
+
+[node name="DemoModeHUD" type="CanvasLayer"]
+layer = 120
+script = ExtResource("1_dm")
+
+[node name="TopBar" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 44.0
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="TopBar"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -310.0
+offset_top = 6.0
+offset_right = 310.0
+offset_bottom = 42.0
+grow_horizontal = 2
+
+[node name="Margin" type="MarginContainer" parent="TopBar/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 4
+
+[node name="HBox" type="HBoxContainer" parent="TopBar/PanelContainer/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LblBadge" type="Label" parent="TopBar/PanelContainer/Margin/HBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.5, 0, 1)
+theme_override_font_sizes/font_size = 11
+text = "★ DEMO MODE (JUDGES)"
+
+[node name="OptStages" type="OptionButton" parent="TopBar/PanelContainer/Margin/HBox"]
+custom_minimum_size = Vector2(230, 26)
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+
+[node name="BtnJump" type="Button" parent="TopBar/PanelContainer/Margin/HBox"]
+custom_minimum_size = Vector2(70, 26)
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "JUMP >"
+
+[node name="BtnExitDemo" type="Button" parent="TopBar/PanelContainer/Margin/HBox"]
+custom_minimum_size = Vector2(85, 26)
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "EXIT DEMO"

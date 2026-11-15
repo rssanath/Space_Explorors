@@ -1,0 +1,27 @@
+# Godot 4+ engine cache & metadata
+.godot/
+*.translation
+
+# Export binaries & packs (exceeds GitHub limits and are generated artifacts)
+build/
+bin/
+*.exe
+*.pck
+*.zip
+
+# Editor & OS temporary files
+.vscode/
+.idea/
+*.tmp
+*.log
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# Backup folders
+backup_*/
+*.bak
+*.stage_*_bak
+
+# Scratch Python scripts
+scripts/*.py

@@ -1,0 +1,83 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/ui/PanelCard.gd" id="1_panel"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_card_default"]
+bg_color = Color(0.0666667, 0.0901961, 0.0980392, 0.92)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.18, 0.25, 0.28, 0.65)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+content_margin_left = 12.0
+content_margin_top = 12.0
+content_margin_right = 12.0
+content_margin_bottom = 12.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_toggle"]
+
+[node name="PanelCard" type="PanelContainer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 70.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_card_default")
+script = ExtResource("1_panel")
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="HeaderHBox" type="HBoxContainer" parent="Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="AccentStripe" type="ColorRect" parent="Margin/VBox/HeaderHBox"]
+custom_minimum_size = Vector2(3, 14)
+layout_mode = 2
+size_flags_vertical = 4
+color = Color(0, 0.898039, 1, 1)
+
+[node name="Title" type="Label" parent="Margin/VBox/HeaderHBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.94902, 0.960784, 0.960784, 1)
+theme_override_font_sizes/font_size = 13
+text = "SYSTEM PANEL"
+
+[node name="Badge" type="Label" parent="Margin/VBox/HeaderHBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.0, 0.898039, 1, 0.8)
+theme_override_font_sizes/font_size = 10
+text = "[SYS.01]"
+
+[node name="Spacer" type="Control" parent="Margin/VBox/HeaderHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ToggleBtn" type="Button" parent="Margin/VBox/HeaderHBox"]
+visible = false
+custom_minimum_size = Vector2(24, 20)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.631373, 0.678431, 0.694118, 1)
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxEmpty_toggle")
+text = "[-]"
+
+[node name="HeaderDivider" type="HSeparator" parent="Margin/VBox"]
+layout_mode = 2
+
+[node name="ContentSlot" type="VBoxContainer" parent="Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="ExpandableSlot" type="VBoxContainer" parent="Margin/VBox"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 6

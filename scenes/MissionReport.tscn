@@ -1,0 +1,639 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scenes/MissionReport.gd" id="1_mr"]
+[ext_resource type="PackedScene" path="res://scenes/MissionControl3D.tscn" id="2_mc3d"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0.015, 0.02, 0.035, 1)
+
+[node name="MissionReport" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mr")
+
+[node name="Background" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Header" type="HBoxContainer" parent="MarginContainer/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TitleBox" type="VBoxContainer" parent="MarginContainer/VBox/Header"]
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="Title" type="Label" parent="MarginContainer/VBox/Header/TitleBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 15
+text = "MARS DEEP • MISSION DEBRIEF & FINAL NASA CERTIFICATION"
+
+[node name="Subtitle" type="Label" parent="MarginContainer/VBox/Header/TitleBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 1)
+theme_override_font_sizes/font_size = 10
+text = "Cumulative Campaign Scoring, Astrobiological Discoveries & Administrator Awards"
+
+[node name="TabContainer" type="HBoxContainer" parent="MarginContainer/VBox/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+alignment = 1
+
+[node name="BtnTabOverview" type="Button" parent="MarginContainer/VBox/Header/TabContainer"]
+custom_minimum_size = Vector2(95, 32)
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "[1] OVERVIEW"
+
+[node name="BtnTabTimeline" type="Button" parent="MarginContainer/VBox/Header/TabContainer"]
+custom_minimum_size = Vector2(95, 32)
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "[2] TIMELINE"
+
+[node name="BtnTabPerformance" type="Button" parent="MarginContainer/VBox/Header/TabContainer"]
+custom_minimum_size = Vector2(95, 32)
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "[3] ANALYSIS"
+
+[node name="BtnTabScience" type="Button" parent="MarginContainer/VBox/Header/TabContainer"]
+custom_minimum_size = Vector2(95, 32)
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "[4] SCIENCE"
+
+[node name="BtnTabSpecs" type="Button" parent="MarginContainer/VBox/Header/TabContainer"]
+custom_minimum_size = Vector2(95, 32)
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "[5] SPECS"
+
+[node name="BtnTabAchievements" type="Button" parent="MarginContainer/VBox/Header/TabContainer"]
+custom_minimum_size = Vector2(105, 32)
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "[6] AWARDS (10)"
+
+[node name="BtnTabCinematic" type="Button" parent="MarginContainer/VBox/Header/TabContainer"]
+custom_minimum_size = Vector2(100, 32)
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "[7] CINEMATIC"
+
+[node name="BtnCamSwitch" type="Button" parent="MarginContainer/VBox/Header"]
+custom_minimum_size = Vector2(110, 32)
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "🎥 CAM VIEW"
+
+[node name="MainBody" type="Control" parent="MarginContainer/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ViewportContainer" type="SubViewportContainer" parent="MarginContainer/VBox/MainBody"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="MarginContainer/VBox/MainBody/ViewportContainer"]
+handle_input_locally = false
+size = Vector2i(1256, 650)
+render_target_update_mode = 4
+
+[node name="MissionControl3D" parent="MarginContainer/VBox/MainBody/ViewportContainer/SubViewport" instance=ExtResource("2_mc3d")]
+
+[node name="OverlayHUD" type="Control" parent="MarginContainer/VBox/MainBody"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RadioPanel" type="PanelContainer" parent="MarginContainer/VBox/MainBody/OverlayHUD"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -340.0
+offset_top = 8.0
+offset_right = -12.0
+offset_bottom = 76.0
+grow_horizontal = 0
+
+[node name="Margin" type="MarginContainer" parent="MarginContainer/VBox/MainBody/OverlayHUD/RadioPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 6
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/VBox/MainBody/OverlayHUD/RadioPanel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="LblSpeaker" type="Label" parent="MarginContainer/VBox/MainBody/OverlayHUD/RadioPanel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 10
+text = "• NASA ADMINISTRATOR"
+
+[node name="LblMessage" type="Label" parent="MarginContainer/VBox/MainBody/OverlayHUD/RadioPanel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.95, 1, 1)
+theme_override_font_sizes/font_size = 9
+text = "Welcome to Mission Control, Commander. Review your comprehensive flight performance and certification."
+autowrap_mode = 3
+
+[node name="PanelOverview" type="PanelContainer" parent="MarginContainer/VBox/MainBody/OverlayHUD"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -460.0
+offset_top = -240.0
+offset_right = 460.0
+offset_bottom = 240.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelOverview"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 20
+
+[node name="HBox" type="HBoxContainer" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelOverview/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="LeftCol" type="VBoxContainer" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelOverview/Margin/HBox"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="GradeHeader" type="Label" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelOverview/Margin/HBox/LeftCol"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 1)
+theme_override_font_sizes/font_size = 11
+text = "OVERALL MISSION EVALUATION"
+horizontal_alignment = 1
+
+[node name="GradeBadge" type="Label" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelOverview/Margin/HBox/LeftCol"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.84, 0, 1)
+theme_override_font_sizes/font_size = 64
+text = "S"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LblAwardTitle" type="Label" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelOverview/Margin/HBox/LeftCol"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 12
+text = "NASA Administrator's Distinguished Medal"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="LblFinalScore" type="Label" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelOverview/Margin/HBox/LeftCol"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.9, 0.5, 1)
+theme_override_font_sizes/font_size = 18
+text = "9,850 / 10,000 PTS"
+horizontal_alignment = 1
+
+[node name="RightCol" type="VBoxContainer" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelOverview/Margin/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="ScoreBreakdownHeader" type="Label" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelOverview/Margin/HBox/RightCol"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 13
+text = "CUMULATIVE SCORING ALLOCATION"
+
+[node name="LblTaskPts" type="Label" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelOverview/Margin/HBox/RightCol"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Mandatory Tasks Completion (23 Tasks): 5,000 / 5,000 Pts"
+
+[node name="BarTasks" type="ProgressBar" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelOverview/Margin/HBox/RightCol"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+value = 100.0
+show_percentage = false
+
+[node name="LblPrecPts" type="Label" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelOverview/Margin/HBox/RightCol"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Engineering Precision Bonus (±2% Tolerance): 2,450 / 2,500 Pts"
+
+[node name="BarPrecision" type="ProgressBar" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelOverview/Margin/HBox/RightCol"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+value = 98.0
+show_percentage = false
+
+[node name="LblSciPts" type="Label" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelOverview/Margin/HBox/RightCol"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Planetary Science & Sample Yield (5 Targets): 2,400 / 2,500 Pts"
+
+[node name="BarScience" type="ProgressBar" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelOverview/Margin/HBox/RightCol"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+value = 96.0
+show_percentage = false
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelOverview/Margin/HBox/RightCol"]
+layout_mode = 2
+
+[node name="LblSummaryText" type="Label" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelOverview/Margin/HBox/RightCol"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.85, 0.9, 1)
+theme_override_font_sizes/font_size = 10
+text = "Executive flight debrief summary will be generated dynamically..."
+autowrap_mode = 3
+
+[node name="PanelTimeline" type="PanelContainer" parent="MarginContainer/VBox/MainBody/OverlayHUD"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -500.0
+offset_top = -250.0
+offset_right = 500.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelTimeline"]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 16
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelTimeline/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Title" type="Label" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelTimeline/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "16-STAGE COMPLETE MISSION FLIGHT TIMELINE"
+
+[node name="Scroll" type="ScrollContainer" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelTimeline/Margin/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TimelineList" type="VBoxContainer" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelTimeline/Margin/VBox/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[node name="PanelPerformance" type="PanelContainer" parent="MarginContainer/VBox/MainBody/OverlayHUD"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -480.0
+offset_top = -240.0
+offset_right = 480.0
+offset_bottom = 240.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelPerformance"]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 16
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelPerformance/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Title" type="Label" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelPerformance/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "FLIGHT PERFORMANCE & SUBSYSTEM EFFICIENCY ANALYSIS"
+
+[node name="Scroll" type="ScrollContainer" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelPerformance/Margin/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PerfList" type="VBoxContainer" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelPerformance/Margin/VBox/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="PanelScience" type="PanelContainer" parent="MarginContainer/VBox/MainBody/OverlayHUD"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -520.0
+offset_top = -250.0
+offset_right = 520.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelScience"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 14
+
+[node name="HBox" type="HBoxContainer" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelScience/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="LeftList" type="VBoxContainer" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelScience/Margin/HBox"]
+custom_minimum_size = Vector2(280, 0)
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="ListTitle" type="Label" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelScience/Margin/HBox/LeftList"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 12
+text = "CACHED MARTIAN DISCOVERIES"
+
+[node name="Scroll" type="ScrollContainer" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelScience/Margin/HBox/LeftList"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ListVBox" type="VBoxContainer" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelScience/Margin/HBox/LeftList/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="RightDetail" type="PanelContainer" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelScience/Margin/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Margin" type="MarginContainer" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelScience/Margin/HBox/RightDetail"]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelScience/Margin/HBox/RightDetail/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="LblSampleName" type="Label" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelScience/Margin/HBox/RightDetail/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "Sample Name"
+
+[node name="LblInstruments" type="Label" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelScience/Margin/HBox/RightDetail/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.78, 0.34, 1)
+theme_override_font_sizes/font_size = 10
+text = "INSTRUMENTS USED: SuperCam, PIXL"
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelScience/Margin/HBox/RightDetail/Margin/VBox"]
+layout_mode = 2
+
+[node name="LblObservation" type="Label" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelScience/Margin/HBox/RightDetail/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.95, 1, 1)
+theme_override_font_sizes/font_size = 10
+text = "Observation text..."
+autowrap_mode = 3
+
+[node name="LblExplanation" type="Label" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelScience/Margin/HBox/RightDetail/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.8, 0.9, 1)
+theme_override_font_sizes/font_size = 10
+text = "Scientific explanation..."
+autowrap_mode = 3
+
+[node name="LblRealNasa" type="Label" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelScience/Margin/HBox/RightDetail/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.9, 0.5, 1)
+theme_override_font_sizes/font_size = 10
+text = "Real-world NASA discovery..."
+autowrap_mode = 3
+
+[node name="PanelSpecs" type="PanelContainer" parent="MarginContainer/VBox/MainBody/OverlayHUD"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -460.0
+offset_top = -240.0
+offset_right = 460.0
+offset_bottom = 240.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelSpecs"]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 16
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelSpecs/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Title" type="Label" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelSpecs/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "SPACECRAFT HARDWARE & SUBSYSTEM AUDIT SPECIFICATIONS"
+
+[node name="Scroll" type="ScrollContainer" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelSpecs/Margin/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="LblSpecsText" type="Label" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelSpecs/Margin/VBox/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.85, 0.9, 0.95, 1)
+theme_override_font_sizes/font_size = 10
+text = "Specs report text will appear here..."
+
+[node name="PanelAchievements" type="PanelContainer" parent="MarginContainer/VBox/MainBody/OverlayHUD"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -500.0
+offset_top = -250.0
+offset_right = 500.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelAchievements"]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 16
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelAchievements/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Title" type="Label" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelAchievements/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "NASA FLIGHT AWARDS & CAMPAIGN ACHIEVEMENTS (10 MEDALS)"
+
+[node name="Scroll" type="ScrollContainer" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelAchievements/Margin/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="AchGrid" type="GridContainer" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelAchievements/Margin/VBox/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+columns = 2
+
+[node name="PanelCinematic" type="PanelContainer" parent="MarginContainer/VBox/MainBody/OverlayHUD"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -460.0
+offset_top = -200.0
+offset_right = 460.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelCinematic"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 20
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelCinematic/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="MainTitle" type="Label" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelCinematic/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 32
+text = "MARS DEEP"
+horizontal_alignment = 1
+
+[node name="Motto" type="Label" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelCinematic/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.78, 0.34, 1)
+theme_override_font_sizes/font_size = 16
+text = "DESIGN.  LAUNCH.  EXPLORE."
+horizontal_alignment = 1
+
+[node name="Status" type="Label" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelCinematic/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.9, 0.5, 1)
+theme_override_font_sizes/font_size = 20
+text = "MISSION ACCOMPLISHED."
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelCinematic/Margin/VBox"]
+layout_mode = 2
+
+[node name="Congrats" type="Label" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelCinematic/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.9, 0.95, 1)
+theme_override_font_sizes/font_size = 11
+text = "Congratulations Commander! You have successfully designed a deep-space probe, launched from Cape Canaveral, navigated interplanetary transit, survived hypersonic Mars entry, and operated an astrobiology rover on the surface of another world."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="HBoxButtons" type="HBoxContainer" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelCinematic/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="BtnReplay" type="Button" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelCinematic/Margin/VBox/HBoxButtons"]
+custom_minimum_size = Vector2(160, 42)
+layout_mode = 2
+text = "REPLAY MISSION"
+
+[node name="BtnExploreAgain" type="Button" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelCinematic/Margin/VBox/HBoxButtons"]
+custom_minimum_size = Vector2(180, 42)
+layout_mode = 2
+text = "EXPLORE SURFACE AGAIN"
+
+[node name="BtnMenu" type="Button" parent="MarginContainer/VBox/MainBody/OverlayHUD/PanelCinematic/Margin/VBox/HBoxButtons"]
+custom_minimum_size = Vector2(160, 42)
+layout_mode = 2
+text = "RETURN TO MAIN MENU"

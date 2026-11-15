@@ -1,0 +1,387 @@
+[gd_scene load_steps=29 format=3 uid="uid://spaceflight3d01"]
+
+[ext_resource type="Script" path="res://scenes/SpaceFlight3D.gd" id="1_space"]
+
+[sub_resource type="Environment" id="Environment_deep_space"]
+background_mode = 1
+background_color = Color(0.008, 0.012, 0.02, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.1, 0.14, 0.2, 1)
+ambient_light_energy = 0.6
+glow_enabled = true
+glow_intensity = 0.5
+glow_bloom = 0.15
+
+[sub_resource type="StandardMaterial3D" id="Mat_Earth"]
+albedo_color = Color(0.12, 0.38, 0.78, 1)
+metallic = 0.1
+roughness = 0.4
+
+[sub_resource type="SphereMesh" id="SphereMesh_Earth"]
+material = SubResource("Mat_Earth")
+radius = 16.0
+height = 32.0
+radial_segments = 48
+rings = 24
+
+[sub_resource type="StandardMaterial3D" id="Mat_EarthAtmo"]
+transparency = 1
+albedo_color = Color(0.2, 0.65, 1, 0.35)
+emission_enabled = true
+emission = Color(0.15, 0.55, 0.95, 1)
+emission_energy_multiplier = 0.6
+rim_enabled = true
+rim = 0.8
+
+[sub_resource type="SphereMesh" id="SphereMesh_EarthAtmo"]
+material = SubResource("Mat_EarthAtmo")
+radius = 16.5
+height = 33.0
+radial_segments = 48
+rings = 24
+
+[sub_resource type="StandardMaterial3D" id="Mat_Mars"]
+albedo_color = Color(0.85, 0.38, 0.18, 1)
+metallic = 0.05
+roughness = 0.85
+
+[sub_resource type="SphereMesh" id="SphereMesh_Mars"]
+material = SubResource("Mat_Mars")
+radius = 12.0
+height = 24.0
+radial_segments = 48
+rings = 24
+
+[sub_resource type="StandardMaterial3D" id="Mat_MarsAtmo"]
+transparency = 1
+albedo_color = Color(1, 0.45, 0.25, 0.3)
+emission_enabled = true
+emission = Color(0.85, 0.35, 0.15, 1)
+emission_energy_multiplier = 0.5
+rim_enabled = true
+rim = 0.75
+
+[sub_resource type="SphereMesh" id="SphereMesh_MarsAtmo"]
+material = SubResource("Mat_MarsAtmo")
+radius = 12.4
+height = 24.8
+radial_segments = 48
+rings = 24
+
+[sub_resource type="StandardMaterial3D" id="Mat_MarsIce"]
+albedo_color = Color(0.95, 0.95, 1, 1)
+roughness = 0.3
+
+[sub_resource type="SphereMesh" id="SphereMesh_MarsIce"]
+material = SubResource("Mat_MarsIce")
+radius = 3.5
+height = 0.6
+
+[sub_resource type="StandardMaterial3D" id="Mat_GoldFoil"]
+albedo_color = Color(0.9, 0.72, 0.2, 1)
+metallic = 0.9
+roughness = 0.3
+
+[sub_resource type="BoxMesh" id="BoxMesh_BusLight"]
+material = SubResource("Mat_GoldFoil")
+size = Vector3(1.6, 1.4, 1.6)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Titanium"]
+albedo_color = Color(0.28, 0.3, 0.34, 1)
+metallic = 0.95
+roughness = 0.25
+
+[sub_resource type="BoxMesh" id="BoxMesh_BusHeavy"]
+material = SubResource("Mat_Titanium")
+size = Vector3(2.2, 1.6, 2.2)
+
+[sub_resource type="StandardMaterial3D" id="Mat_SolarPanel"]
+albedo_color = Color(0.06, 0.12, 0.28, 1)
+metallic = 0.6
+roughness = 0.2
+emission_enabled = true
+emission = Color(0.02, 0.08, 0.22, 1)
+emission_energy_multiplier = 0.3
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_SolarWing"]
+material = SubResource("Mat_SolarPanel")
+top_radius = 1.3
+bottom_radius = 1.3
+height = 0.04
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_Nozzle"]
+material = SubResource("Mat_Titanium")
+top_radius = 0.2
+bottom_radius = 0.45
+height = 0.7
+
+[sub_resource type="StandardMaterial3D" id="Mat_Flame"]
+transparency = 1
+albedo_color = Color(1, 0.6, 0.2, 0.85)
+emission_enabled = true
+emission = Color(1, 0.55, 0.15, 1)
+emission_energy_multiplier = 4.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_Flame"]
+material = SubResource("Mat_Flame")
+top_radius = 0.35
+bottom_radius = 0.04
+height = 2.2
+
+[sub_resource type="StandardMaterial3D" id="Mat_Carbon"]
+albedo_color = Color(0.12, 0.14, 0.16, 1)
+metallic = 0.3
+roughness = 0.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_Console"]
+material = SubResource("Mat_Carbon")
+size = Vector3(1.8, 0.45, 0.7)
+
+[sub_resource type="StandardMaterial3D" id="Mat_ScreenCyan"]
+albedo_color = Color(0.02, 0.05, 0.1, 1)
+emission_enabled = true
+emission = Color(0, 0.85, 1, 1)
+emission_energy_multiplier = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_Screen"]
+material = SubResource("Mat_ScreenCyan")
+size = Vector3(0.48, 0.3, 0.02)
+
+[sub_resource type="StandardMaterial3D" id="Mat_LeverOrange"]
+albedo_color = Color(1, 0.35, 0.05, 1)
+roughness = 0.4
+
+[sub_resource type="BoxMesh" id="BoxMesh_LeverRod"]
+material = SubResource("Mat_Titanium")
+size = Vector3(0.03, 0.22, 0.03)
+
+[sub_resource type="BoxMesh" id="BoxMesh_LeverKnob"]
+material = SubResource("Mat_LeverOrange")
+size = Vector3(0.07, 0.07, 0.07)
+
+[node name="SpaceFlight3D" type="Node3D"]
+script = ExtResource("1_space")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_deep_space")
+
+[node name="SunLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.25, 0.433013, 0, 0.866025, 0.5, -0.5, -0.433013, 0.75, 20, 25, 30)
+light_color = Color(1, 0.96, 0.88, 1)
+light_energy = 1.8
+shadow_enabled = true
+
+[node name="CelestialBodies" type="Node3D" parent="."]
+
+[node name="EarthSystem" type="Node3D" parent="CelestialBodies"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -22, -18)
+
+[node name="EarthMesh" type="MeshInstance3D" parent="CelestialBodies/EarthSystem"]
+mesh = SubResource("SphereMesh_Earth")
+
+[node name="EarthAtmosphere" type="MeshInstance3D" parent="CelestialBodies/EarthSystem"]
+mesh = SubResource("SphereMesh_EarthAtmo")
+
+[node name="MarsSystem" type="Node3D" parent="CelestialBodies"]
+transform = Transform3D(0.04, 0, 0, 0, 0.04, 0, 0, 0, 0.04, 0, 2, -220)
+visible = false
+
+[node name="MarsMesh" type="MeshInstance3D" parent="CelestialBodies/MarsSystem"]
+mesh = SubResource("SphereMesh_Mars")
+
+[node name="MarsAtmosphere" type="MeshInstance3D" parent="CelestialBodies/MarsSystem"]
+mesh = SubResource("SphereMesh_MarsAtmo")
+
+[node name="MarsNorthCap" type="MeshInstance3D" parent="CelestialBodies/MarsSystem"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.8, 0)
+mesh = SubResource("SphereMesh_MarsIce")
+
+[node name="SpacecraftRig" type="Node3D" parent="."]
+
+[node name="ModularCraft" type="Node3D" parent="SpacecraftRig"]
+
+[node name="BusLight" type="MeshInstance3D" parent="SpacecraftRig/ModularCraft"]
+mesh = SubResource("BoxMesh_BusLight")
+
+[node name="BusHeavy" type="MeshInstance3D" parent="SpacecraftRig/ModularCraft"]
+visible = false
+mesh = SubResource("BoxMesh_BusHeavy")
+
+[node name="SolarLeft" type="Node3D" parent="SpacecraftRig/ModularCraft"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4, 0, 0)
+
+[node name="WingMesh" type="MeshInstance3D" parent="SpacecraftRig/ModularCraft/SolarLeft"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 0, 0)
+mesh = SubResource("CylinderMesh_SolarWing")
+
+[node name="SolarRight" type="Node3D" parent="SpacecraftRig/ModularCraft"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4, 0, 0)
+
+[node name="WingMesh" type="MeshInstance3D" parent="SpacecraftRig/ModularCraft/SolarRight"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 0, 0)
+mesh = SubResource("CylinderMesh_SolarWing")
+
+[node name="MMRTGMount" type="Node3D" parent="SpacecraftRig/ModularCraft"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.9, -0.6)
+visible = false
+
+[node name="RTGCylinder" type="MeshInstance3D" parent="SpacecraftRig/ModularCraft/MMRTGMount"]
+mesh = SubResource("CylinderMesh_Nozzle")
+
+[node name="DishAntenna" type="Node3D" parent="SpacecraftRig/ModularCraft"]
+transform = Transform3D(0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 0, 0, 1, 0, 1.1, 0)
+
+[node name="DishMesh" type="MeshInstance3D" parent="SpacecraftRig/ModularCraft/DishAntenna"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_Nozzle")
+
+[node name="EngineExhaust" type="Node3D" parent="SpacecraftRig/ModularCraft"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.9)
+
+[node name="NozzleMesh" type="MeshInstance3D" parent="SpacecraftRig/ModularCraft/EngineExhaust"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("CylinderMesh_Nozzle")
+
+[node name="FlameMesh" type="MeshInstance3D" parent="SpacecraftRig/ModularCraft/EngineExhaust"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 1.3)
+visible = false
+mesh = SubResource("CylinderMesh_Flame")
+
+[node name="FlameParticles" type="CPUParticles3D" parent="SpacecraftRig/ModularCraft/EngineExhaust"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.6)
+emitting = false
+amount = 48
+lifetime = 0.35
+speed_scale = 1.8
+direction = Vector3(0, 0, 1)
+spread = 12.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 8.0
+initial_velocity_max = 16.0
+
+[node name="ExhaustLight" type="OmniLight3D" parent="SpacecraftRig/ModularCraft/EngineExhaust"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.2)
+visible = false
+light_color = Color(1, 0.6, 0.2, 1)
+light_energy = 3.5
+omni_range = 10.0
+
+[node name="RCS_PosX" type="CPUParticles3D" parent="SpacecraftRig/ModularCraft"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.85, 0, 0.8)
+emitting = false
+amount = 16
+lifetime = 0.15
+one_shot = true
+direction = Vector3(1, 0, 0)
+spread = 10.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 4.0
+initial_velocity_max = 8.0
+
+[node name="RCS_NegX" type="CPUParticles3D" parent="SpacecraftRig/ModularCraft"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.85, 0, 0.8)
+emitting = false
+amount = 16
+lifetime = 0.15
+one_shot = true
+direction = Vector3(-1, 0, 0)
+spread = 10.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 4.0
+initial_velocity_max = 8.0
+
+[node name="RCS_PosY" type="CPUParticles3D" parent="SpacecraftRig/ModularCraft"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0.8)
+emitting = false
+amount = 16
+lifetime = 0.15
+one_shot = true
+direction = Vector3(0, 1, 0)
+spread = 10.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 4.0
+initial_velocity_max = 8.0
+
+[node name="RCS_NegY" type="CPUParticles3D" parent="SpacecraftRig/ModularCraft"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.75, 0.8)
+emitting = false
+amount = 16
+lifetime = 0.15
+one_shot = true
+direction = Vector3(0, -1, 0)
+spread = 10.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 4.0
+initial_velocity_max = 8.0
+
+[node name="CockpitInterior" type="Node3D" parent="SpacecraftRig"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, -0.2)
+
+[node name="CamCockpit" type="Camera3D" parent="SpacecraftRig/CockpitInterior"]
+transform = Transform3D(1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 0, 0.38, 0.15)
+current = true
+fov = 68.0
+
+[node name="ConsolePanel" type="Node3D" parent="SpacecraftRig/CockpitInterior"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, -0.15, -0.6)
+
+[node name="DeskMesh" type="MeshInstance3D" parent="SpacecraftRig/CockpitInterior/ConsolePanel"]
+mesh = SubResource("BoxMesh_Console")
+
+[node name="ScreenNav" type="MeshInstance3D" parent="SpacecraftRig/CockpitInterior/ConsolePanel"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.55, 0.12, -0.05)
+mesh = SubResource("BoxMesh_Screen")
+
+[node name="ScreenAttitude" type="MeshInstance3D" parent="SpacecraftRig/CockpitInterior/ConsolePanel"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12, -0.05)
+mesh = SubResource("BoxMesh_Screen")
+
+[node name="ScreenSystems" type="MeshInstance3D" parent="SpacecraftRig/CockpitInterior/ConsolePanel"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.55, 0.12, -0.05)
+mesh = SubResource("BoxMesh_Screen")
+
+[node name="ThrottleLeverPivot" type="Node3D" parent="SpacecraftRig/CockpitInterior"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.42, -0.08, -0.35)
+
+[node name="LeverRod" type="MeshInstance3D" parent="SpacecraftRig/CockpitInterior/ThrottleLeverPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.11, 0)
+mesh = SubResource("BoxMesh_LeverRod")
+
+[node name="LeverKnob" type="MeshInstance3D" parent="SpacecraftRig/CockpitInterior/ThrottleLeverPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.23, 0)
+mesh = SubResource("BoxMesh_LeverKnob")
+
+[node name="FlightStickPivot" type="Node3D" parent="SpacecraftRig/CockpitInterior"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.35, -0.1, -0.32)
+
+[node name="StickRod" type="MeshInstance3D" parent="SpacecraftRig/CockpitInterior/FlightStickPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12, 0)
+mesh = SubResource("BoxMesh_LeverRod")
+
+[node name="CameraPivot" type="Node3D" parent="SpacecraftRig"]
+
+[node name="CamExterior" type="Camera3D" parent="SpacecraftRig/CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 2.5, 6.5)
+fov = 55.0
+
+[node name="Cameras" type="Node3D" parent="."]
+
+[node name="CamNavMap" type="Camera3D" parent="Cameras"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 45, 0)
+fov = 65.0
+
+[node name="CamMarsCinematic" type="Camera3D" parent="Cameras"]
+transform = Transform3D(0.965926, 0.0669873, -0.25, 0, 0.965926, 0.258819, 0.258819, -0.25, 0.933013, -3.2, 1.2, 5.0)
+fov = 50.0
+
+[node name="AudioEngine" type="AudioStreamPlayer" parent="."]
+bus = &"Master"
+
+[node name="AudioRCS" type="AudioStreamPlayer" parent="."]
+bus = &"Master"
+
+[node name="AudioComms" type="AudioStreamPlayer" parent="."]
+bus = &"Master"
+
+[node name="AudioAlarm" type="AudioStreamPlayer" parent="."]
+bus = &"Master"

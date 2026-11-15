@@ -1,0 +1,81 @@
+{
+  "instruments": [
+    {
+      "id": "INST_MASTCAM_Z",
+      "name": "Mastcam-Z Multispectral Stereo Imaging System",
+      "mass_kg": 4.0,
+      "power_w": 17.4,
+      "data_volume_mb_per_sol": 150.0,
+      "science_value": 25,
+      "cost_m": 18.0,
+      "primary_discipline": "Geomorphology & Navigation",
+      "description": "Mast-mounted dual-camera stereo imaging suite with zoom capability to examine panoramic terrain and mineralogy."
+    },
+    {
+      "id": "INST_SUPERCAM",
+      "name": "SuperCam Laser Induced Breakdown Spectrometer",
+      "mass_kg": 10.6,
+      "power_w": 28.0,
+      "data_volume_mb_per_sol": 45.0,
+      "science_value": 35,
+      "cost_m": 32.0,
+      "primary_discipline": "Astrobiology & Mineralogy",
+      "description": "Fires pulsed laser beams at rock targets up to 7 meters away to vaporize target surfaces and analyze atomic emission spectra."
+    },
+    {
+      "id": "INST_PIXL",
+      "name": "PIXL Planetary Instrument for X-ray Lithochemistry",
+      "mass_kg": 4.3,
+      "power_w": 25.0,
+      "data_volume_mb_per_sol": 20.0,
+      "science_value": 30,
+      "cost_m": 26.0,
+      "primary_discipline": "Geochemistry",
+      "description": "Arm-mounted micro-focus X-ray fluorescence spectrometer that maps chemical elemental variations on target rocks down to sub-millimeter scales."
+    },
+    {
+      "id": "INST_SHERLOC",
+      "name": "SHERLOC UV Raman & Fluorescence Spectrometer",
+      "mass_kg": 4.7,
+      "power_w": 32.0,
+      "data_volume_mb_per_sol": 30.0,
+      "science_value": 40,
+      "cost_m": 38.0,
+      "primary_discipline": "Biosignatures & Organic Chemistry",
+      "description": "Deep UV resonance Raman and fluorescence spectrometer designed to detect past organic molecules and potential biosignatures."
+    },
+    {
+      "id": "INST_MOXIE",
+      "name": "MOXIE Mars Oxygen ISRU Experiment",
+      "mass_kg": 17.1,
+      "power_w": 300.0,
+      "data_volume_mb_per_sol": 5.0,
+      "science_value": 45,
+      "cost_m": 48.0,
+      "primary_discipline": "In-Situ Resource Utilization (ISRU)",
+      "description": "Solid oxide electrolysis cell that converts atmospheric carbon dioxide into breathable oxygen and rocket oxidizer propellant."
+    },
+    {
+      "id": "INST_RIMFAX",
+      "name": "RIMFAX Radar Imager for Mars' Subsurface Experiment",
+      "mass_kg": 3.0,
+      "power_w": 10.0,
+      "data_volume_mb_per_sol": 12.0,
+      "science_value": 28,
+      "cost_m": 15.0,
+      "primary_discipline": "Subsurface Geophysics",
+      "description": "Ground-penetrating radar profiling geological layers and potential buried water ice structures up to 10 meters depth."
+    },
+    {
+      "id": "INST_MEDA",
+      "name": "MEDA Mars Environmental Dynamics Analyzer",
+      "mass_kg": 5.5,
+      "power_w": 14.0,
+      "data_volume_mb_per_sol": 8.0,
+      "science_value": 20,
+      "cost_m": 12.0,
+      "primary_discipline": "Meteorology & Atmospheric Dust",
+      "description": "Sensor suite measuring wind speed and direction, atmospheric pressure, relative humidity, air and surface temperatures, and dust optical depth."
+    }
+  ]
+}

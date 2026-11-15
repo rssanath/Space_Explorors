@@ -1,0 +1,273 @@
+[gd_scene load_steps=28 format=3]
+
+[ext_resource type="Script" path="res://scenes/MissionControl3D.gd" id="1_mc"]
+
+[sub_resource type="Environment" id="Environment_mc"]
+background_mode = 1
+background_color = Color(0.015, 0.02, 0.03, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.08, 0.12, 0.18, 1)
+ambient_light_energy = 0.5
+glow_enabled = true
+glow_intensity = 0.6
+glow_bloom = 0.2
+
+[sub_resource type="StandardMaterial3D" id="Mat_Floor"]
+albedo_color = Color(0.04, 0.06, 0.08, 1)
+metallic = 0.6
+roughness = 0.25
+
+[sub_resource type="BoxMesh" id="BoxMesh_Floor"]
+material = SubResource("Mat_Floor")
+size = Vector3(32, 0.4, 24)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Wall"]
+albedo_color = Color(0.02, 0.035, 0.05, 1)
+roughness = 0.7
+
+[sub_resource type="BoxMesh" id="BoxMesh_Wall"]
+material = SubResource("Mat_Wall")
+size = Vector3(32, 10, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Screen"]
+albedo_color = Color(0.01, 0.04, 0.07, 1)
+metallic = 0.2
+roughness = 0.1
+emission_enabled = true
+emission = Color(0.0, 0.2, 0.35, 1)
+emission_energy_multiplier = 0.35
+
+[sub_resource type="BoxMesh" id="BoxMesh_Screen"]
+material = SubResource("Mat_Screen")
+size = Vector3(18, 6.5, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="Mat_EarthHolo"]
+albedo_color = Color(0.1, 0.4, 0.9, 1)
+emission_enabled = true
+emission = Color(0.15, 0.5, 1.0, 1)
+emission_energy_multiplier = 0.8
+
+[sub_resource type="SphereMesh" id="SphereMesh_EarthHolo"]
+material = SubResource("Mat_EarthHolo")
+radius = 1.0
+height = 2.0
+radial_segments = 32
+rings = 16
+
+[sub_resource type="StandardMaterial3D" id="Mat_MarsHolo"]
+albedo_color = Color(0.9, 0.4, 0.15, 1)
+emission_enabled = true
+emission = Color(1.0, 0.45, 0.2, 1)
+emission_energy_multiplier = 0.85
+
+[sub_resource type="SphereMesh" id="SphereMesh_MarsHolo"]
+material = SubResource("Mat_MarsHolo")
+radius = 0.8
+height = 1.6
+radial_segments = 32
+rings = 16
+
+[sub_resource type="StandardMaterial3D" id="Mat_TrajArc"]
+albedo_color = Color(0.0, 0.9, 1.0, 1)
+emission_enabled = true
+emission = Color(0.0, 0.9, 1.0, 1)
+emission_energy_multiplier = 1.0
+
+[sub_resource type="TorusMesh" id="TorusMesh_TrajArc"]
+material = SubResource("Mat_TrajArc")
+inner_radius = 4.8
+outer_radius = 4.9
+rings = 32
+ring_segments = 8
+
+[sub_resource type="StandardMaterial3D" id="Mat_Desk"]
+albedo_color = Color(0.08, 0.11, 0.15, 1)
+metallic = 0.3
+roughness = 0.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_Desk"]
+material = SubResource("Mat_Desk")
+size = Vector3(14, 0.8, 1.4)
+
+[sub_resource type="StandardMaterial3D" id="Mat_MonitorCyan"]
+albedo_color = Color(0.02, 0.1, 0.15, 1)
+emission_enabled = true
+emission = Color(0.0, 0.85, 1.0, 1)
+emission_energy_multiplier = 0.7
+
+[sub_resource type="BoxMesh" id="BoxMesh_MonitorCyan"]
+material = SubResource("Mat_MonitorCyan")
+size = Vector3(1.2, 0.65, 0.08)
+
+[sub_resource type="StandardMaterial3D" id="Mat_MonitorAmber"]
+albedo_color = Color(0.12, 0.08, 0.02, 1)
+emission_enabled = true
+emission = Color(1.0, 0.55, 0.05, 1)
+emission_energy_multiplier = 0.75
+
+[sub_resource type="BoxMesh" id="BoxMesh_MonitorAmber"]
+material = SubResource("Mat_MonitorAmber")
+size = Vector3(1.2, 0.65, 0.08)
+
+[sub_resource type="StandardMaterial3D" id="Mat_MarsCinematic"]
+albedo_color = Color(0.85, 0.38, 0.18, 1)
+metallic = 0.05
+roughness = 0.85
+
+[sub_resource type="SphereMesh" id="SphereMesh_MarsCinematic"]
+material = SubResource("Mat_MarsCinematic")
+radius = 6.0
+height = 12.0
+radial_segments = 64
+rings = 32
+
+[sub_resource type="StandardMaterial3D" id="Mat_MarsAtmoCinematic"]
+transparency = 1
+albedo_color = Color(1, 0.45, 0.25, 0.35)
+emission_enabled = true
+emission = Color(0.9, 0.35, 0.15, 1)
+emission_energy_multiplier = 0.6
+rim_enabled = true
+rim = 0.85
+
+[sub_resource type="SphereMesh" id="SphereMesh_MarsAtmoCinematic"]
+material = SubResource("Mat_MarsAtmoCinematic")
+radius = 6.3
+height = 12.6
+radial_segments = 64
+rings = 32
+
+[sub_resource type="StandardMaterial3D" id="Mat_RoverMini"]
+albedo_color = Color(0.8, 0.82, 0.85, 1)
+metallic = 0.4
+roughness = 0.3
+
+[sub_resource type="BoxMesh" id="BoxMesh_RoverMini"]
+material = SubResource("Mat_RoverMini")
+size = Vector3(0.6, 0.3, 0.9)
+
+[node name="MissionControl3D" type="Node3D"]
+script = ExtResource("1_mc")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_mc")
+
+[node name="MainRoomLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866, -0.354, 0.354, 0, 0.707, 0.707, -0.5, -0.612, 0.612, 0, 10, 0)
+light_color = Color(0.85, 0.92, 1, 1)
+light_energy = 0.6
+
+[node name="CamOverview" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.966, 0.259, 0, -0.259, 0.966, 0, 3.8, 11.5)
+current = true
+fov = 68.0
+
+[node name="CamVideoWall" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.996, 0.087, 0, -0.087, 0.996, 0, 2.6, 5.2)
+fov = 62.0
+
+[node name="CamConsole" type="Camera3D" parent="."]
+transform = Transform3D(0.94, -0.08, 0.33, 0, 0.97, 0.24, -0.34, -0.23, 0.91, -2.4, 1.8, 6.8)
+fov = 60.0
+
+[node name="CamMarsCinematic" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.985, 0.174, 0, -0.174, 0.985, 0, 1.5, 16.5)
+fov = 55.0
+
+[node name="CommandCenter" type="Node3D" parent="."]
+
+[node name="Floor" type="MeshInstance3D" parent="CommandCenter"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, 4)
+mesh = SubResource("BoxMesh_Floor")
+
+[node name="BackWall" type="MeshInstance3D" parent="CommandCenter"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.8, -4)
+mesh = SubResource("BoxMesh_Wall")
+
+[node name="VideoWall" type="Node3D" parent="CommandCenter"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.2, -3.7)
+
+[node name="ScreenMesh" type="MeshInstance3D" parent="CommandCenter/VideoWall"]
+mesh = SubResource("BoxMesh_Screen")
+
+[node name="EarthHolo" type="MeshInstance3D" parent="CommandCenter/VideoWall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 0.2, 0.4)
+mesh = SubResource("SphereMesh_EarthHolo")
+
+[node name="MarsHolo" type="MeshInstance3D" parent="CommandCenter/VideoWall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0.2, 0.4)
+mesh = SubResource("SphereMesh_MarsHolo")
+
+[node name="TrajectoryArc" type="MeshInstance3D" parent="CommandCenter/VideoWall"]
+transform = Transform3D(1.1, 0, 0, 0, 0.35, 0, 0, 0, 0.1, 0, 0.2, 0.3)
+mesh = SubResource("TorusMesh_TrajArc")
+
+[node name="ConsoleRow1" type="Node3D" parent="CommandCenter"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+
+[node name="Desk" type="MeshInstance3D" parent="CommandCenter/ConsoleRow1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+mesh = SubResource("BoxMesh_Desk")
+
+[node name="Mon1" type="MeshInstance3D" parent="CommandCenter/ConsoleRow1"]
+transform = Transform3D(1, 0, 0, 0, 0.966, 0.259, 0, -0.259, 0.966, -5.0, 1.0, 0.1)
+mesh = SubResource("BoxMesh_MonitorCyan")
+
+[node name="Mon2" type="MeshInstance3D" parent="CommandCenter/ConsoleRow1"]
+transform = Transform3D(1, 0, 0, 0, 0.966, 0.259, 0, -0.259, 0.966, -3.2, 1.0, 0.1)
+mesh = SubResource("BoxMesh_MonitorAmber")
+
+[node name="Mon3" type="MeshInstance3D" parent="CommandCenter/ConsoleRow1"]
+transform = Transform3D(1, 0, 0, 0, 0.966, 0.259, 0, -0.259, 0.966, -1.4, 1.0, 0.1)
+mesh = SubResource("BoxMesh_MonitorCyan")
+
+[node name="Mon4" type="MeshInstance3D" parent="CommandCenter/ConsoleRow1"]
+transform = Transform3D(1, 0, 0, 0, 0.966, 0.259, 0, -0.259, 0.966, 1.4, 1.0, 0.1)
+mesh = SubResource("BoxMesh_MonitorCyan")
+
+[node name="Mon5" type="MeshInstance3D" parent="CommandCenter/ConsoleRow1"]
+transform = Transform3D(1, 0, 0, 0, 0.966, 0.259, 0, -0.259, 0.966, 3.2, 1.0, 0.1)
+mesh = SubResource("BoxMesh_MonitorAmber")
+
+[node name="Mon6" type="MeshInstance3D" parent="CommandCenter/ConsoleRow1"]
+transform = Transform3D(1, 0, 0, 0, 0.966, 0.259, 0, -0.259, 0.966, 5.0, 1.0, 0.1)
+mesh = SubResource("BoxMesh_MonitorCyan")
+
+[node name="ConsoleRow2" type="Node3D" parent="CommandCenter"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 5.5)
+
+[node name="Desk" type="MeshInstance3D" parent="CommandCenter/ConsoleRow2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+mesh = SubResource("BoxMesh_Desk")
+
+[node name="Mon1" type="MeshInstance3D" parent="CommandCenter/ConsoleRow2"]
+transform = Transform3D(1, 0, 0, 0, 0.966, 0.259, 0, -0.259, 0.966, -3.5, 1.0, 0.1)
+mesh = SubResource("BoxMesh_MonitorCyan")
+
+[node name="Mon2" type="MeshInstance3D" parent="CommandCenter/ConsoleRow2"]
+transform = Transform3D(1, 0, 0, 0, 0.966, 0.259, 0, -0.259, 0.966, 0, 1.0, 0.1)
+mesh = SubResource("BoxMesh_MonitorAmber")
+
+[node name="Mon3" type="MeshInstance3D" parent="CommandCenter/ConsoleRow2"]
+transform = Transform3D(1, 0, 0, 0, 0.966, 0.259, 0, -0.259, 0.966, 3.5, 1.0, 0.1)
+mesh = SubResource("BoxMesh_MonitorCyan")
+
+[node name="CinematicMars" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+visible = false
+
+[node name="MarsGlobe" type="MeshInstance3D" parent="CinematicMars"]
+mesh = SubResource("SphereMesh_MarsCinematic")
+
+[node name="MarsAtmo" type="MeshInstance3D" parent="CinematicMars"]
+mesh = SubResource("SphereMesh_MarsAtmoCinematic")
+
+[node name="RoverModel" type="Node3D" parent="CinematicMars"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.05, 0)
+
+[node name="Body" type="MeshInstance3D" parent="CinematicMars/RoverModel"]
+mesh = SubResource("BoxMesh_RoverMini")
+
+[node name="AudioRoomHum" type="AudioStreamPlayer" parent="."]
+
+[node name="AudioRadioComms" type="AudioStreamPlayer" parent="."]

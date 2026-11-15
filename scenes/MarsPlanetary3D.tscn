@@ -1,0 +1,394 @@
+[gd_scene load_steps=31 format=3 uid="uid://marsplanetary3d01"]
+
+[ext_resource type="Script" path="res://scenes/MarsPlanetary3D.gd" id="1_mars"]
+
+[sub_resource type="Environment" id="Environment_Mars"]
+background_mode = 1
+background_color = Color(0.72, 0.38, 0.22, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.35, 0.22, 0.16, 1)
+ambient_light_energy = 0.8
+glow_enabled = true
+glow_intensity = 0.4
+glow_bloom = 0.15
+
+[sub_resource type="StandardMaterial3D" id="Mat_MarsGlobe"]
+albedo_color = Color(0.85, 0.38, 0.18, 1)
+roughness = 0.85
+
+[sub_resource type="SphereMesh" id="SphereMesh_MarsGlobe"]
+material = SubResource("Mat_MarsGlobe")
+radius = 20.0
+height = 40.0
+radial_segments = 48
+rings = 24
+
+[sub_resource type="StandardMaterial3D" id="Mat_Regolith"]
+albedo_color = Color(0.82, 0.36, 0.16, 1)
+roughness = 0.95
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_Terrain"]
+material = SubResource("Mat_Regolith")
+size = Vector2(160, 160)
+
+[sub_resource type="StandardMaterial3D" id="Mat_RockBasalt"]
+albedo_color = Color(0.24, 0.22, 0.22, 1)
+roughness = 0.75
+
+[sub_resource type="SphereMesh" id="SphereMesh_Boulder"]
+material = SubResource("Mat_RockBasalt")
+radius = 0.8
+height = 1.3
+
+[sub_resource type="StandardMaterial3D" id="Mat_DeltaMudstone"]
+albedo_color = Color(0.78, 0.52, 0.34, 1)
+roughness = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_Outcrop"]
+material = SubResource("Mat_DeltaMudstone")
+size = Vector3(2.8, 1.4, 2.2)
+
+[sub_resource type="StandardMaterial3D" id="Mat_BeaconCyan"]
+albedo_color = Color(0, 0.9, 1, 1)
+emission_enabled = true
+emission = Color(0, 0.9, 1, 1)
+emission_energy_multiplier = 3.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_Beacon"]
+material = SubResource("Mat_BeaconCyan")
+top_radius = 0.08
+bottom_radius = 0.08
+height = 2.5
+
+[sub_resource type="StandardMaterial3D" id="Mat_BeaconOrange"]
+albedo_color = Color(1, 0.5, 0.1, 1)
+emission_enabled = true
+emission = Color(1, 0.5, 0.1, 1)
+emission_energy_multiplier = 3.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_BeaconOrange"]
+material = SubResource("Mat_BeaconOrange")
+top_radius = 0.08
+bottom_radius = 0.08
+height = 2.5
+
+[sub_resource type="StandardMaterial3D" id="Mat_BeaconMagenta"]
+albedo_color = Color(0.9, 0.2, 0.9, 1)
+emission_enabled = true
+emission = Color(0.9, 0.2, 0.9, 1)
+emission_energy_multiplier = 3.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_BeaconMagenta"]
+material = SubResource("Mat_BeaconMagenta")
+top_radius = 0.08
+bottom_radius = 0.08
+height = 2.5
+
+[sub_resource type="StandardMaterial3D" id="Mat_BeaconGreen"]
+albedo_color = Color(0.2, 0.9, 0.4, 1)
+emission_enabled = true
+emission = Color(0.2, 0.9, 0.4, 1)
+emission_energy_multiplier = 3.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_BeaconGreen"]
+material = SubResource("Mat_BeaconGreen")
+top_radius = 0.08
+bottom_radius = 0.08
+height = 2.5
+
+[sub_resource type="StandardMaterial3D" id="Mat_BeaconYellow"]
+albedo_color = Color(1, 0.85, 0.1, 1)
+emission_enabled = true
+emission = Color(1, 0.85, 0.1, 1)
+emission_energy_multiplier = 3.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_BeaconYellow"]
+material = SubResource("Mat_BeaconYellow")
+top_radius = 0.08
+bottom_radius = 0.08
+height = 2.5
+
+[sub_resource type="StandardMaterial3D" id="Mat_RoverWhite"]
+albedo_color = Color(0.92, 0.92, 0.94, 1)
+metallic = 0.4
+roughness = 0.3
+
+[sub_resource type="BoxMesh" id="BoxMesh_RoverChassis"]
+material = SubResource("Mat_RoverWhite")
+size = Vector3(1.3, 0.42, 1.9)
+
+[sub_resource type="StandardMaterial3D" id="Mat_WheelDark"]
+albedo_color = Color(0.18, 0.18, 0.2, 1)
+metallic = 0.7
+roughness = 0.5
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_Wheel"]
+material = SubResource("Mat_WheelDark")
+top_radius = 0.26
+bottom_radius = 0.26
+height = 0.2
+
+[sub_resource type="StandardMaterial3D" id="Mat_Titanium"]
+albedo_color = Color(0.3, 0.32, 0.35, 1)
+metallic = 0.9
+roughness = 0.3
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_Mast"]
+material = SubResource("Mat_Titanium")
+top_radius = 0.04
+bottom_radius = 0.04
+height = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_MastHead"]
+material = SubResource("Mat_Titanium")
+size = Vector3(0.3, 0.14, 0.18)
+
+[sub_resource type="BoxMesh" id="BoxMesh_LanderBody"]
+material = SubResource("Mat_RoverWhite")
+size = Vector3(2.6, 1.6, 2.6)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Parachute"]
+albedo_color = Color(0.95, 0.4, 0.1, 1)
+roughness = 0.6
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_Parachute"]
+material = SubResource("Mat_Parachute")
+top_radius = 3.6
+bottom_radius = 0.3
+height = 1.4
+
+[node name="MarsPlanetary3D" type="Node3D"]
+script = ExtResource("1_mars")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_Mars")
+
+[node name="SunLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 20, 30, 20)
+light_color = Color(1, 0.92, 0.82, 1)
+light_energy = 1.6
+shadow_enabled = true
+
+[node name="OrbitScene" type="Node3D" parent="."]
+
+[node name="MarsGlobe" type="MeshInstance3D" parent="OrbitScene"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -32)
+mesh = SubResource("SphereMesh_MarsGlobe")
+
+[node name="CamOrbit" type="Camera3D" parent="OrbitScene"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 3.5, 4.0)
+current = true
+fov = 55.0
+
+[node name="DescentScene" type="Node3D" parent="."]
+visible = false
+
+[node name="DescentCraft" type="Node3D" parent="DescentScene"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 45, 0)
+
+[node name="CraftBody" type="MeshInstance3D" parent="DescentScene/DescentCraft"]
+mesh = SubResource("BoxMesh_LanderBody")
+
+[node name="ParachuteRig" type="Node3D" parent="DescentScene/DescentCraft"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.5, 0)
+
+[node name="ChuteMesh" type="MeshInstance3D" parent="DescentScene/DescentCraft/ParachuteRig"]
+mesh = SubResource("CylinderMesh_Parachute")
+
+[node name="HeatShieldGlow" type="MeshInstance3D" parent="DescentScene/DescentCraft"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.9, 0)
+mesh = SubResource("BoxMesh_LanderBody")
+
+[node name="DescentFlame" type="MeshInstance3D" parent="DescentScene/DescentCraft"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, -1.6, 0)
+visible = false
+mesh = SubResource("CylinderMesh_Mast")
+
+[node name="DescentParticles" type="CPUParticles3D" parent="DescentScene/DescentCraft"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.2, 0)
+emitting = false
+amount = 32
+lifetime = 0.25
+direction = Vector3(0, -1, 0)
+spread = 15.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 8.0
+initial_velocity_max = 16.0
+
+[node name="TouchdownDust" type="CPUParticles3D" parent="DescentScene/DescentCraft"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.8, 0)
+emitting = false
+amount = 48
+lifetime = 0.8
+one_shot = true
+direction = Vector3(0, 1, 0)
+spread = 80.0
+gravity = Vector3(0, -2, 0)
+initial_velocity_min = 4.0
+initial_velocity_max = 9.0
+
+[node name="CockpitInterior" type="Node3D" parent="DescentScene/DescentCraft"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, -0.6)
+
+[node name="CamCockpitDescent" type="Camera3D" parent="DescentScene/DescentCraft/CockpitInterior"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+fov = 68.0
+
+[node name="CamExteriorDescent" type="Camera3D" parent="DescentScene/DescentCraft"]
+transform = Transform3D(1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 4.5, 9.5)
+fov = 60.0
+
+[node name="SurfaceScene" type="Node3D" parent="."]
+visible = false
+
+[node name="TerrainMesh" type="MeshInstance3D" parent="SurfaceScene"]
+mesh = SubResource("PlaneMesh_Terrain")
+
+[node name="LanderStation" type="Node3D" parent="SurfaceScene"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+
+[node name="LanderHull" type="MeshInstance3D" parent="SurfaceScene/LanderStation"]
+mesh = SubResource("BoxMesh_LanderBody")
+
+[node name="DeployRamp" type="MeshInstance3D" parent="SurfaceScene/LanderStation"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 2.0)
+mesh = SubResource("BoxMesh_Outcrop")
+
+[node name="RoverRig" type="Node3D" parent="SurfaceScene"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 6.5)
+
+[node name="Chassis" type="MeshInstance3D" parent="SurfaceScene/RoverRig"]
+mesh = SubResource("BoxMesh_RoverChassis")
+
+[node name="MastAssembly" type="Node3D" parent="SurfaceScene/RoverRig"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35, 0.4, -0.65)
+
+[node name="MastPole" type="MeshInstance3D" parent="SurfaceScene/RoverRig/MastAssembly"]
+mesh = SubResource("CylinderMesh_Mast")
+
+[node name="MastHead" type="MeshInstance3D" parent="SurfaceScene/RoverRig/MastAssembly"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.48, 0)
+mesh = SubResource("BoxMesh_MastHead")
+
+[node name="CamRoverMast" type="Camera3D" parent="SurfaceScene/RoverRig/MastAssembly"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.52, -0.15)
+fov = 65.0
+
+[node name="RoboticArm" type="Node3D" parent="SurfaceScene/RoverRig"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45, 0.1, -0.85)
+
+[node name="ArmSegment" type="MeshInstance3D" parent="SurfaceScene/RoverRig/RoboticArm"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0.2)
+mesh = SubResource("CylinderMesh_Mast")
+
+[node name="ToolHead" type="MeshInstance3D" parent="SurfaceScene/RoverRig/RoboticArm"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0.6)
+mesh = SubResource("BoxMesh_MastHead")
+
+[node name="Wheels" type="Node3D" parent="SurfaceScene/RoverRig"]
+
+[node name="Wheel_FL" type="MeshInstance3D" parent="SurfaceScene/RoverRig/Wheels"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -0.82, -0.18, -0.7)
+mesh = SubResource("CylinderMesh_Wheel")
+
+[node name="Wheel_ML" type="MeshInstance3D" parent="SurfaceScene/RoverRig/Wheels"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -0.82, -0.18, 0)
+mesh = SubResource("CylinderMesh_Wheel")
+
+[node name="Wheel_RL" type="MeshInstance3D" parent="SurfaceScene/RoverRig/Wheels"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -0.82, -0.18, 0.7)
+mesh = SubResource("CylinderMesh_Wheel")
+
+[node name="Wheel_FR" type="MeshInstance3D" parent="SurfaceScene/RoverRig/Wheels"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0.82, -0.18, -0.7)
+mesh = SubResource("CylinderMesh_Wheel")
+
+[node name="Wheel_MR" type="MeshInstance3D" parent="SurfaceScene/RoverRig/Wheels"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0.82, -0.18, 0)
+mesh = SubResource("CylinderMesh_Wheel")
+
+[node name="Wheel_RR" type="MeshInstance3D" parent="SurfaceScene/RoverRig/Wheels"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0.82, -0.18, 0.7)
+mesh = SubResource("CylinderMesh_Wheel")
+
+[node name="WheelDust" type="CPUParticles3D" parent="SurfaceScene/RoverRig"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.22, 0.9)
+emitting = false
+amount = 24
+lifetime = 0.45
+direction = Vector3(0, 0.5, 1)
+spread = 25.0
+gravity = Vector3(0, -2, 0)
+initial_velocity_min = 1.5
+initial_velocity_max = 3.5
+
+[node name="CamPivot" type="Node3D" parent="SurfaceScene/RoverRig"]
+
+[node name="CamRoverChase" type="Camera3D" parent="SurfaceScene/RoverRig/CamPivot"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 1.8, 4.2)
+fov = 60.0
+
+[node name="ScienceTargets" type="Node3D" parent="SurfaceScene"]
+
+[node name="Target_Water" type="Node3D" parent="SurfaceScene/ScienceTargets"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0.6, 22)
+
+[node name="MudstoneMesh" type="MeshInstance3D" parent="SurfaceScene/ScienceTargets/Target_Water"]
+mesh = SubResource("BoxMesh_Outcrop")
+
+[node name="Beacon" type="MeshInstance3D" parent="SurfaceScene/ScienceTargets/Target_Water"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+mesh = SubResource("CylinderMesh_Beacon")
+
+[node name="Target_Rock" type="Node3D" parent="SurfaceScene/ScienceTargets"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0.6, 16)
+
+[node name="BasaltMesh" type="MeshInstance3D" parent="SurfaceScene/ScienceTargets/Target_Rock"]
+mesh = SubResource("SphereMesh_Boulder")
+
+[node name="Beacon" type="MeshInstance3D" parent="SurfaceScene/ScienceTargets/Target_Rock"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+mesh = SubResource("CylinderMesh_BeaconOrange")
+
+[node name="Target_Subsurface" type="Node3D" parent="SurfaceScene/ScienceTargets"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26, 0.6, -18)
+
+[node name="CraterMesh" type="MeshInstance3D" parent="SurfaceScene/ScienceTargets/Target_Subsurface"]
+mesh = SubResource("SphereMesh_Boulder")
+
+[node name="Beacon" type="MeshInstance3D" parent="SurfaceScene/ScienceTargets/Target_Subsurface"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+mesh = SubResource("CylinderMesh_BeaconMagenta")
+
+[node name="Target_Weather" type="Node3D" parent="SurfaceScene/ScienceTargets"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0.6, -24)
+
+[node name="MedaMesh" type="MeshInstance3D" parent="SurfaceScene/ScienceTargets/Target_Weather"]
+mesh = SubResource("BoxMesh_Outcrop")
+
+[node name="Beacon" type="MeshInstance3D" parent="SurfaceScene/ScienceTargets/Target_Weather"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+mesh = SubResource("CylinderMesh_BeaconGreen")
+
+[node name="Target_MOXIE" type="Node3D" parent="SurfaceScene/ScienceTargets"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0.6, 1.5)
+
+[node name="MoxieMesh" type="MeshInstance3D" parent="SurfaceScene/ScienceTargets/Target_MOXIE"]
+mesh = SubResource("BoxMesh_MastHead")
+
+[node name="Beacon" type="MeshInstance3D" parent="SurfaceScene/ScienceTargets/Target_MOXIE"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+mesh = SubResource("CylinderMesh_BeaconYellow")
+
+[node name="CamSurfaceCinematic" type="Camera3D" parent="SurfaceScene"]
+transform = Transform3D(0.866025, 0.17101, -0.469846, 0, 0.939693, 0.34202, 0.5, -0.296198, 0.813798, -12, 3.2, 16)
+fov = 50.0
+
+[node name="AudioEngine" type="AudioStreamPlayer" parent="."]
+bus = &"Master"
+
+[node name="AudioChatter" type="AudioStreamPlayer" parent="."]
+bus = &"Master"
+
+[node name="AudioRover" type="AudioStreamPlayer" parent="."]
+bus = &"Master"

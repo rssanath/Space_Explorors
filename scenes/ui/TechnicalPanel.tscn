@@ -1,0 +1,67 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/ui/TechnicalPanel.gd" id="1_tech"]
+[ext_resource type="PackedScene" path="res://scenes/ui/StatusIndicator.tscn" id="2_stat"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tech_panel"]
+bg_color = Color(0.0901961, 0.121569, 0.133333, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.18, 0.25, 0.28, 0.65)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+content_margin_left = 12.0
+content_margin_top = 10.0
+content_margin_right = 12.0
+content_margin_bottom = 10.0
+
+[node name="TechnicalPanel" type="PanelContainer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 90.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_tech_panel")
+script = ExtResource("1_tech")
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Header" type="HBoxContainer" parent="Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="SystemName" type="Label" parent="Margin/VBox/Header"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.94902, 0.960784, 0.960784, 1)
+theme_override_font_sizes/font_size = 12
+text = "SUBSYSTEM TELEMETRY"
+
+[node name="SystemCode" type="Label" parent="Margin/VBox/Header"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.898039, 1, 0.75)
+theme_override_font_sizes/font_size = 10
+text = "[TLM.01]"
+
+[node name="Spacer" type="Control" parent="Margin/VBox/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="StatusIndicator" parent="Margin/VBox/Header" instance=ExtResource("2_stat")]
+layout_mode = 2
+
+[node name="Divider" type="HSeparator" parent="Margin/VBox"]
+layout_mode = 2
+
+[node name="DataGrid" type="GridContainer" parent="Margin/VBox"]
+layout_mode = 2
+theme_override_constants/h_separation = 16
+theme_override_constants/v_separation = 6
+columns = 2

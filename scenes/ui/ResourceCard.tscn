@@ -1,0 +1,94 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/ui/ResourceCard.gd" id="1_res"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_res_card"]
+bg_color = Color(0.0666667, 0.0901961, 0.0980392, 0.92)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.18, 0.25, 0.28, 0.65)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+content_margin_left = 10.0
+content_margin_top = 8.0
+content_margin_right = 10.0
+content_margin_bottom = 8.0
+
+[node name="ResourceCard" type="PanelContainer"]
+custom_minimum_size = Vector2(140, 75)
+offset_right = 150.0
+offset_bottom = 80.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_res_card")
+script = ExtResource("1_res")
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Header" type="HBoxContainer" parent="Margin/VBox"]
+layout_mode = 2
+
+[node name="MetricName" type="Label" parent="Margin/VBox/Header"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.631373, 0.678431, 0.694118, 1)
+theme_override_font_sizes/font_size = 10
+text = "TOTAL MASS"
+
+[node name="Spacer" type="Control" parent="Margin/VBox/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MetricCode" type="Label" parent="Margin/VBox/Header"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.898039, 1, 0.7)
+theme_override_font_sizes/font_size = 9
+text = "[M_WET]"
+
+[node name="ReadoutHBox" type="HBoxContainer" parent="Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Value" type="Label" parent="Margin/VBox/ReadoutHBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.94902, 0.960784, 0.960784, 1)
+theme_override_font_sizes/font_size = 16
+text = "573.6"
+
+[node name="Unit" type="Label" parent="Margin/VBox/ReadoutHBox"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(0.631373, 0.678431, 0.694118, 1)
+theme_override_font_sizes/font_size = 11
+text = "kg"
+
+[node name="GaugeBar" type="ProgressBar" parent="Margin/VBox"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+value = 65.0
+show_percentage = false
+
+[node name="Footer" type="HBoxContainer" parent="Margin/VBox"]
+layout_mode = 2
+
+[node name="MarginText" type="Label" parent="Margin/VBox/Footer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45098, 0.521569, 0.54902, 1)
+theme_override_font_sizes/font_size = 9
+text = "Limit: 850 kg"
+
+[node name="Spacer" type="Control" parent="Margin/VBox/Footer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="StatusTag" type="Label" parent="Margin/VBox/Footer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.152941, 0.85098, 0.501961, 1)
+theme_override_font_sizes/font_size = 9
+text = "NOMINAL"

@@ -1,0 +1,337 @@
+{
+  "campaign_name": "MARS DEEP",
+  "version": "1.0.0",
+  "total_levels": 5,
+  "total_mandatory_tasks": 23,
+  "levels": [
+    {
+      "id": "LVL_01",
+      "level_number": 1,
+      "title": "LEVEL 01: Mission Architect",
+      "subtitle": "Mission Profile & Trajectory Foundations",
+      "description": "Establish the foundational parameters of your Mars expedition. Select your science payload architecture, calculate astronomical distances, solar flux, and communications delay.",
+      "unlocked": true,
+      "completed": false,
+      "tasks": [
+        {
+          "id": "TASK_01_01",
+          "name": "Primary Scientific Objective Selection",
+          "description": "Designate the primary mission archetype (Orbiter, Stationary Lander, or Surface Rover) and primary science profile.",
+          "task_type": "selection",
+          "requires_manual_input": true,
+          "completed": false,
+          "target_value": "Surface Rover",
+          "acceptable_options": ["Orbital Reconnaissance", "Stationary Lander", "Surface Rover", "Sample Return Lander"]
+        },
+        {
+          "id": "TASK_01_02",
+          "name": "Mars Orbital Distance Range",
+          "description": "Calculate Mars average orbital radius in Astronomical Units (AU) based on perihelion (1.381 AU) and aphelion (1.666 AU).",
+          "task_type": "calculation",
+          "requires_manual_input": true,
+          "completed": false,
+          "formula_hint": "a = (r_peri + r_aph) / 2",
+          "unit": "AU",
+          "target_value": 1.524,
+          "tolerance": 0.02
+        },
+        {
+          "id": "TASK_01_03",
+          "name": "One-Way Light Time Delay",
+          "description": "Compute the one-way radio communication latency from Earth to Mars at an opposition distance of 225 million kilometers (c = 299,792 km/s).",
+          "task_type": "calculation",
+          "requires_manual_input": true,
+          "completed": false,
+          "formula_hint": "t = d / c (in seconds)",
+          "unit": "seconds",
+          "target_value": 750.5,
+          "tolerance": 0.03
+        },
+        {
+          "id": "TASK_01_04",
+          "name": "Martian Solar Irradiance at Mean Distance",
+          "description": "Calculate the solar flux available at Mars mean orbit (1.524 AU) given 1 AU solar constant S0 = 1361 W/m².",
+          "task_type": "calculation",
+          "requires_manual_input": true,
+          "completed": false,
+          "formula_hint": "S_mars = S_0 / (r_AU)^2",
+          "unit": "W/m²",
+          "target_value": 586.0,
+          "tolerance": 0.05
+        },
+        {
+          "id": "TASK_01_05",
+          "name": "Payload Structural Fraction Baseline",
+          "description": "Establish target science payload mass allocation percentage relative to total dry mass (standard NASA guideline is 15-20%). Enter 18.0%.",
+          "task_type": "calculation",
+          "requires_manual_input": true,
+          "completed": false,
+          "formula_hint": "Payload Fraction = (M_payload / M_dry) * 100",
+          "unit": "%",
+          "target_value": 18.0,
+          "tolerance": 0.05
+        }
+      ]
+    },
+    {
+      "id": "LVL_02",
+      "level_number": 2,
+      "title": "LEVEL 02: Engineering Challenge",
+      "subtitle": "Subsystems, Mass, Power & Delta-V",
+      "description": "Balance critical engineering budgets. Size the spacecraft bus, compute the electrical power balance, evaluate battery depth-of-discharge, and calculate propulsion Delta-V.",
+      "unlocked": false,
+      "completed": false,
+      "tasks": [
+        {
+          "id": "TASK_02_01",
+          "name": "Spacecraft Total Dry Mass Budget",
+          "description": "Sum the subsystem masses: Structure (320 kg), Avionics (85 kg), Power System (145 kg), Thermal (60 kg), Communications (40 kg), Science Payload (150 kg).",
+          "task_type": "calculation",
+          "requires_manual_input": true,
+          "completed": false,
+          "formula_hint": "M_dry = sum(M_subsystems)",
+          "unit": "kg",
+          "target_value": 800.0,
+          "tolerance": 0.01
+        },
+        {
+          "id": "TASK_02_02",
+          "name": "Solar Array Sizing for Mars Surface",
+          "description": "Calculate required solar array surface area (m²) for a 350 W continuous daytime load, with 28% triple-junction cell efficiency, dust derating 0.80, and S = 586 W/m².",
+          "task_type": "calculation",
+          "requires_manual_input": true,
+          "completed": false,
+          "formula_hint": "Area = P_load / (S * efficiency * derating)",
+          "unit": "m²",
+          "target_value": 2.67,
+          "tolerance": 0.05
+        },
+        {
+          "id": "TASK_02_03",
+          "name": "Battery Energy Storage for Martian Night",
+          "description": "Determine battery storage capacity (Watt-hours) required to sustain 90 W night survival heaters over a 12.3-hour Martian night at 70% depth-of-discharge limit.",
+          "task_type": "calculation",
+          "requires_manual_input": true,
+          "completed": false,
+          "formula_hint": "Capacity = (P_night * t_night) / DoD_max",
+          "unit": "Wh",
+          "target_value": 1581.4,
+          "tolerance": 0.04
+        },
+        {
+          "id": "TASK_02_04",
+          "name": "Cruise & Orbit Insertion Delta-V",
+          "description": "Using Tsiolkovsky's Rocket Equation, calculate propellant mass required for Delta-V = 1600 m/s with Isp = 320 s (g0 = 9.80665 m/s²) and dry mass = 800 kg.",
+          "task_type": "calculation",
+          "requires_manual_input": true,
+          "completed": false,
+          "formula_hint": "M_prop = M_dry * (exp(Delta_V / (Isp * g0)) - 1)",
+          "unit": "kg",
+          "target_value": 532.5,
+          "tolerance": 0.03
+        },
+        {
+          "id": "TASK_02_05",
+          "name": "Radiative Equilibrium Thermal Rejection",
+          "description": "Calculate radiator area (m²) needed to reject 400 W internal heat at 285 K (Stefan-Boltzmann sigma = 5.67e-8, emissivity = 0.90, deep space T_sink = 4 K).",
+          "task_type": "calculation",
+          "requires_manual_input": true,
+          "completed": false,
+          "formula_hint": "A_rad = Q / (emissivity * sigma * T^4)",
+          "unit": "m²",
+          "target_value": 1.18,
+          "tolerance": 0.05
+        }
+      ]
+    },
+    {
+      "id": "LVL_03",
+      "level_number": 3,
+      "title": "LEVEL 03: Launch Preparation",
+      "subtitle": "Launch Vehicle Integration & Orbital Dynamics",
+      "description": "Evaluate launch vehicle capacity curves, verify fairing envelope clearances, calculate characteristic launch energy (C3), and validate structural launch margins.",
+      "unlocked": false,
+      "completed": false,
+      "tasks": [
+        {
+          "id": "TASK_03_01",
+          "name": "Characteristic Energy C3 Calculation",
+          "description": "Calculate the hyperbolic excess velocity v_inf (km/s) from Earth required for standard Hohmann transfer injection with C3 = 16.5 km²/s² (v_inf = sqrt(C3)).",
+          "task_type": "calculation",
+          "requires_manual_input": true,
+          "completed": false,
+          "formula_hint": "v_inf = sqrt(C3)",
+          "unit": "km/s",
+          "target_value": 4.062,
+          "tolerance": 0.02
+        },
+        {
+          "id": "TASK_03_02",
+          "name": "Earth-Mars Synodic Period",
+          "description": "Compute the synodic recurrence period (days) between consecutive Earth-Mars launch windows (Earth period T1 = 365.25 days, Mars period T2 = 686.98 days).",
+          "task_type": "calculation",
+          "requires_manual_input": true,
+          "completed": false,
+          "formula_hint": "S = 1 / (1/T1 - 1/T2)",
+          "unit": "days",
+          "target_value": 779.9,
+          "tolerance": 0.02
+        },
+        {
+          "id": "TASK_03_03",
+          "name": "Launch Vehicle Fairing Margin Verification",
+          "description": "Given stowed spacecraft envelope diameter of 3.80 m inside a 5.00 m inner dynamic fairing envelope, calculate the diametrical clearance.",
+          "task_type": "calculation",
+          "requires_manual_input": true,
+          "completed": false,
+          "formula_hint": "Clearance = D_fairing - D_spacecraft",
+          "unit": "m",
+          "target_value": 1.20,
+          "tolerance": 0.02
+        },
+        {
+          "id": "TASK_03_04",
+          "name": "Launch Mass Margin Verification",
+          "description": "Given launch vehicle TMI injection capacity of 2200 kg and total spacecraft wet mass of 1850 kg, calculate the launch mass reserve percentage.",
+          "task_type": "calculation",
+          "requires_manual_input": true,
+          "completed": false,
+          "formula_hint": "Margin = ((M_capacity - M_wet) / M_wet) * 100",
+          "unit": "%",
+          "target_value": 18.9,
+          "tolerance": 0.05
+        }
+      ]
+    },
+    {
+      "id": "LVL_04",
+      "level_number": 4,
+      "title": "LEVEL 04: Journey to Mars",
+      "subtitle": "Interplanetary Cruise & Trajectory Correction",
+      "description": "Navigate the 200+ day interplanetary transit. Compute transfer orbital elements, plan Trajectory Correction Maneuvers (TCM), and monitor deep space communications links.",
+      "unlocked": false,
+      "completed": false,
+      "tasks": [
+        {
+          "id": "TASK_04_01",
+          "name": "Hohmann Transfer Orbit Cruise Duration",
+          "description": "Compute the one-way transit time (days) for a standard semi-elliptical Hohmann transfer orbit (semi-major axis a = (1.0 + 1.524)/2 = 1.262 AU, Sun mu = 1.327e11 km³/s²).",
+          "task_type": "calculation",
+          "requires_manual_input": true,
+          "completed": false,
+          "formula_hint": "T_transfer = 0.5 * (a^1.5) * 365.25",
+          "unit": "days",
+          "target_value": 258.8,
+          "tolerance": 0.03
+        },
+        {
+          "id": "TASK_04_02",
+          "name": "TCM-1 Midcourse Trajectory Correction Delta-V",
+          "description": "Determine the required propellant mass to execute a 15.0 m/s TCM-1 trim burn for a 1750 kg cruise stage using hydrazine RCS (Isp = 220 s, g0 = 9.80665 m/s²).",
+          "task_type": "calculation",
+          "requires_manual_input": true,
+          "completed": false,
+          "formula_hint": "M_prop = M_total * (1 - exp(-Delta_V / (Isp * g0)))",
+          "unit": "kg",
+          "target_value": 12.1,
+          "tolerance": 0.05
+        },
+        {
+          "id": "TASK_04_03",
+          "name": "Deep Space Network Signal Free-Space Path Loss",
+          "description": "Calculate free-space path loss (FSPL in dB) at X-band (f = 8.4 GHz) for distance d = 2.0e8 km: FSPL = 20*log10(4*pi*d*f/c).",
+          "task_type": "calculation",
+          "requires_manual_input": true,
+          "completed": false,
+          "formula_hint": "FSPL = 20 * log10(4 * pi * d * f / c)",
+          "unit": "dB",
+          "target_value": 276.9,
+          "tolerance": 0.02
+        },
+        {
+          "id": "TASK_04_04",
+          "name": "Galactic Cosmic Radiation Dose Estimation",
+          "description": "Calculate total ionizing radiation dose (mSv) absorbed by avionics over 260 days in deep space with 5 g/cm² aluminum shielding (daily dose rate = 1.8 mSv/day).",
+          "task_type": "calculation",
+          "requires_manual_input": true,
+          "completed": false,
+          "formula_hint": "Dose = rate * days",
+          "unit": "mSv",
+          "target_value": 468.0,
+          "tolerance": 0.02
+        }
+      ]
+    },
+    {
+      "id": "LVL_05",
+      "level_number": 5,
+      "title": "LEVEL 05: Mars Exploration",
+      "subtitle": "Entry, Descent, Landing & Surface Science",
+      "description": "Execute the harrowing 'Seven Minutes of Terror' Entry, Descent, and Landing (EDL) sequence, verify surface stability, deploy science payloads, and achieve mission legacy.",
+      "unlocked": false,
+      "completed": false,
+      "tasks": [
+        {
+          "id": "TASK_05_01",
+          "name": "Atmospheric Entry Velocity & Kinetic Energy",
+          "description": "Calculate entry kinetic energy (GJ) for entry mass m = 1025 kg at hyperbolic atmospheric interface velocity v = 5.8 km/s (5800 m/s).",
+          "task_type": "calculation",
+          "requires_manual_input": true,
+          "completed": false,
+          "formula_hint": "E_k = 0.5 * m * v^2 / 1e9",
+          "unit": "GJ",
+          "target_value": 17.24,
+          "tolerance": 0.03
+        },
+        {
+          "id": "TASK_05_02",
+          "name": "Supersonic Parachute Terminal Velocity",
+          "description": "Compute terminal velocity (m/s) under 21.5 m diameter disk-gap-band parachute (Cd = 0.55) in thin Martian lower atmosphere (rho = 0.015 kg/m³) for 850 kg payload (Mars g = 3.72 m/s²).",
+          "task_type": "calculation",
+          "requires_manual_input": true,
+          "completed": false,
+          "formula_hint": "v_t = sqrt((2 * m * g) / (rho * A * Cd)) where A = pi * (d/2)^2",
+          "unit": "m/s",
+          "target_value": 61.3,
+          "tolerance": 0.04
+        },
+        {
+          "id": "TASK_05_03",
+          "name": "Powered Descent Retro-Propulsion Burn Time",
+          "description": "Calculate burn duration (seconds) needed to decelerate from 60 m/s to touchdown speed of 0.75 m/s at a steady net retro deceleration of 9.5 m/s².",
+          "task_type": "calculation",
+          "requires_manual_input": true,
+          "completed": false,
+          "formula_hint": "t = (v_init - v_final) / a_net",
+          "unit": "seconds",
+          "target_value": 6.24,
+          "tolerance": 0.03
+        },
+        {
+          "id": "TASK_05_04",
+          "name": "Surface Traversing Mobility Energy Expenditure",
+          "description": "Calculate Watt-hours consumed by six brushless DC drive motors traversing 120 meters on Jezero crater regolith (average power draw 180 W at 0.04 m/s traverse rate).",
+          "task_type": "calculation",
+          "requires_manual_input": true,
+          "completed": false,
+          "formula_hint": "Energy = Power * (Distance / Velocity) / 3600",
+          "unit": "Wh",
+          "target_value": 150.0,
+          "tolerance": 0.03
+        },
+        {
+          "id": "TASK_05_05",
+          "name": "Total Mission Science Return Scoring",
+          "description": "Verify cumulative science yield multiplier based on 4 instrument deployments, 15 core samples collected, and 100% telemetry link budget (Yield = 4 * 15 * 1.5).",
+          "task_type": "calculation",
+          "requires_manual_input": true,
+          "completed": false,
+          "formula_hint": "Yield = N_instruments * N_samples * Link_Efficiency",
+          "unit": "points",
+          "target_value": 90.0,
+          "tolerance": 0.02
+        }
+      ]
+    }
+  ]
+}

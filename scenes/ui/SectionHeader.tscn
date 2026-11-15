@@ -1,0 +1,32 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/ui/SectionHeader.gd" id="1_sh"]
+
+[node name="SectionHeader" type="HBoxContainer"]
+offset_right = 320.0
+offset_bottom = 24.0
+theme_override_constants/separation = 8
+script = ExtResource("1_sh")
+
+[node name="AccentBar" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(4, 16)
+layout_mode = 2
+size_flags_vertical = 4
+color = Color(0, 0.898039, 1, 1)
+
+[node name="Code" type="Label" parent="."]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.898039, 1, 0.85)
+theme_override_font_sizes/font_size = 11
+text = "[SYS.01]"
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.94902, 0.960784, 0.960784, 1)
+theme_override_font_sizes/font_size = 12
+text = "SUBSYSTEM ARCHITECTURE"
+
+[node name="Divider" type="HSeparator" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4

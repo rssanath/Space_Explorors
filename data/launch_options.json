@@ -1,0 +1,44 @@
+{
+  "launch_vehicles": [
+    {
+      "id": "LV_ATLAS_V_541",
+      "name": "Atlas V 541 (Centaur Upper Stage)",
+      "fairing_diameter_m": 5.4,
+      "payload_tmi_capacity_kg": 2400.0,
+      "c3_capability_km2_s2": 22.0,
+      "cost_m": 155.0,
+      "reliability_rate": 0.99,
+      "historical_missions": ["Curiosity Rover (2011)", "Perseverance Rover (2020)"]
+    },
+    {
+      "id": "LV_FALCON_HEAVY",
+      "name": "Falcon Heavy (Expendable Core)",
+      "fairing_diameter_m": 5.2,
+      "payload_tmi_capacity_kg": 4500.0,
+      "c3_capability_km2_s2": 35.0,
+      "cost_m": 120.0,
+      "reliability_rate": 0.98,
+      "historical_missions": ["Psyche Mission (2023)", "Europa Clipper (2024)"]
+    },
+    {
+      "id": "LV_DELTA_IV_HEAVY",
+      "name": "Delta IV Heavy (Triple Core)",
+      "fairing_diameter_m": 5.1,
+      "payload_tmi_capacity_kg": 3800.0,
+      "c3_capability_km2_s2": 30.0,
+      "cost_m": 350.0,
+      "reliability_rate": 0.96,
+      "historical_missions": ["Parker Solar Probe (2018)", "EFT-1 Orion (2014)"]
+    },
+    {
+      "id": "LV_SLS_BLOCK_1B",
+      "name": "Space Launch System (SLS Block 1B / EUS)",
+      "fairing_diameter_m": 8.4,
+      "payload_tmi_capacity_kg": 9500.0,
+      "c3_capability_km2_s2": 65.0,
+      "cost_m": 950.0,
+      "reliability_rate": 0.99,
+      "historical_missions": ["Artemis Deep Space Architecture"]
+    }
+  ]
+}

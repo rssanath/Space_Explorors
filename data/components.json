@@ -1,0 +1,118 @@
+{
+  "categories": {
+    "structure": [
+      {
+        "id": "BUS_LIGHT",
+        "name": "Composite Honeycomb Light Bus",
+        "category": "structure",
+        "mass_kg": 210.0,
+        "cost_m": 24.0,
+        "max_payload_kg": 350.0,
+        "description": "Carbon fiber reinforced polymer structure with aluminum honeycomb core optimized for light orbiter or small rover missions."
+      },
+      {
+        "id": "BUS_HEAVY",
+        "name": "Titanium-Aluminum Heavy Science Platform",
+        "category": "structure",
+        "mass_kg": 380.0,
+        "cost_m": 42.0,
+        "max_payload_kg": 900.0,
+        "description": "Rigid high-load aerospace structure designed for heavy rover operations (Curiosity/Perseverance class) with high mechanical vibration damping."
+      }
+    ],
+    "power": [
+      {
+        "id": "PWR_SOLAR_ULTRAFLEX",
+        "name": "UltraFlex High-Efficiency Solar Arrays",
+        "category": "power",
+        "mass_kg": 75.0,
+        "power_output_w": 420.0,
+        "cost_m": 35.0,
+        "description": "InSight/Phoenix class circular fold-out solar panels with triple-junction InGaP/InGaAs/Ge cells providing high specific power (W/kg)."
+      },
+      {
+        "id": "PWR_MMRTG",
+        "name": "Multi-Mission Radioisotope Thermoelectric Generator (MMRTG)",
+        "category": "power",
+        "mass_kg": 45.0,
+        "power_output_w": 110.0,
+        "cost_m": 95.0,
+        "description": "Plutonium-238 dioxide thermal decay converter providing steady day/night electrical power and excess heat regardless of dust storms or latitude."
+      }
+    ],
+    "propulsion": [
+      {
+        "id": "PROP_BIPROP",
+        "name": "Hydrazine / NTO Bi-propellant Main Engine",
+        "category": "propulsion",
+        "mass_kg": 65.0,
+        "thrust_n": 450.0,
+        "isp_s": 325.0,
+        "cost_m": 28.0,
+        "description": "High-thrust chemical bipropellant engine for Mars Orbit Insertion (MOI) and critical trajectory burns."
+      },
+      {
+        "id": "PROP_DUAL_MODE",
+        "name": "High-Thrust Bipropellant Dual Engine",
+        "category": "propulsion",
+        "mass_kg": 95.0,
+        "thrust_n": 900.0,
+        "isp_s": 335.0,
+        "cost_m": 36.0,
+        "description": "Twin dual-mode chemical engines delivering rapid Mars orbit insertion and high-velocity trajectory maneuvers."
+      },
+      {
+        "id": "PROP_MONO_RCS",
+        "name": "Hydrazine Monopropellant RCS Thruster Quad",
+        "category": "propulsion",
+        "mass_kg": 22.0,
+        "thrust_n": 22.0,
+        "isp_s": 220.0,
+        "cost_m": 12.0,
+        "description": "Precision attitude control and midcourse trim thruster clusters using catalyzed hydrazine decomposition."
+      }
+    ],
+    "telecom": [
+      {
+        "id": "COMMS_HIGH_GAIN",
+        "name": "High-Gain 2.1m Parabolic Reflector (X/Ka-Band)",
+        "category": "telecom",
+        "mass_kg": 34.0,
+        "power_w": 85.0,
+        "data_rate_kbps": 2048.0,
+        "cost_m": 22.0,
+        "description": "Steerable dual-band dish antenna communicating directly with NASA Deep Space Network (Goldstone, Madrid, Canberra)."
+      },
+      {
+        "id": "COMMS_UHF_RELAY",
+        "name": "Electra UHF Proximity Relay Transceiver",
+        "category": "telecom",
+        "mass_kg": 8.5,
+        "power_w": 25.0,
+        "data_rate_kbps": 512.0,
+        "cost_m": 9.0,
+        "description": "Proximity-1 protocol transceiver for surface-to-orbiter communications relay."
+      }
+    ],
+    "thermal": [
+      {
+        "id": "THM_LOUVERS",
+        "name": "Passive Bimetallic Louver Panel",
+        "category": "thermal",
+        "mass_kg": 18.0,
+        "heat_rejection_w": 220.0,
+        "cost_m": 7.0,
+        "description": "Lightweight passive thermal louvers that open and close based on thermal expansion of bimetallic springs."
+      },
+      {
+        "id": "THM_HEATPIPE_LOUVER",
+        "name": "Loop Heat Pipe & Active Louver Thermal Array",
+        "category": "thermal",
+        "mass_kg": 35.0,
+        "heat_rejection_w": 450.0,
+        "cost_m": 14.0,
+        "description": "Passive variable-emittance louvers coupled with ammonia loop heat pipes for core avionics temperature regulation."
+      }
+    ]
+  }
+}

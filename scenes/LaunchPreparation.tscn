@@ -1,0 +1,734 @@
+[gd_scene load_steps=12 format=3 uid="uid://launchpreparation01"]
+
+[ext_resource type="Script" path="res://scenes/LaunchPreparation.gd" id="1_lp_script"]
+[ext_resource type="PackedScene" path="res://scenes/RocketPreview3D.tscn" id="2_rocket_3d"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_glass"]
+bg_color = Color(0.067, 0.09, 0.098, 0.92)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.18, 0.25, 0.28, 0.65)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_card_cyan"]
+bg_color = Color(0.067, 0.09, 0.098, 0.92)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0.898, 1, 0.65)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_launch"]
+bg_color = Color(0.85, 0.45, 0.05, 0.9)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.7, 0.2, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_clamp"]
+bg_color = Color(0.12, 0.65, 0.35, 0.9)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.3, 1, 0.5, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="LaunchPreparation" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lp_script")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.031, 0.043, 0.047, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Header" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TitleVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Header"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/Header/TitleVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.96, 0.96, 1)
+theme_override_font_sizes/font_size = 20
+text = "STAGE 03 // LAUNCH PREPARATION & TRAJECTORY"
+
+[node name="Subtitle" type="Label" parent="MarginContainer/VBoxContainer/Header/TitleVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.898, 1, 1)
+theme_override_font_sizes/font_size = 12
+text = "Vehicle Integration, TMI Payload Verification & Earth-Mars Departure Window"
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TopNav" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Header"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="AuthStatusBadge" type="Label" parent="MarginContainer/VBoxContainer/Header/TopNav"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.153, 0.851, 0.502, 1)
+theme_override_font_sizes/font_size = 13
+text = "AUTHORIZATION: PENDING"
+
+[node name="BtnBackLab" type="Button" parent="MarginContainer/VBoxContainer/Header/TopNav"]
+custom_minimum_size = Vector2(140, 32)
+layout_mode = 2
+text = "< BACK TO LAB"
+
+[node name="BtnDesigner" type="Button" parent="MarginContainer/VBoxContainer/Header/TopNav"]
+custom_minimum_size = Vector2(160, 32)
+layout_mode = 2
+text = "SPACECRAFT DESIGNER"
+
+[node name="MainBody" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="LeftPanel" type="PanelContainer" parent="MarginContainer/VBoxContainer/MainBody"]
+custom_minimum_size = Vector2(340, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_glass")
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/LeftPanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="PanelHeader" type="Label" parent="MarginContainer/VBoxContainer/MainBody/LeftPanel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.898, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "ACTIVITY 1: CHOOSE YOUR ROCKET"
+
+[node name="SelectedRocketSummary" type="Label" parent="MarginContainer/VBoxContainer/MainBody/LeftPanel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.63, 0.68, 0.7, 1)
+theme_override_font_sizes/font_size = 11
+text = "ACTIVE VEHICLE: Atlas V 541 ($155.0M)"
+
+[node name="RocketScroll" type="ScrollContainer" parent="MarginContainer/VBoxContainer/MainBody/LeftPanel/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RocketListVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/LeftPanel/VBox/RocketScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="CenterPanel" type="PanelContainer" parent="MarginContainer/VBoxContainer/MainBody"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.3
+theme_override_styles/panel = SubResource("StyleBoxFlat_glass")
+
+[node name="ViewportContainer" type="SubViewportContainer" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel"]
+layout_mode = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel/ViewportContainer"]
+handle_input_locally = false
+size = Vector2i(450, 480)
+render_target_update_mode = 4
+
+[node name="RocketPreview3D" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel/ViewportContainer/SubViewport" instance=ExtResource("2_rocket_3d")]
+
+[node name="StageOverlay" type="MarginContainer" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="LblStageTelemetry" type="Label" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel/StageOverlay"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.898, 1, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "VEHICLE ENVELOPE: Atlas V 541 (Centaur Upper Stage)\nFAIRING DIAMETER: 5.4 m  •  C3 CAPABILITY: 22.0 km²/s²"
+
+[node name="CamSelectorBar" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_constants/separation = 4
+
+[node name="BtnCamOverview" type="Button" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel/CamSelectorBar"]
+custom_minimum_size = Vector2(72, 26)
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "PAD VIEW"
+
+[node name="BtnCamNozzles" type="Button" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel/CamSelectorBar"]
+custom_minimum_size = Vector2(72, 26)
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "ENGINES"
+
+[node name="BtnCamUnderRocket" type="Button" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel/CamSelectorBar"]
+custom_minimum_size = Vector2(95, 26)
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "UNDER-ROCKET"
+
+[node name="BtnCamCockpit" type="Button" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel/CamSelectorBar"]
+custom_minimum_size = Vector2(65, 26)
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "COCKPIT"
+
+[node name="BtnCamAscent" type="Button" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel/CamSelectorBar"]
+custom_minimum_size = Vector2(65, 26)
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "ASCENT"
+
+[node name="CountdownOverlay" type="PanelContainer" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_card_cyan")
+
+[node name="Margin" type="MarginContainer" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel/CountdownOverlay"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 8
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel/CountdownOverlay/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="LblCountdownClock" type="Label" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel/CountdownOverlay/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.898, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "T - 00:10.0"
+
+[node name="LblCountdownStatus" type="Label" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel/CountdownOverlay/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.478, 0, 1)
+theme_override_font_sizes/font_size = 10
+text = "TERMINAL COUNTDOWN STANDBY"
+
+[node name="ThrottleHUD" type="PanelContainer" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_styles/panel = SubResource("StyleBoxFlat_glass")
+
+[node name="Margin" type="MarginContainer" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel/ThrottleHUD"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 8
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel/ThrottleHUD/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="LblThrottleTitle" type="Label" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel/ThrottleHUD/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.7, 0.2, 1)
+theme_override_font_sizes/font_size = 11
+text = "ENGINE THROTTLE (W / S)"
+horizontal_alignment = 1
+
+[node name="HBoxThrottle" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel/ThrottleHUD/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="SliderThrottle" type="VSlider" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel/ThrottleHUD/Margin/VBox/HBoxThrottle"]
+custom_minimum_size = Vector2(24, 75)
+layout_mode = 2
+step = 5.0
+
+[node name="VBoxLabels" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel/ThrottleHUD/Margin/VBox/HBoxThrottle"]
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="LblThrottlePrompt" type="Label" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel/ThrottleHUD/Margin/VBox/HBoxThrottle/VBoxLabels"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.63, 0.68, 0.7, 1)
+theme_override_font_sizes/font_size = 10
+text = "Power Setting:"
+
+[node name="LblThrottleVal" type="Label" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel/ThrottleHUD/Margin/VBox/HBoxThrottle/VBoxLabels"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.898, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "0%"
+
+[node name="LblThrustPrompt" type="Label" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel/ThrottleHUD/Margin/VBox/HBoxThrottle/VBoxLabels"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.63, 0.68, 0.7, 1)
+theme_override_font_sizes/font_size = 10
+text = "Total Thrust:"
+
+[node name="LblThrustVal" type="Label" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel/ThrottleHUD/Margin/VBox/HBoxThrottle/VBoxLabels"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.96, 0.96, 1)
+theme_override_font_sizes/font_size = 11
+text = "0 kN"
+
+[node name="LblChamberPrompt" type="Label" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel/ThrottleHUD/Margin/VBox/HBoxThrottle/VBoxLabels"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.63, 0.68, 0.7, 1)
+theme_override_font_sizes/font_size = 10
+text = "Chamber Press:"
+
+[node name="LblChamberVal" type="Label" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel/ThrottleHUD/Margin/VBox/HBoxThrottle/VBoxLabels"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.96, 0.96, 1)
+theme_override_font_sizes/font_size = 11
+text = "0 PSI"
+
+[node name="VBoxButtons" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel/ThrottleHUD/Margin/VBox/HBoxThrottle"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="BtnThrottleUp" type="Button" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel/ThrottleHUD/Margin/VBox/HBoxThrottle/VBoxButtons"]
+custom_minimum_size = Vector2(28, 34)
+layout_mode = 2
+text = "▲"
+
+[node name="BtnThrottleDown" type="Button" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel/ThrottleHUD/Margin/VBox/HBoxThrottle/VBoxButtons"]
+custom_minimum_size = Vector2(28, 34)
+layout_mode = 2
+text = "▼"
+
+[node name="BtnClampRelease" type="Button" parent="MarginContainer/VBoxContainer/MainBody/CenterPanel/ThrottleHUD/Margin/VBox"]
+custom_minimum_size = Vector2(0, 26)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_clamp")
+theme_override_font_sizes/font_size = 11
+disabled = true
+text = "RELEASE CLAMPS (E)"
+
+[node name="RightPanel" type="PanelContainer" parent="MarginContainer/VBoxContainer/MainBody"]
+custom_minimum_size = Vector2(370, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_glass")
+
+[node name="Scroll" type="ScrollContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel"]
+layout_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="CompatCard" type="PanelContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_glass")
+
+[node name="Margin" type="MarginContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/CompatCard"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/CompatCard/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/CompatCard/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.898, 1, 1)
+theme_override_font_sizes/font_size = 13
+text = "ACTIVITY 2: SPACECRAFT COMPATIBILITY"
+
+[node name="StatsGrid" type="GridContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/CompatCard/Margin/VBox"]
+layout_mode = 2
+columns = 2
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 4
+
+[node name="LblCraftMassPrompt" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/CompatCard/Margin/VBox/StatsGrid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.63, 0.68, 0.7, 1)
+theme_override_font_sizes/font_size = 11
+text = "Spacecraft Wet Mass:"
+
+[node name="LblCraftMassVal" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/CompatCard/Margin/VBox/StatsGrid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.96, 0.96, 1)
+theme_override_font_sizes/font_size = 11
+text = "1850.0 kg"
+
+[node name="LblCapacityPrompt" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/CompatCard/Margin/VBox/StatsGrid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.63, 0.68, 0.7, 1)
+theme_override_font_sizes/font_size = 11
+text = "Rocket TMI Capacity:"
+
+[node name="LblCapacityVal" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/CompatCard/Margin/VBox/StatsGrid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.898, 1, 1)
+theme_override_font_sizes/font_size = 11
+text = "2400.0 kg"
+
+[node name="LblMarginPrompt" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/CompatCard/Margin/VBox/StatsGrid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.63, 0.68, 0.7, 1)
+theme_override_font_sizes/font_size = 11
+text = "Mass Reserve Margin:"
+
+[node name="LblMarginVal" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/CompatCard/Margin/VBox/StatsGrid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.153, 0.851, 0.502, 1)
+theme_override_font_sizes/font_size = 11
+text = "+22.9%"
+
+[node name="LblFairingPrompt" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/CompatCard/Margin/VBox/StatsGrid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.63, 0.68, 0.7, 1)
+theme_override_font_sizes/font_size = 11
+text = "Fairing Clearance:"
+
+[node name="LblFairingVal" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/CompatCard/Margin/VBox/StatsGrid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.153, 0.851, 0.502, 1)
+theme_override_font_sizes/font_size = 11
+text = "1.60 m"
+
+[node name="BadgeCompatStatus" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/CompatCard/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.153, 0.851, 0.502, 1)
+theme_override_font_sizes/font_size = 12
+text = "STATUS: COMPATIBLE (NOMINAL NASA RESERVE)"
+
+[node name="LblOverweightWarning" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/CompatCard/Margin/VBox"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.27, 0.27, 1)
+theme_override_font_sizes/font_size = 11
+text = "⚠ PAYLOAD EXCEEDS ROCKET TMI CAPACITY!"
+autowrap_mode = 3
+
+[node name="TrajectoryCard" type="PanelContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_glass")
+
+[node name="Margin" type="MarginContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/TrajectoryCard"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/TrajectoryCard/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/TrajectoryCard/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.898, 1, 1)
+theme_override_font_sizes/font_size = 13
+text = "ACTIVITY 3: JOURNEY TO MARS (TRAJECTORY)"
+
+[node name="BadgeActiveRoute" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/TrajectoryCard/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.898, 1, 1)
+theme_override_font_sizes/font_size = 11
+text = "ACTIVE TRAJECTORY: ROUTE B (HOHMANN • 260 DAYS)"
+
+[node name="RouteA" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/TrajectoryCard/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="LblRouteAName" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/TrajectoryCard/Margin/VBox/RouteA"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.478, 0, 1)
+theme_override_font_sizes/font_size = 12
+text = "Route A: Fast Transit Trajectory (~180 Days)"
+
+[node name="LblRouteADesc" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/TrajectoryCard/Margin/VBox/RouteA"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.63, 0.68, 0.7, 1)
+theme_override_font_sizes/font_size = 10
+text = "• Delta-V: 4.8 km/s | Fuel Demand: +40% Propellant\n• Reaches Mars 80 days sooner, minimizing deep space radiation dose."
+autowrap_mode = 3
+
+[node name="BtnSelectRouteA" type="Button" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/TrajectoryCard/Margin/VBox/RouteA"]
+custom_minimum_size = Vector2(0, 26)
+layout_mode = 2
+text = "SELECT ROUTE A"
+
+[node name="RouteB" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/TrajectoryCard/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="LblRouteBName" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/TrajectoryCard/Margin/VBox/RouteB"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.898, 1, 1)
+theme_override_font_sizes/font_size = 12
+text = "Route B: Fuel-Saving Hohmann Transfer (~260 Days)"
+
+[node name="LblRouteBDesc" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/TrajectoryCard/Margin/VBox/RouteB"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.63, 0.68, 0.7, 1)
+theme_override_font_sizes/font_size = 10
+text = "• Delta-V: 3.6 km/s | Fuel Demand: Nominal Minimum Energy\n• Tangent Keplerian ellipse delivering maximum payload mass for minimum fuel."
+autowrap_mode = 3
+
+[node name="BtnSelectRouteB" type="Button" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/TrajectoryCard/Margin/VBox/RouteB"]
+custom_minimum_size = Vector2(0, 26)
+layout_mode = 2
+text = "✓ SELECTED (HOHMANN)"
+
+[node name="AICard" type="PanelContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_glass")
+
+[node name="Margin" type="MarginContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/AICard"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/AICard/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/AICard/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.898, 1, 1)
+theme_override_font_sizes/font_size = 13
+text = "MISSION AI ASSISTANT"
+
+[node name="AIButtons" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/AICard/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="BtnExplain" type="Button" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/AICard/Margin/VBox/AIButtons"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "EXPLAIN"
+
+[node name="BtnHint" type="Button" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/AICard/Margin/VBox/AIButtons"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "HINT"
+
+[node name="BtnTeach" type="Button" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/AICard/Margin/VBox/AIButtons"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "TEACH ME"
+
+[node name="AIResponsePanel" type="PanelContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/AICard/Margin/VBox"]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_glass")
+
+[node name="Margin" type="MarginContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/AICard/Margin/VBox/AIResponsePanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="TxtAI" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/AICard/Margin/VBox/AIResponsePanel/Margin"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.96, 0.96, 1)
+theme_override_font_sizes/font_size = 11
+text = "MISSION AI ONLINE..."
+autowrap_mode = 3
+
+[node name="AdvTasksCard" type="PanelContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_glass")
+
+[node name="Margin" type="MarginContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/AdvTasksCard"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/AdvTasksCard/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/AdvTasksCard/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.784, 0.341, 1)
+theme_override_font_sizes/font_size = 13
+text = "ADVANCED MODE: LEVEL 03 TASKS"
+
+[node name="TasksVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/AdvTasksCard/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="HBoxInput" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/AdvTasksCard/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="AdvInputAnswer" type="LineEdit" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/AdvTasksCard/Margin/VBox/HBoxInput"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Enter value..."
+
+[node name="AdvLblUnit" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/AdvTasksCard/Margin/VBox/HBoxInput"]
+custom_minimum_size = Vector2(45, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "km/s"
+
+[node name="AdvBtnSubmit" type="Button" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/AdvTasksCard/Margin/VBox/HBoxInput"]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+text = "SUBMIT"
+
+[node name="AdvLblFeedback" type="Label" parent="MarginContainer/VBoxContainer/MainBody/RightPanel/Scroll/VBox/AdvTasksCard/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.63, 0.68, 0.7, 1)
+theme_override_font_sizes/font_size = 11
+text = "Select a Level 03 task above to verify orbital equations."
+autowrap_mode = 3
+
+[node name="BottomPanel" type="PanelContainer" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 105)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_glass")
+
+[node name="Margin" type="MarginContainer" parent="MarginContainer/VBoxContainer/BottomPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 8
+
+[node name="HBox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/BottomPanel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="ChecklistPanel" type="PanelContainer" parent="MarginContainer/VBoxContainer/BottomPanel/Margin/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_glass")
+
+[node name="Margin" type="MarginContainer" parent="MarginContainer/VBoxContainer/BottomPanel/Margin/HBox/ChecklistPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 6
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/BottomPanel/Margin/HBox/ChecklistPanel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="ChecklistTitle" type="Label" parent="MarginContainer/VBoxContainer/BottomPanel/Margin/HBox/ChecklistPanel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.898, 1, 1)
+theme_override_font_sizes/font_size = 12
+text = "ACTIVITY 4: PRE-LAUNCH CHECKLIST (8 CRITERIA)"
+
+[node name="ChecklistGrid" type="GridContainer" parent="MarginContainer/VBoxContainer/BottomPanel/Margin/HBox/ChecklistPanel/Margin/VBox"]
+layout_mode = 2
+columns = 4
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 4
+
+[node name="AuthActionPanel" type="PanelContainer" parent="MarginContainer/VBoxContainer/BottomPanel/Margin/HBox"]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_card_cyan")
+
+[node name="Margin" type="MarginContainer" parent="MarginContainer/VBoxContainer/BottomPanel/Margin/HBox/AuthActionPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 6
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/BottomPanel/Margin/HBox/AuthActionPanel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="LblAuthStatus" type="Label" parent="MarginContainer/VBoxContainer/BottomPanel/Margin/HBox/AuthActionPanel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.153, 0.851, 0.502, 1)
+theme_override_font_sizes/font_size = 13
+text = "LAUNCH AUTHORIZATION: APPROVED"
+horizontal_alignment = 1
+
+[node name="LblAuthSubtitle" type="Label" parent="MarginContainer/VBoxContainer/BottomPanel/Margin/HBox/AuthActionPanel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.63, 0.68, 0.7, 1)
+theme_override_font_sizes/font_size = 10
+text = "All 8 pre-launch criteria nominal. Cape Canaveral Range reports GREEN."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="BtnInitiateCountdown" type="Button" parent="MarginContainer/VBoxContainer/BottomPanel/Margin/HBox/AuthActionPanel/Margin/VBox"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_launch")
+text = "INITIATE COUNTDOWN ▶"
+
+[node name="NavButtons" type="VBoxContainer" parent="MarginContainer/VBoxContainer/BottomPanel/Margin/HBox"]
+custom_minimum_size = Vector2(170, 0)
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="BtnBackToLab" type="Button" parent="MarginContainer/VBoxContainer/BottomPanel/Margin/HBox/NavButtons"]
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+text = "< BACK TO LAB"
+
+[node name="BtnToSimulation" type="Button" parent="MarginContainer/VBoxContainer/BottomPanel/Margin/HBox/NavButtons"]
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+text = "MISSION SIMULATION >"
