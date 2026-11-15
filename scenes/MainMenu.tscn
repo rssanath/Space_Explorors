@@ -1,6 +1,6 @@
-[gd_scene load_steps=22 format=3]
+[gd_scene format=3 uid="uid://ctw0y6i27i2j5"]
 
-[ext_resource type="Script" path="res://scenes/MainMenu.gd" id="1_main"]
+[ext_resource type="Script" uid="uid://gs3urdfj3bdx" path="res://scenes/MainMenu.gd" id="1_main"]
 
 [sub_resource type="Environment" id="Environment_1"]
 background_mode = 1
@@ -15,14 +15,10 @@ glow_bloom = 0.15
 [sub_resource type="SphereMesh" id="SphereMesh_mars"]
 radius = 2.4
 height = 4.8
-radial_segments = 64
-rings = 32
 
 [sub_resource type="SphereMesh" id="SphereMesh_atmo"]
 radius = 2.48
 height = 4.96
-radial_segments = 64
-rings = 32
 
 [sub_resource type="StandardMaterial3D" id="Mat_CraftBus"]
 albedo_color = Color(0.85, 0.88, 0.92, 1)
@@ -81,18 +77,6 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_demo"]
-bg_color = Color(0.45, 0.25, 0.05, 0.85)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(1, 0.65, 0, 0.9)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_normal"]
 bg_color = Color(0.06, 0.09, 0.13, 0.9)
 border_width_left = 1
@@ -100,6 +84,18 @@ border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
 border_color = Color(0.2, 0.3, 0.4, 0.7)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_demo"]
+bg_color = Color(0.45, 0.25, 0.05, 0.85)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 0.65, 0, 0.9)
 corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
@@ -129,59 +125,59 @@ corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
-[node name="MainMenu" type="Node3D"]
+[node name="MainMenu" type="Node3D" unique_id=170067147]
 script = ExtResource("1_main")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1155538235]
 environment = SubResource("Environment_1")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1060178181]
 transform = Transform3D(0.866, -0.25, 0.433, 0, 0.866, 0.5, -0.5, -0.433, 0.75, 0, 0, 0)
 light_color = Color(1, 0.95, 0.88, 1)
 light_energy = 1.6
 shadow_enabled = true
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, 0.1, 5.4)
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1470822717]
+transform = Transform3D(0.98153424, 0.19128653, 0, -0.19128653, 0.98153424, 0, 0, 0, 1, -0.8, 0.1, 5.4)
 current = true
-fov = 60.0
+fov = 82.14686
 
-[node name="MarsAnchor" type="Node3D" parent="."]
+[node name="MarsAnchor" type="Node3D" parent="." unique_id=850868888]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8, -0.1, 0)
 
-[node name="MarsMesh" type="MeshInstance3D" parent="MarsAnchor"]
+[node name="MarsMesh" type="MeshInstance3D" parent="MarsAnchor" unique_id=76399982]
 mesh = SubResource("SphereMesh_mars")
 
-[node name="AtmosphereMesh" type="MeshInstance3D" parent="MarsAnchor"]
+[node name="AtmosphereMesh" type="MeshInstance3D" parent="MarsAnchor" unique_id=1246561262]
 mesh = SubResource("SphereMesh_atmo")
 
-[node name="CraftOrbitPivot" type="Node3D" parent="MarsAnchor"]
+[node name="CraftOrbitPivot" type="Node3D" parent="MarsAnchor" unique_id=1929905540]
 
-[node name="OrbitingCraft" type="Node3D" parent="MarsAnchor/CraftOrbitPivot"]
+[node name="OrbitingCraft" type="Node3D" parent="MarsAnchor/CraftOrbitPivot" unique_id=1496901792]
 transform = Transform3D(0.866, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866, 3.8, 0.4, 0)
 
-[node name="Bus" type="MeshInstance3D" parent="MarsAnchor/CraftOrbitPivot/OrbitingCraft"]
+[node name="Bus" type="MeshInstance3D" parent="MarsAnchor/CraftOrbitPivot/OrbitingCraft" unique_id=1664325999]
 mesh = SubResource("BoxMesh_CraftBus")
 
-[node name="LeftWing" type="MeshInstance3D" parent="MarsAnchor/CraftOrbitPivot/OrbitingCraft"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0, 0, 0)
+[node name="LeftWing" type="MeshInstance3D" parent="MarsAnchor/CraftOrbitPivot/OrbitingCraft" unique_id=1408929137]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
 mesh = SubResource("BoxMesh_SolarWing")
 
-[node name="RightWing" type="MeshInstance3D" parent="MarsAnchor/CraftOrbitPivot/OrbitingCraft"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0, 0, 0)
+[node name="RightWing" type="MeshInstance3D" parent="MarsAnchor/CraftOrbitPivot/OrbitingCraft" unique_id=1640547091]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
 mesh = SubResource("BoxMesh_SolarWing")
 
-[node name="Plume" type="MeshInstance3D" parent="MarsAnchor/CraftOrbitPivot/OrbitingCraft"]
+[node name="Plume" type="MeshInstance3D" parent="MarsAnchor/CraftOrbitPivot/OrbitingCraft" unique_id=2091431022]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0.6)
 mesh = SubResource("CylinderMesh_Plume")
 
-[node name="Starfield" type="MultiMeshInstance3D" parent="."]
+[node name="Starfield" type="MultiMeshInstance3D" parent="." unique_id=1194307266]
 
-[node name="AudioPlayer" type="AudioStreamPlayer" parent="."]
+[node name="AudioPlayer" type="AudioStreamPlayer" parent="." unique_id=181630633]
 
-[node name="UI" type="CanvasLayer" parent="."]
+[node name="UI" type="CanvasLayer" parent="." unique_id=1590873428]
 
-[node name="MainMenuPanel" type="PanelContainer" parent="UI"]
+[node name="MainMenuPanel" type="PanelContainer" parent="UI" unique_id=842606324]
 anchors_preset = -1
 anchor_left = 0.04
 anchor_top = 0.05
@@ -191,24 +187,24 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_menu_panel")
 
-[node name="MarginContainer" type="MarginContainer" parent="UI/MainMenuPanel"]
+[node name="MarginContainer" type="MarginContainer" parent="UI/MainMenuPanel" unique_id=397124541]
 layout_mode = 2
 theme_override_constants/margin_left = 24
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 24
 theme_override_constants/margin_bottom = 20
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/MainMenuPanel/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/MainMenuPanel/MarginContainer" unique_id=2082353524]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="MissionBadge" type="Label" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer"]
+[node name="MissionBadge" type="Label" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer" unique_id=1704676574]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0.898, 1, 1)
 theme_override_font_sizes/font_size = 10
 text = "[ NASA SPACE APPS CHALLENGE 2026 // FLIGHT DIRECTORATE ]"
 
-[node name="Title" type="Label" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer"]
+[node name="Title" type="Label" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer" unique_id=1605930886]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.95, 0.97, 1, 1)
 theme_override_colors/font_shadow_color = Color(0, 0.898, 1, 0.5)
@@ -218,43 +214,43 @@ theme_override_constants/shadow_outline_size = 6
 theme_override_font_sizes/font_size = 28
 text = "MARS DEEP"
 
-[node name="Tagline" type="Label" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer"]
+[node name="Tagline" type="Label" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer" unique_id=1475431804]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.75, 0.3, 1)
 theme_override_font_sizes/font_size = 12
 text = "DESIGN.  LAUNCH.  EXPLORE."
 
-[node name="Subtitle" type="Label" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer"]
+[node name="Subtitle" type="Label" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer" unique_id=221876597]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.65, 0.75, 0.85, 1)
 theme_override_font_sizes/font_size = 10
 text = "Interactive 3D Aerospace Engineering & Astrobiology Simulation"
 autowrap_mode = 3
 
-[node name="HSeparator" type="HSeparator" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer" unique_id=218342112]
 layout_mode = 2
 
-[node name="ButtonsVBox" type="VBoxContainer" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer"]
+[node name="ButtonsVBox" type="VBoxContainer" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer" unique_id=2079120105]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 6
 alignment = 1
 
-[node name="BtnStart" type="Button" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer/ButtonsVBox"]
+[node name="BtnStart" type="Button" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer/ButtonsVBox" unique_id=450436071]
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_start")
 text = "START NEW MISSION"
 
-[node name="BtnContinue" type="Button" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer/ButtonsVBox"]
+[node name="BtnContinue" type="Button" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer/ButtonsVBox" unique_id=735622576]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 theme_override_font_sizes/font_size = 11
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
 text = "CONTINUE MISSION"
 
-[node name="BtnDemoMode" type="Button" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer/ButtonsVBox"]
+[node name="BtnDemoMode" type="Button" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer/ButtonsVBox" unique_id=63070734]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.85, 0.4, 1)
@@ -262,49 +258,49 @@ theme_override_font_sizes/font_size = 11
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_demo")
 text = "★ HACKATHON DEMO (JUDGES)"
 
-[node name="BtnBriefing" type="Button" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer/ButtonsVBox"]
+[node name="BtnBriefing" type="Button" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer/ButtonsVBox" unique_id=587711733]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 theme_override_font_sizes/font_size = 11
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
 text = "MISSION BRIEFING"
 
-[node name="BtnControls" type="Button" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer/ButtonsVBox"]
+[node name="BtnControls" type="Button" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer/ButtonsVBox" unique_id=629796219]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 theme_override_font_sizes/font_size = 11
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
 text = "CONTROLS GUIDE"
 
-[node name="BtnSettings" type="Button" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer/ButtonsVBox"]
+[node name="BtnSettings" type="Button" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer/ButtonsVBox" unique_id=334531548]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 theme_override_font_sizes/font_size = 11
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
 text = "SETTINGS"
 
-[node name="BtnCredits" type="Button" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer/ButtonsVBox"]
+[node name="BtnCredits" type="Button" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer/ButtonsVBox" unique_id=1334075652]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 theme_override_font_sizes/font_size = 11
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
 text = "NASA TECH & CREDITS"
 
-[node name="BtnExit" type="Button" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer/ButtonsVBox"]
+[node name="BtnExit" type="Button" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer/ButtonsVBox" unique_id=832207672]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 theme_override_font_sizes/font_size = 11
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_exit")
 text = "EXIT GAME"
 
-[node name="FooterLabel" type="Label" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer"]
+[node name="FooterLabel" type="Label" parent="UI/MainMenuPanel/MarginContainer/VBoxContainer" unique_id=895216152]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.4, 0.5, 0.6, 1)
 theme_override_font_sizes/font_size = 9
 text = "Godot 4.7.2 Forward+ • NASA/JPL Data Integration"
 horizontal_alignment = 1
 
-[node name="ModalDemo" type="Control" parent="UI"]
+[node name="ModalDemo" type="Control" parent="UI" unique_id=400888956]
 visible = false
 layout_mode = 3
 anchors_preset = 15
@@ -313,7 +309,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Panel" type="PanelContainer" parent="UI/ModalDemo"]
+[node name="Panel" type="PanelContainer" parent="UI/ModalDemo" unique_id=93775104]
 custom_minimum_size = Vector2(580, 480)
 layout_mode = 1
 anchors_preset = 8
@@ -329,92 +325,92 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_modal")
 
-[node name="Margin" type="MarginContainer" parent="UI/ModalDemo/Panel"]
+[node name="Margin" type="MarginContainer" parent="UI/ModalDemo/Panel" unique_id=228870313]
 layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 18
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 18
 
-[node name="VBox" type="VBoxContainer" parent="UI/ModalDemo/Panel/Margin"]
+[node name="VBox" type="VBoxContainer" parent="UI/ModalDemo/Panel/Margin" unique_id=222430389]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="Title" type="Label" parent="UI/ModalDemo/Panel/Margin/VBox"]
+[node name="Title" type="Label" parent="UI/ModalDemo/Panel/Margin/VBox" unique_id=1602591253]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.75, 0.2, 1)
 theme_override_font_sizes/font_size = 16
 text = "★ HACKATHON DEMO & PRESENTATION MODE"
 horizontal_alignment = 1
 
-[node name="Desc" type="Label" parent="UI/ModalDemo/Panel/Margin/VBox"]
+[node name="Desc" type="Label" parent="UI/ModalDemo/Panel/Margin/VBox" unique_id=334620060]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.8, 0.85, 0.9, 1)
 theme_override_font_sizes/font_size = 10
 text = "Designed for Hackathon Judges & Evaluators. Instantly jump to any phase of the MARS DEEP campaign without progression locks or mandatory task prerequisites:"
 autowrap_mode = 3
 
-[node name="Grid" type="GridContainer" parent="UI/ModalDemo/Panel/Margin/VBox"]
+[node name="Grid" type="GridContainer" parent="UI/ModalDemo/Panel/Margin/VBox" unique_id=1137616111]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/h_separation = 10
 theme_override_constants/v_separation = 8
 columns = 2
 
-[node name="BtnStage1" type="Button" parent="UI/ModalDemo/Panel/Margin/VBox/Grid"]
+[node name="BtnStage1" type="Button" parent="UI/ModalDemo/Panel/Margin/VBox/Grid" unique_id=1864845011]
 custom_minimum_size = Vector2(0, 42)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "1. Mission Briefing"
 
-[node name="BtnStage2" type="Button" parent="UI/ModalDemo/Panel/Margin/VBox/Grid"]
+[node name="BtnStage2" type="Button" parent="UI/ModalDemo/Panel/Margin/VBox/Grid" unique_id=29218267]
 custom_minimum_size = Vector2(0, 42)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "2. 3D Spacecraft Designer"
 
-[node name="BtnStage3" type="Button" parent="UI/ModalDemo/Panel/Margin/VBox/Grid"]
+[node name="BtnStage3" type="Button" parent="UI/ModalDemo/Panel/Margin/VBox/Grid" unique_id=170288853]
 custom_minimum_size = Vector2(0, 42)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "3. Engineering Lab & Math"
 
-[node name="BtnStage4" type="Button" parent="UI/ModalDemo/Panel/Margin/VBox/Grid"]
+[node name="BtnStage4" type="Button" parent="UI/ModalDemo/Panel/Margin/VBox/Grid" unique_id=305013073]
 custom_minimum_size = Vector2(0, 42)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "4. Pad 39A Launch & Cockpit"
 
-[node name="BtnStage5" type="Button" parent="UI/ModalDemo/Panel/Margin/VBox/Grid"]
+[node name="BtnStage5" type="Button" parent="UI/ModalDemo/Panel/Margin/VBox/Grid" unique_id=1892356402]
 custom_minimum_size = Vector2(0, 42)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "5. Interplanetary Spaceflight"
 
-[node name="BtnStage6" type="Button" parent="UI/ModalDemo/Panel/Margin/VBox/Grid"]
+[node name="BtnStage6" type="Button" parent="UI/ModalDemo/Panel/Margin/VBox/Grid" unique_id=599279324]
 custom_minimum_size = Vector2(0, 42)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "6. Mars Powered Descent"
 
-[node name="BtnStage7" type="Button" parent="UI/ModalDemo/Panel/Margin/VBox/Grid"]
+[node name="BtnStage7" type="Button" parent="UI/ModalDemo/Panel/Margin/VBox/Grid" unique_id=552936694]
 custom_minimum_size = Vector2(0, 42)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "7. Surface Rover & Science"
 
-[node name="BtnStage8" type="Button" parent="UI/ModalDemo/Panel/Margin/VBox/Grid"]
+[node name="BtnStage8" type="Button" parent="UI/ModalDemo/Panel/Margin/VBox/Grid" unique_id=287086074]
 custom_minimum_size = Vector2(0, 42)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "8. Mission Debrief & Report"
 
-[node name="BtnCloseDemo" type="Button" parent="UI/ModalDemo/Panel/Margin/VBox"]
+[node name="BtnCloseDemo" type="Button" parent="UI/ModalDemo/Panel/Margin/VBox" unique_id=514483272]
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 text = "CLOSE DEMO SELECTOR"
 
-[node name="ModalCredits" type="Control" parent="UI"]
+[node name="ModalCredits" type="Control" parent="UI" unique_id=314036069]
 visible = false
 layout_mode = 3
 anchors_preset = 15
@@ -423,7 +419,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Panel" type="PanelContainer" parent="UI/ModalCredits"]
+[node name="Panel" type="PanelContainer" parent="UI/ModalCredits" unique_id=1865871206]
 custom_minimum_size = Vector2(620, 520)
 layout_mode = 1
 anchors_preset = 8
@@ -439,29 +435,29 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_modal")
 
-[node name="Margin" type="MarginContainer" parent="UI/ModalCredits/Panel"]
+[node name="Margin" type="MarginContainer" parent="UI/ModalCredits/Panel" unique_id=923138958]
 layout_mode = 2
 theme_override_constants/margin_left = 22
 theme_override_constants/margin_top = 18
 theme_override_constants/margin_right = 22
 theme_override_constants/margin_bottom = 18
 
-[node name="VBox" type="VBoxContainer" parent="UI/ModalCredits/Panel/Margin"]
+[node name="VBox" type="VBoxContainer" parent="UI/ModalCredits/Panel/Margin" unique_id=1838034665]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="Title" type="Label" parent="UI/ModalCredits/Panel/Margin/VBox"]
+[node name="Title" type="Label" parent="UI/ModalCredits/Panel/Margin/VBox" unique_id=1491615396]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0.9, 1, 1)
 theme_override_font_sizes/font_size = 16
 text = "NASA TECHNOLOGIES, DATA SOURCES & CREDITS"
 horizontal_alignment = 1
 
-[node name="Scroll" type="ScrollContainer" parent="UI/ModalCredits/Panel/Margin/VBox"]
+[node name="Scroll" type="ScrollContainer" parent="UI/ModalCredits/Panel/Margin/VBox" unique_id=1284584754]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="CreditsText" type="Label" parent="UI/ModalCredits/Panel/Margin/VBox/Scroll"]
+[node name="CreditsText" type="Label" parent="UI/ModalCredits/Panel/Margin/VBox/Scroll" unique_id=1576350972]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.85, 0.9, 0.95, 1)
@@ -492,12 +488,12 @@ MARS DEEP makes real-world aerospace engineering and astrobiological exploration
 This educational game simulation was created independently for the NASA Space Apps Challenge hackathon. While based rigorously on open NASA and JPL scientific datasets, MARS DEEP is an educational simulation game and does not represent an official endorsement or direct software product of the National Aeronautics and Space Administration."
 autowrap_mode = 3
 
-[node name="BtnCloseCredits" type="Button" parent="UI/ModalCredits/Panel/Margin/VBox"]
+[node name="BtnCloseCredits" type="Button" parent="UI/ModalCredits/Panel/Margin/VBox" unique_id=866892229]
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 text = "CLOSE CREDITS"
 
-[node name="ModalControls" type="Control" parent="UI"]
+[node name="ModalControls" type="Control" parent="UI" unique_id=465342872]
 visible = false
 layout_mode = 3
 anchors_preset = 15
@@ -506,7 +502,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Panel" type="PanelContainer" parent="UI/ModalControls"]
+[node name="Panel" type="PanelContainer" parent="UI/ModalControls" unique_id=1109644911]
 custom_minimum_size = Vector2(560, 480)
 layout_mode = 1
 anchors_preset = 8
@@ -522,29 +518,29 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_modal")
 
-[node name="Margin" type="MarginContainer" parent="UI/ModalControls/Panel"]
+[node name="Margin" type="MarginContainer" parent="UI/ModalControls/Panel" unique_id=439320902]
 layout_mode = 2
 theme_override_constants/margin_left = 22
 theme_override_constants/margin_top = 18
 theme_override_constants/margin_right = 22
 theme_override_constants/margin_bottom = 18
 
-[node name="VBox" type="VBoxContainer" parent="UI/ModalControls/Panel/Margin"]
+[node name="VBox" type="VBoxContainer" parent="UI/ModalControls/Panel/Margin" unique_id=1713921334]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="Title" type="Label" parent="UI/ModalControls/Panel/Margin/VBox"]
+[node name="Title" type="Label" parent="UI/ModalControls/Panel/Margin/VBox" unique_id=1099515499]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0.9, 1, 1)
 theme_override_font_sizes/font_size = 16
 text = "COMPLETE ASTRONAUT & ROVER CONTROLS"
 horizontal_alignment = 1
 
-[node name="Scroll" type="ScrollContainer" parent="UI/ModalControls/Panel/Margin/VBox"]
+[node name="Scroll" type="ScrollContainer" parent="UI/ModalControls/Panel/Margin/VBox" unique_id=1243295637]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ControlsText" type="Label" parent="UI/ModalControls/Panel/Margin/VBox/Scroll"]
+[node name="ControlsText" type="Label" parent="UI/ModalControls/Panel/Margin/VBox/Scroll" unique_id=2040864426]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.85, 0.9, 0.95, 1)
@@ -583,12 +579,12 @@ text = "• GLOBAL:
 - [E]: Examine geological target and deploy robotic arm / sample cache."
 autowrap_mode = 3
 
-[node name="BtnCloseControls" type="Button" parent="UI/ModalControls/Panel/Margin/VBox"]
+[node name="BtnCloseControls" type="Button" parent="UI/ModalControls/Panel/Margin/VBox" unique_id=328012101]
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 text = "BACK TO MENU"
 
-[node name="ModalSettings" type="Control" parent="UI"]
+[node name="ModalSettings" type="Control" parent="UI" unique_id=1555443263]
 visible = false
 layout_mode = 3
 anchors_preset = 15
@@ -597,7 +593,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Panel" type="PanelContainer" parent="UI/ModalSettings"]
+[node name="Panel" type="PanelContainer" parent="UI/ModalSettings" unique_id=536358903]
 custom_minimum_size = Vector2(480, 360)
 layout_mode = 1
 anchors_preset = 8
@@ -613,55 +609,55 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_modal")
 
-[node name="Margin" type="MarginContainer" parent="UI/ModalSettings/Panel"]
+[node name="Margin" type="MarginContainer" parent="UI/ModalSettings/Panel" unique_id=1469992487]
 layout_mode = 2
 theme_override_constants/margin_left = 22
 theme_override_constants/margin_top = 18
 theme_override_constants/margin_right = 22
 theme_override_constants/margin_bottom = 18
 
-[node name="VBox" type="VBoxContainer" parent="UI/ModalSettings/Panel/Margin"]
+[node name="VBox" type="VBoxContainer" parent="UI/ModalSettings/Panel/Margin" unique_id=2088396665]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="Title" type="Label" parent="UI/ModalSettings/Panel/Margin/VBox"]
+[node name="Title" type="Label" parent="UI/ModalSettings/Panel/Margin/VBox" unique_id=1808371519]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0.9, 1, 1)
 theme_override_font_sizes/font_size = 16
 text = "AUDIO & DISPLAY SETTINGS"
 horizontal_alignment = 1
 
-[node name="MasterBox" type="HBoxContainer" parent="UI/ModalSettings/Panel/Margin/VBox"]
+[node name="MasterBox" type="HBoxContainer" parent="UI/ModalSettings/Panel/Margin/VBox" unique_id=957891957]
 layout_mode = 2
 
-[node name="Lbl" type="Label" parent="UI/ModalSettings/Panel/Margin/VBox/MasterBox"]
+[node name="Lbl" type="Label" parent="UI/ModalSettings/Panel/Margin/VBox/MasterBox" unique_id=1516407547]
 custom_minimum_size = Vector2(140, 0)
 layout_mode = 2
 text = "Master Volume:"
 
-[node name="SliderMaster" type="HSlider" parent="UI/ModalSettings/Panel/Margin/VBox/MasterBox"]
+[node name="SliderMaster" type="HSlider" parent="UI/ModalSettings/Panel/Margin/VBox/MasterBox" unique_id=316295318]
 layout_mode = 2
 size_flags_horizontal = 3
 value = 85.0
 
-[node name="SFXBox" type="HBoxContainer" parent="UI/ModalSettings/Panel/Margin/VBox"]
+[node name="SFXBox" type="HBoxContainer" parent="UI/ModalSettings/Panel/Margin/VBox" unique_id=752545103]
 layout_mode = 2
 
-[node name="Lbl" type="Label" parent="UI/ModalSettings/Panel/Margin/VBox/SFXBox"]
+[node name="Lbl" type="Label" parent="UI/ModalSettings/Panel/Margin/VBox/SFXBox" unique_id=1315033278]
 custom_minimum_size = Vector2(140, 0)
 layout_mode = 2
 text = "SFX & Engine Vol:"
 
-[node name="SliderSFX" type="HSlider" parent="UI/ModalSettings/Panel/Margin/VBox/SFXBox"]
+[node name="SliderSFX" type="HSlider" parent="UI/ModalSettings/Panel/Margin/VBox/SFXBox" unique_id=1660650282]
 layout_mode = 2
 size_flags_horizontal = 3
 value = 90.0
 
-[node name="CheckFullscreen" type="CheckBox" parent="UI/ModalSettings/Panel/Margin/VBox"]
+[node name="CheckFullscreen" type="CheckBox" parent="UI/ModalSettings/Panel/Margin/VBox" unique_id=866908086]
 layout_mode = 2
 text = "Fullscreen Desktop Display"
 
-[node name="BtnCloseSettings" type="Button" parent="UI/ModalSettings/Panel/Margin/VBox"]
+[node name="BtnCloseSettings" type="Button" parent="UI/ModalSettings/Panel/Margin/VBox" unique_id=1263315351]
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 text = "SAVE & RETURN"

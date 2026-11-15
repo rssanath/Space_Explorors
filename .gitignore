@@ -7,6 +7,7 @@ build/
 bin/
 *.exe
 *.pck
+!web/*.pck
 *.zip
 
 # Editor & OS temporary files
