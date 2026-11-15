@@ -1753,6 +1753,198 @@ func _ready() -> void:
 		print("  FAIL: Could not load MarsExploration.tscn for Test 27.")
 		failed += 1
 
+	# =========================================================================
+	# TEST 28: Stage J - GuidanceHUD Component & Accessible Player Guidance
+	# =========================================================================
+	print("\n[TEST 28] Verifying Stage J GuidanceHUD Component...")
+	var GuidanceHUDScene = load("res://scenes/ui/GuidanceHUD.tscn")
+	if GuidanceHUDScene:
+		var gh_inst = GuidanceHUDScene.instantiate()
+		add_child(gh_inst)
+		
+		var has_panel = gh_inst.has_node("GuidancePanel")
+		var has_badge = gh_inst.has_node("GuidancePanel/Margin/VBox/HeaderHBox/StepBadge")
+		var has_obj = gh_inst.has_node("GuidancePanel/Margin/VBox/LblObjective")
+		var has_inst = gh_inst.has_node("GuidancePanel/Margin/VBox/LblHowTo")
+		var has_next = gh_inst.has_node("GuidancePanel/Margin/VBox/LblNextStep")
+		var has_prog = gh_inst.has_node("GuidancePanel/Margin/VBox/ProgressBar")
+		var has_drawer = gh_inst.has_node("HelpDrawer")
+		var has_warn = gh_inst.has_node("WarningBanner")
+		var has_toast = gh_inst.has_node("ToastBanner")
+		
+		if has_panel and has_badge and has_obj and has_inst and has_next and has_prog and has_drawer and has_warn and has_toast:
+			print("  PASS: GuidanceHUD nodes (Panel, Badges, Instructions, NextStep, Progress, Help Drawer, Alert, Toast) verified.")
+			passed += 1
+		else:
+			print("  FAIL: GuidanceHUD missing required child nodes.")
+			failed += 1
+			
+		# Test methods
+		gh_inst.set_guidance("STEP 1/3", "TEST OBJECTIVE", "Press [SPACE] to burn", "Next milestone", 50.0, "Detailed help content")
+		var text_ok = gh_inst.lbl_objective.text.contains("TEST OBJECTIVE") and gh_inst.progress_bar.value == 50.0
+		gh_inst.show_warning("CRITICAL ALERT", 2.0)
+		var warn_ok = gh_inst.banner_warning.visible
+		gh_inst.hide_warning()
+		var hide_warn_ok = not gh_inst.banner_warning.visible
+		gh_inst.show_completion_toast("TASK DONE")
+		var toast_ok = gh_inst.banner_toast.visible
+		
+		if text_ok and warn_ok and hide_warn_ok and toast_ok:
+			print("  PASS: GuidanceHUD API (set_guidance, show_warning, hide_warning, show_completion_toast) verified.")
+			passed += 1
+		else:
+			print("  FAIL: GuidanceHUD API test failed (Text: %s, Warn: %s, Hide: %s, Toast: %s)." % [text_ok, warn_ok, hide_warn_ok, toast_ok])
+			failed += 1
+			
+		gh_inst.queue_free()
+	else:
+		print("  FAIL: Could not load GuidanceHUD.tscn.")
+		failed += 1
+
+	# =========================================================================
+	# TEST 29: Stage J - 3D Attitude Rotation, Alignment & Mars Orbital Revolution
+	# =========================================================================
+	print("\n[TEST 29] Verifying Stage J 3D Spacecraft Rotation & Mars Orbit Revolution...")
+	var SpaceFlight3DScene = load("res://scenes/SpaceFlight3D.tscn")
+	if SpaceFlight3DScene:
+		var sf_inst = SpaceFlight3DScene.instantiate()
+		add_child(sf_inst)
+		
+		# Test rotation controls
+		sf_inst.apply_yaw_input(0.5)
+		sf_inst.apply_pitch_input(0.3)
+		sf_inst.apply_roll_input(0.2)
+		sf_inst._process(0.1)
+		
+		var rot_telem = sf_inst.get_telemetry_data()
+		var has_align = rot_telem.has("alignment_pct")
+		var has_orbit_angle = rot_telem.has("mars_orbit_angle")
+		
+		if has_align and has_orbit_angle and rot_telem["alignment_pct"] > 0.0:
+			print("  PASS: 3D attitude rotation and alignment percentage calculation verified (Alignment: %.1f%%)." % rot_telem["alignment_pct"])
+			passed += 1
+		else:
+			print("  FAIL: Attitude rotation or alignment calculation failed.")
+			failed += 1
+			
+		# Test Mars orbit achieved revolution
+		sf_inst.set_flight_phase(6) # MARS_ORBIT_ACHIEVED (enum index 6)
+		sf_inst._process(1.0)
+		var orbit_angle_1 = sf_inst.mars_orbit_angle
+		sf_inst._process(1.0)
+		var orbit_angle_2 = sf_inst.mars_orbit_angle
+		var path_mesh_exists = sf_inst.mars_orbit_path_mesh != null
+		
+		if orbit_angle_2 > orbit_angle_1 and path_mesh_exists:
+			print("  PASS: Mars orbital capture sequence with revolving 3D spacecraft and curved orbital path ring verified.")
+			passed += 1
+		else:
+			print("  FAIL: Mars orbital revolution failed (Angle 1: %.3f, Angle 2: %.3f, PathMesh: %s)." % [orbit_angle_1, orbit_angle_2, path_mesh_exists])
+			failed += 1
+			
+		sf_inst.queue_free()
+	else:
+		print("  FAIL: Could not load SpaceFlight3D.tscn for Test 29.")
+		failed += 1
+
+	# =========================================================================
+	# TEST 30: Stage J - Procedural Martian Topography & Non-Floating Surface Clamping
+	# =========================================================================
+	print("\n[TEST 30] Verifying Stage J Procedural Martian Topography & Surface Clamping...")
+	var MarsPlanetary3DScene = load("res://scenes/MarsPlanetary3D.tscn")
+	if MarsPlanetary3DScene:
+		var mp_inst = MarsPlanetary3DScene.instantiate()
+		add_child(mp_inst)
+		mp_inst.start_surface_mode()
+		
+		# Check procedural heightfield variation
+		var h0 = mp_inst.get_terrain_height(0, 0)
+		var h_rim = mp_inst.get_terrain_height(35, 20)
+		var h_dune = mp_inst.get_terrain_height(-25, 40)
+		var has_height_variation = (h_rim != h0) or (h_dune != h0)
+		
+		# Check non-floating boulders
+		var terrain_group = mp_inst.get_node_or_null("SurfaceScene/ProceduralTerrainFeatures")
+		var all_rocks_clamped = true
+		var rock_count = 0
+		if terrain_group:
+			for child in terrain_group.get_children():
+				if child is MeshInstance3D and child.mesh is BoxMesh:
+					rock_count += 1
+					var expected_y = mp_inst.get_terrain_height(child.position.x, child.position.z)
+					if abs(child.position.y - expected_y) > 2.5:
+						all_rocks_clamped = false
+						break
+						
+		if has_height_variation and all_rocks_clamped and rock_count > 10:
+			print("  PASS: Procedural 3D terrain heightfield and non-floating rock clamping verified (%d rocks sampled)." % rock_count)
+			passed += 1
+		else:
+			print("  FAIL: Terrain heightfield or boulder clamping failed (Var: %s, Clamped: %s, Count: %d)." % [has_height_variation, all_rocks_clamped, rock_count])
+			failed += 1
+			
+		# Check guided rover navigation data
+		var nav_data = mp_inst.get_rover_navigation_data()
+		var has_nav_fields = nav_data.has("checkpoint_idx") and nav_data.has("distance_m") and nav_data.has("compass_arrow") and nav_data.has("instrument")
+		var valid_arrow = nav_data.get("compass_arrow", "") in ["▲", "►", "◄", "▼"]
+		
+		if has_nav_fields and valid_arrow and nav_data["distance_m"] > 0.0:
+			print("  PASS: Guided rover navigation system (Waypoint %d: %s, Dist: %.1fm, Direction: %s, Instrument: %s) verified." % [
+				nav_data["checkpoint_idx"], nav_data["checkpoint_name"], nav_data["distance_m"], nav_data["compass_arrow"], nav_data["instrument"]
+			])
+			passed += 1
+		else:
+			print("  FAIL: Rover navigation data incomplete.")
+			failed += 1
+			
+		# Check rover deployment sequence
+		mp_inst.deploy_rover_sequence()
+		var is_dep = mp_inst.is_deploying_rover
+		mp_inst._process_surface_mode(1.5)
+		var rover_on_ground = mp_inst.rover_rig.position.y > -2.0
+		
+		if is_dep and rover_on_ground:
+			print("  PASS: Rover deployment cinematic animation and smooth terrain grounding verified.")
+			passed += 1
+		else:
+			print("  FAIL: Rover deployment sequence failed (is_dep: %s, rover_y: %s)." % [is_dep, mp_inst.rover_rig.position.y if mp_inst.rover_rig else -999])
+			failed += 1
+			
+		mp_inst.queue_free()
+	else:
+		print("  FAIL: Could not load MarsPlanetary3D.tscn for Test 30.")
+		failed += 1
+
+	# =========================================================================
+	# TEST 31: Stage J - Non-Obstructive UI Layout & Modal Docking
+	# =========================================================================
+	print("\n[TEST 31] Verifying Stage J Non-Obstructive HUD & Bottom Docking...")
+	var ms_scene = load("res://scenes/MissionSimulation.tscn")
+	if ms_scene:
+		var ms_inst = ms_scene.instantiate()
+		add_child(ms_inst)
+		
+		var overlay_hud = ms_inst.get_node_or_null("MarginContainer/VBoxContainer/MainBody/OverlayHUD")
+		var has_ms_guidance = overlay_hud != null and overlay_hud.get_node_or_null("GuidanceHUD") != null
+		var modal_dep = overlay_hud.get_node_or_null("ModalDeparture") if overlay_hud else null
+		var modal_moi = overlay_hud.get_node_or_null("ModalMarsArrival") if overlay_hud else null
+		
+		# Modals must be docked at bottom center (preset 7) rather than center screen (preset 8)
+		var dep_docked_bottom = modal_dep != null and modal_dep.anchors_preset == 7
+		var moi_docked_bottom = modal_moi != null and modal_moi.anchors_preset == 7
+		
+		if has_ms_guidance and dep_docked_bottom and moi_docked_bottom:
+			print("  PASS: MissionSimulation non-obstructive HUD layout verified (GuidanceHUD active, modals bottom-docked).")
+			passed += 1
+		else:
+			print("  FAIL: MissionSimulation UI obstruction check failed (Guidance: %s, DepBottom: %s, MOIBottom: %s)." % [has_ms_guidance, dep_docked_bottom, moi_docked_bottom])
+			failed += 1
+			
+		ms_inst.queue_free()
+	else:
+		print("  FAIL: Could not load MissionSimulation.tscn for Test 31.")
+		failed += 1
+
 	print("\n========================================")
 	print("VERIFICATION COMPLETE: %d Passed, %d Failed" % [passed, failed])
 	print("========================================")

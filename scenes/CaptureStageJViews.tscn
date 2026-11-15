@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://capturestagej001"]
+
+[ext_resource type="Script" path="res://scripts/CaptureStageJViews.gd" id="1_capj"]
+
+[node name="CaptureStageJViews" type="Node"]
+script = ExtResource("1_capj")

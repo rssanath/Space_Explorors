@@ -1,0 +1,268 @@
+[gd_scene format=3 uid="uid://cguidancehud01"]
+
+[ext_resource type="Script" path="res://scenes/ui/GuidanceHUD.gd" id="1_ghud"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.04, 0.07, 0.12, 0.88)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0.85, 1, 0.5)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_badge"]
+bg_color = Color(0, 0.65, 0.85, 0.2)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0.85, 1, 0.7)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_help"]
+bg_color = Color(0.08, 0.14, 0.22, 0.9)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.3, 0.8, 1, 0.7)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_warning"]
+bg_color = Color(0.25, 0.05, 0.05, 0.92)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.3, 0.1, 0.95)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_toast"]
+bg_color = Color(0.03, 0.16, 0.08, 0.92)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.2, 0.9, 0.5, 0.85)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="GuidanceHUD" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_ghud")
+
+[node name="GuidancePanel" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 390.0
+offset_bottom = 175.0
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="Margin" type="MarginContainer" parent="GuidancePanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox" type="VBoxContainer" parent="GuidancePanel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="HeaderHBox" type="HBoxContainer" parent="GuidancePanel/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="StepBadge" type="Label" parent="GuidancePanel/Margin/VBox/HeaderHBox"]
+custom_minimum_size = Vector2(70, 20)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.95, 1, 1)
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = SubResource("StyleBoxFlat_badge")
+text = "STEP 1/5"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Title" type="Label" parent="GuidancePanel/Margin/VBox/HeaderHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 11
+text = "MISSION FLIGHT GUIDANCE"
+vertical_alignment = 1
+
+[node name="BtnHelp" type="Button" parent="GuidancePanel/Margin/VBox/HeaderHBox"]
+custom_minimum_size = Vector2(60, 22)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.4, 1)
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_help")
+text = "[ ? HELP ]"
+
+[node name="LblObjective" type="Label" parent="GuidancePanel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+theme_override_font_sizes/font_size = 12
+text = "CURRENT OBJECTIVE: TRANS-MARS INJECTION"
+autowrap_mode = 2
+
+[node name="LblHowTo" type="Label" parent="GuidancePanel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.96, 1, 1)
+theme_override_font_sizes/font_size = 11
+text = "HOW TO COMPLETE:
+Press SPACE or drag throttle lever to 100%."
+autowrap_mode = 2
+
+[node name="LblNextStep" type="Label" parent="GuidancePanel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5, 0.8, 0.9, 1)
+theme_override_font_sizes/font_size = 10
+text = "NEXT: Enter interplanetary Hohmann transfer trajectory."
+autowrap_mode = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="GuidancePanel/Margin/VBox"]
+custom_minimum_size = Vector2(0, 6)
+layout_mode = 2
+theme_override_font_sizes/font_size = 1
+value = 20.0
+show_percentage = false
+
+[node name="WarningBanner" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -220.0
+offset_top = 10.0
+offset_right = 220.0
+offset_bottom = 48.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_warning")
+
+[node name="Margin" type="MarginContainer" parent="WarningBanner"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 4
+
+[node name="HBox" type="HBoxContainer" parent="WarningBanner/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="IconWarning" type="Label" parent="WarningBanner/Margin/HBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.1, 1)
+theme_override_font_sizes/font_size = 14
+text = "⚠"
+
+[node name="LblWarningText" type="Label" parent="WarningBanner/Margin/HBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 11
+text = "APPROACHING RETROGRADE MANEUVER WINDOW"
+vertical_alignment = 1
+
+[node name="ToastBanner" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -340.0
+offset_top = 10.0
+offset_right = -12.0
+offset_bottom = 46.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_toast")
+
+[node name="Margin" type="MarginContainer" parent="ToastBanner"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 4
+
+[node name="HBox" type="HBoxContainer" parent="ToastBanner/Margin"]
+layout_mode = 2
+alignment = 1
+
+[node name="LblToastText" type="Label" parent="ToastBanner/Margin/HBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 1, 0.6, 1)
+theme_override_font_sizes/font_size = 11
+text = "✓ TRANS-MARS INJECTION CONFIRMED"
+vertical_alignment = 1
+
+[node name="HelpDrawer" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 12.0
+offset_top = 185.0
+offset_right = 390.0
+offset_bottom = 360.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="Margin" type="MarginContainer" parent="HelpDrawer"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox" type="VBoxContainer" parent="HelpDrawer/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="HeaderHBox" type="HBoxContainer" parent="HelpDrawer/Margin/VBox"]
+layout_mode = 2
+
+[node name="HelpTitle" type="Label" parent="HelpDrawer/Margin/VBox/HeaderHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.9, 0.4, 1)
+theme_override_font_sizes/font_size = 11
+text = "ASTRONAUT FLIGHT ASSISTANT"
+
+[node name="BtnCloseHelp" type="Button" parent="HelpDrawer/Margin/VBox/HeaderHBox"]
+custom_minimum_size = Vector2(24, 20)
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "✕"
+
+[node name="HelpContent" type="Label" parent="HelpDrawer/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.92, 1, 1)
+theme_override_font_sizes/font_size = 10
+text = "Beginner Flight Guide:
+- Spacecraft controls respond smoothly to keyboard inputs.
+- To throttle: use W / S keys or the throttle slider at bottom-right.
+- To execute burns: press SPACE or click EXECUTE BURN.
+- For attitude alignment: press A/D for yaw, W/S for pitch, Q/E for roll."
+autowrap_mode = 2

@@ -129,6 +129,7 @@ func _get_gm() -> Node:
 @onready var lbl_earth_status: Label = $MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalDataTransmission/Margin/VBox/LblEarthStatus
 @onready var btn_transmit_confirm: Button = $MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalDataTransmission/Margin/VBox/BtnTransmitConfirm
 @onready var btn_close_transmission: Button = $MarginContainer/VBoxContainer/MainBody/OverlayHUD/ModalDataTransmission/Margin/VBox/BtnCloseTransmission
+@onready var guidance_hud: Control = $MarginContainer/VBoxContainer/MainBody/OverlayHUD/GuidanceHUD
 
 # State Machine & Progression
 var current_stage_step: int = 0
@@ -242,6 +243,16 @@ func _initialize_orbit_state() -> void:
 	if modal_data_transmission: modal_data_transmission.visible = false
 	_update_camera_buttons_for_mode(0)
 	
+	if guidance_hud:
+		guidance_hud.set_guidance(
+			"STEP 1/4",
+			"MARS ORBIT RECONNAISSANCE",
+			"Inspect Mars in 360° (drag mouse / scroll to zoom) and select a landing site below.",
+			"Confirm landing coordinates and prepare for EDL descent.",
+			25.0,
+			"Landing Site Reconnaissance:\n- Drag mouse or use A/D and W/S to rotate camera around Mars.\n- Scroll wheel: Zoom in/out.\n- Choose between Jezero Crater, Gale Crater, or Elysium Planitia below."
+		)
+	
 	_broadcast_radio("FLIGHT DIRECTOR (HOUSTON)", "Mars orbit nominal. Spacecraft in 350 km observation trajectory. Select primary planetary landing site.")
 
 # =========================================================================
@@ -329,6 +340,15 @@ func _select_site(site_name: String) -> void:
 	modal_checklist.visible = true
 	current_stage_step = 1
 	badge_phase.text = "PHASE 2: DESCENT PREPARATION & EDL ENTRY"
+	if guidance_hud:
+		guidance_hud.set_guidance(
+			"STEP 2/4",
+			"ENTRY, DESCENT & LANDING (EDL)",
+			"Verify checklist and click 'INITIATE ATMOSPHERIC ENTRY' below.",
+			"Execute powered descent with retrograde thrusters to touch down safely.",
+			45.0,
+			"EDL Checklist Verification:\n- Confirm heatshield alignment, parachute pyros, and radar altimeter.\n- When ready, click 'INITIATE ATMOSPHERIC ENTRY'."
+		)
 	_broadcast_radio("CAPCOM", "Target landing coordinates locked for %s. Verify Entry, Descent & Landing systems checklist." % site_name)
 
 # =========================================================================
@@ -344,6 +364,15 @@ func _on_start_edl_pressed() -> void:
 	
 	if mars_3d: mars_3d.start_descent_sequence()
 	_update_camera_buttons_for_mode(1)
+	if guidance_hud:
+		guidance_hud.set_guidance(
+			"STEP 3/4",
+			"POWERED DESCENT FLIGHT CONTROL",
+			"Use [W / UP] to increase throttle, [S / DOWN] to reduce. Maintain vertical speed < 3.0 m/s for touchdown.",
+			"Achieve safe touchdown under 3.2 m/s on the Martian surface.",
+			65.0,
+			"Powered Descent Controls:\n- [W] or [UP Arrow]: Increase thruster power\n- [S] or [DOWN Arrow]: Decrease thruster power\n- [A] / [D]: Adjust horizontal drift\n- Target: Vertical speed < 3.2 m/s before touchdown (0m altitude)"
+		)
 	_broadcast_radio("FLIGHT DYNAMICS", "De-orbit burn complete. Atmospheric entry confirmed at 5.8 km/s! Seven Minutes of Terror underway!")
 	
 	# Submit Task 05_01 in GameManager
@@ -390,10 +419,22 @@ func _on_touchdown_occurred(outcome: int, vspeed: float) -> void:
 	if outcome == 4: # FAILED
 		btn_touchdown_proceed.visible = false
 		btn_touchdown_retry.visible = true
+		if guidance_hud:
+			guidance_hud.show_warning("HARD TOUCHDOWN IMPACT! VERTICAL SPEED EXCEEDED LIMIT", 4.0)
 		_broadcast_radio("CAPCOM", "Touchdown speed exceeded structural limit! Abort landing. Retry descent sequence.")
 	else:
 		btn_touchdown_proceed.visible = true
 		btn_touchdown_retry.visible = false
+		if guidance_hud:
+			guidance_hud.show_completion_toast("TOUCHDOWN CONFIRMED! MARS DEEP IS ON MARS!")
+			guidance_hud.set_guidance(
+				"STEP 4/4",
+				"ROVER EGRESS & SURFACE OPERATIONS",
+				"Click 'PROCEED TO ROVER EGRESS' below to deploy the rover onto the surface.",
+				"Deploy rover and begin science harvest at Martian checkpoints.",
+				75.0,
+				"Touchdown Successful!\n- Lander structure intact.\n- Click Proceed to begin rover ramp deployment sequence."
+			)
 		_broadcast_radio("FLIGHT DIRECTOR", "TOUCHDOWN CONFIRMED! MARS DEEP IS ON THE SURFACE OF MARS!")
 		# Validate Tasks 05_02 and 05_03
 		var gm = _get_gm()
@@ -427,6 +468,16 @@ func _on_confirm_deploy_rover_pressed() -> void:
 	rover_console.visible = true
 	
 	if mars_3d: mars_3d.deploy_rover_sequence()
+	if guidance_hud:
+		guidance_hud.show_completion_toast("ROVER DEPLOYMENT CINEMATIC ENGAGED")
+		guidance_hud.set_guidance(
+			"STEP 4/4",
+			"NAVIGATE TO CHECKPOINT 1",
+			"Drive using [W/A/S/D] or Arrow Keys. Follow navigation arrow ▲ to Geology Outcrop.",
+			"Perform SuperCam laser spectroscopy at Checkpoint 1.",
+			80.0,
+			"Rover Surface Controls:\n- [W / S]: Forward / Reverse drive\n- [A / D]: Steer Left / Right\n- [SPACE]: Handbrake\n- Follow the HUD direction indicator to reach scientific targets\n- Press [P] or click '📷 MASTCAM' to take photos"
+		)
 	_broadcast_radio("ROVER CONTROL", "Rover wheels on Martian regolith! Drive systems and science instruments operational.")
 	
 	# Submit Task 05_04 in GameManager
@@ -445,6 +496,45 @@ func _on_rover_telemetry_updated(data: Dictionary) -> void:
 		lbl_target_range_val.modulate = MarsDeepUIRef.COLOR_GREEN if t_dist <= 12.0 else MarsDeepUIRef.COLOR_TEXT_SECONDARY
 	if lbl_samples_count_val:
 		lbl_samples_count_val.text = "%d / 5 OBJECTIVES" % data.get("samples_count", 0)
+		
+	# Update guidance HUD with real-time waypoint data
+	if guidance_hud and data.has("nav") and current_stage_step == 5:
+		var nav: Dictionary = data["nav"]
+		var cp_idx: int = nav.get("checkpoint_idx", 1)
+		var cp_name: String = nav.get("checkpoint_name", "Target")
+		var cp_dist: float = nav.get("distance_m", 0.0)
+		var cp_arrow: String = nav.get("compass_arrow", "▲")
+		var inst: String = nav.get("instrument", "")
+		var comp_cnt: int = nav.get("completed_count", 0)
+		var pct: float = 80.0 + (float(comp_cnt) / 4.0) * 15.0
+		
+		if comp_cnt >= 4:
+			guidance_hud.set_guidance(
+				"STEP 4/4",
+				"DEEP SPACE TRANSMISSION READY",
+				"All 4 science checkpoints completed! Click 'DEEP SPACE TRANSMIT' to uplink to Earth.",
+				"Transmit findings to Earth DSN stations (Goldstone, Madrid, Canberra).",
+				95.0,
+				"Deep Space Network Uplink:\n- Open the Transmission console\n- Click TRANSMIT DATA TO EARTH\n- Await verification from mission control."
+			)
+		elif cp_dist <= 12.0:
+			guidance_hud.set_guidance(
+				"CHECKPOINT %d/4 REACHED" % cp_idx,
+				"AT TARGET: %s" % cp_name.to_upper(),
+				"Target in range! Press [E] or open '🔬 SCIENCE' to operate %s." % inst,
+				"Complete science experiment and proceed to next checkpoint.",
+				pct,
+				"Checkpoint Arrived:\n- Rover is within instrument sampling range (%.1fm).\n- Open the Science modal to activate %s." % [cp_dist, inst]
+			)
+		else:
+			guidance_hud.set_guidance(
+				"CHECKPOINT %d/4" % cp_idx,
+				"NAVIGATE TO %s" % cp_name.to_upper(),
+				"Follow direction indicator %s (%.1fm away). Drive using [W/A/S/D]." % [cp_arrow, cp_dist],
+				"Reach %s to deploy %s." % [cp_name, inst],
+				pct,
+				"Navigation Waypoint:\n- Heading Arrow: %s\n- Target Distance: %.1f meters\n- Required Instrument: %s" % [cp_arrow, cp_dist, inst]
+			)
 
 # =========================================================================
 # STAGE 5: SCIENCE HARVEST & SAMPLES
@@ -568,6 +658,8 @@ func _on_take_photo_pressed() -> void:
 	var p: Dictionary = mars_3d.capture_viewport_photo()
 	if btn_photo_gallery:
 		btn_photo_gallery.text = "GALLERY (%d)" % mars_3d.captured_photos.size()
+	if guidance_hud:
+		guidance_hud.show_completion_toast("PHOTO CAPTURED: Mastcam-Z saved to memory")
 	_broadcast_radio("MASTCAM-Z", "High-resolution photo captured: %s at %s. Stored in rover memory." % [
 		p.get("id", "PHOTO"), p.get("coordinates", "0,0")
 	])
@@ -632,6 +724,7 @@ func _on_run_exp1_pressed() -> void:
 	var res: Dictionary = mars_3d.perform_experiment_1()
 	_update_science_modal_ui()
 	_check_all_science_completed()
+	if guidance_hud: guidance_hud.show_completion_toast("CHECKPOINT 1 VERIFIED: SuperCam LIBS Fired!")
 	_broadcast_radio("SUPERCAM LIBS", "Laser pulses fired! Mineral breakdown: 38% Pyroxene, 26% Olivine, 22% Smectite, 14% Plagioclase.")
 
 func _on_run_exp2_pressed() -> void:
@@ -639,6 +732,7 @@ func _on_run_exp2_pressed() -> void:
 	var res: Dictionary = mars_3d.perform_experiment_2(selected_rimfax_depth)
 	_update_science_modal_ui()
 	_check_all_science_completed()
+	if guidance_hud: guidance_hud.show_completion_toast("CHECKPOINT 2 VERIFIED: RIMFAX Radar Scan Complete!")
 	_broadcast_radio("RIMFAX GPR", "Subsurface scan complete! Stratigraphic boundary confirmed at %.1f meters depth." % selected_rimfax_depth)
 
 func _on_run_exp3_pressed() -> void:
@@ -646,6 +740,7 @@ func _on_run_exp3_pressed() -> void:
 	var res: Dictionary = mars_3d.perform_experiment_3()
 	_update_science_modal_ui()
 	_check_all_science_completed()
+	if guidance_hud: guidance_hud.show_completion_toast("CHECKPOINT 3 VERIFIED: MEDA Weather Logged!")
 	_broadcast_radio("MEDA WEATHER", "Atmospheric profile recorded: -63.4°C, 612 Pa, 7.4 m/s NNE wind, tau = 0.42.")
 
 func _on_run_exp4_pressed() -> void:
@@ -653,6 +748,7 @@ func _on_run_exp4_pressed() -> void:
 	var res: Dictionary = mars_3d.perform_experiment_4()
 	_update_science_modal_ui()
 	_check_all_science_completed()
+	if guidance_hud: guidance_hud.show_completion_toast("CHECKPOINT 4 VERIFIED: PIXL Sample Tube #042 Cached!")
 	_broadcast_radio("PIXL & SHERLOC", "Sample Tube #042 hermetically sealed! Deep UV Raman detected abiotic organic carbon.")
 
 func _update_science_modal_ui() -> void:
@@ -703,6 +799,16 @@ func _on_transmit_confirm_pressed() -> void:
 			res.get("photos_transmitted", 0)
 		]
 		lbl_earth_status.modulate = MarsDeepUIRef.COLOR_GREEN
+	if guidance_hud:
+		guidance_hud.show_completion_toast("EARTH RECEIVED YOUR DATA! 48.6 MB ARCHIVED")
+		guidance_hud.set_guidance(
+			"MISSION CERTIFIED",
+			"DEEP SPACE TRANSMISSION COMPLETE",
+			"All telemetry & samples received by NASA DSN. Review final mission report.",
+			"Click 'VIEW MISSION REPORT' in top navigation bar or enter sandbox.",
+			100.0,
+			"Mission Status: 100% COMPLETE\n- All 4 science checkpoints logged\n- Earth transmission verified\n- Ready for final mission certification."
+		)
 	_broadcast_radio("DEEP SPACE NETWORK", "DSN Goldstone DSS-14 confirmed: 48.6 MB telemetry & science datasets received and archived!")
 
 # =========================================================================

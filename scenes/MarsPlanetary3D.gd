@@ -77,6 +77,7 @@ var captured_photos: Array[Dictionary] = []
 var data_transmitted_to_earth: bool = false
 var sandbox_mode_active: bool = false
 var surface_features_generated: bool = false
+var is_deploying_rover: bool = false
 
 # Checkpoint Beacons & Records
 var experiment_records: Dictionary = {
@@ -424,18 +425,52 @@ func start_surface_mode() -> void:
 	print("[MarsPlanetary3D] Martian surface environment initialized. Lander ready for rover egress.")
 
 func deploy_rover_sequence() -> void:
+	is_deploying_rover = true
 	is_rover_deployed = true
+	
+	# Step 1: Camera frames lander and deployment bay
+	set_camera_view(CameraViewMode.SURFACE_CINEMATIC)
+	if cam_surface_cinematic:
+		cam_surface_cinematic.position = Vector3(6.5, 2.4, 9.5)
+		cam_surface_cinematic.look_at(Vector3(0, 0.8, 2.0), Vector3.UP)
+		
+	# Step 2: Ramp extends down smoothly
 	if lander_ramp:
-		var tw := create_tween()
-		tw.tween_property(lander_ramp, "rotation:x", 0.45, 1.2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		var tw_ramp := create_tween()
+		tw_ramp.tween_property(lander_ramp, "rotation:x", 0.45, 1.4).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 		
-	# Roll rover down the ramp onto the regolith
+	# Step 3: Rover slowly rolls down the ramp onto the regolith
 	if rover_rig:
+		rover_rig.position = Vector3(0, 1.15, 0.5)
 		var tw_r := create_tween()
-		tw_r.tween_property(rover_rig, "position", Vector3(0, 0.45, 6.5), 2.0).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		tw_r.tween_interval(0.8)
+		tw_r.tween_property(rover_rig, "position", Vector3(0, 0.45, 6.5), 2.8).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 		
-	if audio_chatter: audio_chatter.play()
-	print("[MarsPlanetary3D] Rover successfully deployed onto the Martian surface!")
+		# Animate wheels turning during descent
+		var tw_w := create_tween()
+		tw_w.tween_interval(0.8)
+		tw_w.tween_method(func(val: float):
+			for w in wheels:
+				if w: w.rotation.x = val
+		, 0.0, 12.0, 2.8)
+		
+	if audio_chatter:
+		var tw_a := create_tween()
+		tw_a.tween_interval(3.2)
+		tw_a.tween_callback(func(): audio_chatter.play())
+		
+	# Step 4: Touchdown on soil, dust puff, camera switch to chase
+	var tw_end := create_tween()
+	tw_end.tween_interval(3.8)
+	tw_end.tween_callback(func():
+		if touchdown_dust:
+			touchdown_dust.restart()
+		set_camera_view(CameraViewMode.ROVER_CHASE)
+		is_rover_deployed = true
+		is_deploying_rover = false
+		rover_deployed.emit()
+		print("[MarsPlanetary3D] Rover deployment complete! Controls online.")
+	)
 
 func _process_surface_mode(delta: float) -> void:
 	if not is_rover_deployed or not rover_rig:
@@ -458,6 +493,16 @@ func _process_surface_mode(delta: float) -> void:
 	# Clamp position within explorable region (-80m to +80m)
 	rover_rig.position.x = clampf(rover_rig.position.x, -75.0, 75.0)
 	rover_rig.position.z = clampf(rover_rig.position.z, -75.0, 75.0)
+	
+	# Surface terrain following (No wheel sinking, no floating)
+	var h_current := get_terrain_height(rover_rig.position.x, rover_rig.position.z)
+	rover_rig.position.y = lerpf(rover_rig.position.y, h_current + 0.45, clampf(delta * 12.0, 0.0, 1.0))
+	
+	# Surface normal gradient pitch & roll
+	var h_fwd := get_terrain_height(rover_rig.position.x - sin(rover_heading_rad) * 1.4, rover_rig.position.z - cos(rover_heading_rad) * 1.4)
+	var h_back := get_terrain_height(rover_rig.position.x + sin(rover_heading_rad) * 1.4, rover_rig.position.z + cos(rover_heading_rad) * 1.4)
+	var target_pitch := (h_fwd - h_back) / 2.8
+	rover_rig.rotation.x = lerpf(rover_rig.rotation.x, target_pitch, clampf(delta * 6.0, 0.0, 1.0))
 	
 	# Accumulate distance & consume battery
 	var step_dist := move_vec.length()
@@ -489,6 +534,7 @@ func _process_surface_mode(delta: float) -> void:
 	
 	# Emit telemetry
 	var dist_to_lander := rover_rig.position.distance_to(Vector3.ZERO)
+	var nav_data := get_rover_navigation_data()
 	var r_data: Dictionary = {
 		"speed_kmh": rover_speed * 3.6,
 		"distance_traveled_m": rover_distance_traveled_m,
@@ -497,7 +543,8 @@ func _process_surface_mode(delta: float) -> void:
 		"battery_pct": (rover_battery_wh / 1200.0) * 100.0,
 		"nearest_target": active_nearest_target_name,
 		"nearest_dist_m": active_nearest_target_dist,
-		"samples_count": collected_samples.size()
+		"samples_count": collected_samples.size(),
+		"nav": nav_data
 	}
 	rover_telemetry_updated.emit(r_data)
 
@@ -722,13 +769,129 @@ func reset_orbit_camera() -> void:
 	_update_orbit_cam_transform()
 
 # =========================================================================
-# STAGE I: DETAILED PROCEDURAL SURFACE TERRAIN & ENVIRONMENT
+# STAGE I & J: DETAILED PROCEDURAL SURFACE TERRAIN & ENVIRONMENT
 # =========================================================================
+
+func get_terrain_height(x: float, z: float) -> float:
+	var h: float = 0.0
+	
+	# Primary undulating Martian topography (multi-scale sine harmonics)
+	h += sin(x * 0.045) * cos(z * 0.045) * 1.85
+	h += sin(x * 0.09 + 1.2) * cos(z * 0.08 - 0.7) * 0.95
+	h += sin((x + z) * 0.16) * 0.42
+	
+	# Site-specific geological topography
+	match selected_landing_site:
+		"Jezero Crater":
+			# Ancient river delta fan and depressed crater lake bed
+			var d_center := Vector2(x, z).length()
+			if d_center < 38.0:
+				h -= (1.0 - (d_center / 38.0)) * 1.6
+			if x > 8.0 and z > -18.0:
+				h += clampf((x - 8.0) * 0.07, 0.0, 1.0) * 2.4
+		"Gale Crater":
+			# High slope climbing towards Mount Sharp in south-east
+			var dist_sharp := Vector2(x - 55.0, z - 55.0).length()
+			h += maxf(0.0, (110.0 - dist_sharp) * 0.075) * 2.6
+			h += sin(z * 0.11) * 1.3
+		"Elysium Planitia":
+			# Vast basaltic plains with undulating low lava pressure ridges
+			h = sin(x * 0.032) * 0.7 + cos(z * 0.048) * 0.6
+			
+	# Keep lander / rover initial footprint near (0, 0) smooth and stable
+	var footprint := Vector2(x, z).length()
+	if footprint < 12.0:
+		var blend := footprint / 12.0
+		h = lerpf(0.0, h, blend * blend)
+		
+	return h
+
+func _generate_procedural_terrain_mesh() -> void:
+	if not surface_scene:
+		return
+	var terrain_node: MeshInstance3D = surface_scene.get_node_or_null("TerrainMesh")
+	if not terrain_node:
+		return
+		
+	var st := SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	
+	var grid_size := 36
+	var world_size := 160.0
+	var step := world_size / float(grid_size)
+	var half_size := world_size * 0.5
+	
+	for gz in range(grid_size):
+		for gx in range(grid_size):
+			var x0 := -half_size + float(gx) * step
+			var z0 := -half_size + float(gz) * step
+			var x1 := x0 + step
+			var z1 := z0 + step
+			
+			var y00 := get_terrain_height(x0, z0)
+			var y10 := get_terrain_height(x1, z0)
+			var y01 := get_terrain_height(x0, z1)
+			var y11 := get_terrain_height(x1, z1)
+			
+			var v00 := Vector3(x0, y00, z0)
+			var v10 := Vector3(x1, y10, z0)
+			var v01 := Vector3(x0, y01, z1)
+			var v11 := Vector3(x1, y11, z1)
+			
+			var n1 := (v10 - v00).cross(v01 - v00).normalized()
+			var n2 := (v11 - v10).cross(v01 - v10).normalized()
+			
+			var uv00 := Vector2(float(gx) / grid_size, float(gz) / grid_size) * 8.0
+			var uv10 := Vector2(float(gx + 1) / grid_size, float(gz) / grid_size) * 8.0
+			var uv01 := Vector2(float(gx) / grid_size, float(gz + 1) / grid_size) * 8.0
+			var uv11 := Vector2(float(gx + 1) / grid_size, float(gz + 1) / grid_size) * 8.0
+			
+			# Triangle 1
+			st.set_normal(n1)
+			st.set_uv(uv00)
+			st.add_vertex(v00)
+			st.set_normal(n1)
+			st.set_uv(uv10)
+			st.add_vertex(v10)
+			st.set_normal(n1)
+			st.set_uv(uv01)
+			st.add_vertex(v01)
+			
+			# Triangle 2
+			st.set_normal(n2)
+			st.set_uv(uv10)
+			st.add_vertex(v10)
+			st.set_normal(n2)
+			st.set_uv(uv11)
+			st.add_vertex(v11)
+			st.set_normal(n2)
+			st.set_uv(uv01)
+			st.add_vertex(v01)
+			
+	var arr_mesh := st.commit()
+	
+	# Rich site-tailored Martian material
+	var mat_surface := StandardMaterial3D.new()
+	match selected_landing_site:
+		"Jezero Crater":
+			mat_surface.albedo_color = Color(0.82, 0.38, 0.18)
+			mat_surface.roughness = 0.90
+		"Gale Crater":
+			mat_surface.albedo_color = Color(0.74, 0.34, 0.20)
+			mat_surface.roughness = 0.85
+		"Elysium Planitia":
+			mat_surface.albedo_color = Color(0.58, 0.32, 0.22)
+			mat_surface.roughness = 0.78
+			
+	terrain_node.mesh = arr_mesh
+	terrain_node.material_override = mat_surface
 
 func _setup_surface_environment() -> void:
 	if not surface_scene or surface_features_generated:
 		return
 	surface_features_generated = true
+	
+	_generate_procedural_terrain_mesh()
 	
 	var terrain_group := Node3D.new()
 	terrain_group.name = "ProceduralTerrainFeatures"
@@ -749,10 +912,10 @@ func _setup_surface_environment() -> void:
 	
 	# 1. Undulating Sand Dunes & Rolling Mounds
 	var dune_coords: Array[Vector3] = [
-		Vector3(-30, -0.3, 10), Vector3(-15, -0.2, -35), Vector3(35, -0.2, 15),
-		Vector3(20, -0.4, 40), Vector3(-45, -0.2, -15), Vector3(40, -0.3, -30),
-		Vector3(-10, -0.4, 45), Vector3(10, -0.3, -50), Vector3(-50, -0.3, 30),
-		Vector3(50, -0.2, 45)
+		Vector3(-30, 0, 10), Vector3(-15, 0, -35), Vector3(35, 0, 15),
+		Vector3(20, 0, 40), Vector3(-45, 0, -15), Vector3(40, 0, -30),
+		Vector3(-10, 0, 45), Vector3(10, 0, -50), Vector3(-50, 0, 30),
+		Vector3(50, 0, 45)
 	]
 	for i in range(dune_coords.size()):
 		var dune := MeshInstance3D.new()
@@ -763,7 +926,9 @@ func _setup_surface_environment() -> void:
 		s_mesh.rings = 8
 		s_mesh.material = mat_dune
 		dune.mesh = s_mesh
-		dune.position = dune_coords[i]
+		var dpos := dune_coords[i]
+		dpos.y = get_terrain_height(dpos.x, dpos.z) - 0.2
+		dune.position = dpos
 		dune.scale = Vector3(1.8, 0.3, 1.2)
 		dune.rotation.y = (i * 0.4)
 		terrain_group.add_child(dune)
@@ -777,19 +942,21 @@ func _setup_surface_environment() -> void:
 	t_mesh.ring_segments = 12
 	t_mesh.material = mat_rock
 	crater_rim.mesh = t_mesh
-	crater_rim.position = Vector3(-26, 0.2, -18)
+	var cx := -26.0
+	var cz := -18.0
+	crater_rim.position = Vector3(cx, get_terrain_height(cx, cz) + 0.2, cz)
 	crater_rim.scale = Vector3(1.0, 0.4, 1.0)
 	terrain_group.add_child(crater_rim)
 	
-	# 3. Scattered Boulders & Stone Outcrops across landscape
+	# 3. Scattered Boulders & Stone Outcrops (Non-floating: clamped to get_terrain_height)
 	var rng := RandomNumberGenerator.new()
 	rng.seed = 202611
-	for b in range(24):
+	for b in range(36):
 		var boulder := MeshInstance3D.new()
 		var b_mesh := BoxMesh.new()
-		var sx := rng.randf_range(0.6, 2.4)
-		var sy := rng.randf_range(0.4, 1.6)
-		var sz := rng.randf_range(0.6, 2.2)
+		var sx := rng.randf_range(0.5, 2.6)
+		var sy := rng.randf_range(0.35, 1.8)
+		var sz := rng.randf_range(0.5, 2.4)
 		b_mesh.size = Vector3(sx, sy, sz)
 		b_mesh.material = mat_rock
 		boulder.mesh = b_mesh
@@ -797,7 +964,8 @@ func _setup_surface_environment() -> void:
 		var pz := rng.randf_range(-68.0, 68.0)
 		if Vector2(px, pz).length() < 12.0:
 			px += 18.0 # Keep lander/rover initial footprint clear
-		boulder.position = Vector3(px, sy * 0.4, pz)
+		var py := get_terrain_height(px, pz) + sy * 0.45 # Clamped naturally to terrain height!
+		boulder.position = Vector3(px, py, pz)
 		boulder.rotation = Vector3(rng.randf_range(-0.2, 0.2), rng.randf_range(0, TAU), rng.randf_range(-0.2, 0.2))
 		terrain_group.add_child(boulder)
 		
@@ -815,7 +983,7 @@ func _setup_surface_environment() -> void:
 		p_mesh.size = Vector3(rng.randf_range(26.0, 40.0), rng.randf_range(18.0, 30.0), rng.randf_range(22.0, 34.0))
 		p_mesh.material = mat_mountain
 		m_inst.mesh = p_mesh
-		m_inst.position = Vector3(mx, p_mesh.size.y * 0.4, mz)
+		m_inst.position = Vector3(mx, get_terrain_height(mx, mz) + p_mesh.size.y * 0.4, mz)
 		m_inst.rotation.y = angle + PI * 0.5 + rng.randf_range(-0.25, 0.25)
 		mountain_ring.add_child(m_inst)
 		
@@ -836,6 +1004,44 @@ func _setup_surface_environment() -> void:
 	ambient_dust.color = Color(0.92, 0.45, 0.22, 0.35)
 	ambient_dust.position = Vector3(0, 3.5, 0)
 	terrain_group.add_child(ambient_dust)
+
+func get_rover_navigation_data() -> Dictionary:
+	var rec: Dictionary = experiment_records.get(current_mission_idx, {})
+	var target_pos: Vector3 = rec.get("location", Vector3.ZERO)
+	var rover_pos: Vector3 = rover_rig.position if rover_rig else Vector3.ZERO
+	var dist_m := rover_pos.distance_to(target_pos)
+	
+	# Relative bearing / compass angle from rover heading
+	var to_target_2d := Vector2(target_pos.x - rover_pos.x, target_pos.z - rover_pos.z)
+	var target_angle := atan2(to_target_2d.x, to_target_2d.y)
+	var relative_angle := wrapf(target_angle - rover_heading_rad, -PI, PI)
+	
+	var dir_arrow := "▲"
+	if abs(relative_angle) < 0.35:
+		dir_arrow = "▲"
+	elif relative_angle > 0.35 and relative_angle < 1.4:
+		dir_arrow = "►"
+	elif relative_angle >= 1.4:
+		dir_arrow = "▼"
+	elif relative_angle < -0.35 and relative_angle > -1.4:
+		dir_arrow = "◄"
+	else:
+		dir_arrow = "▼"
+		
+	var is_in_range := (dist_m < 5.0)
+	
+	return {
+		"checkpoint_idx": current_mission_idx,
+		"checkpoint_name": rec.get("name", "Science Target"),
+		"target_name": rec.get("target_name", "Martian Outcrop"),
+		"instrument": rec.get("instrument", "Science Suite"),
+		"distance_m": dist_m,
+		"bearing_deg": rad_to_deg(relative_angle),
+		"direction_arrow": dir_arrow,
+		"compass_arrow": dir_arrow,
+		"is_in_range": is_in_range,
+		"is_completed": rec.get("completed", false)
+	}
 
 # =========================================================================
 # STAGE I: DETAILED ROVER MODEL & KINEMATICS
@@ -1092,6 +1298,7 @@ func transmit_data_to_earth() -> Dictionary:
 
 func enter_sandbox_mode() -> void:
 	sandbox_mode_active = true
+	is_rover_deployed = true
 	rover_battery_wh = 1200.0
 	set_scene_mode(GameSceneMode.SURFACE)
 	set_camera_view(CameraViewMode.ROVER_CHASE)

@@ -153,6 +153,9 @@ var ext_orbit_yaw: float = 0.4
 var ext_orbit_pitch: float = -0.3
 var ext_orbit_dist: float = 6.5
 var is_mouse_dragging: bool = false
+var is_orientation_mode: bool = false
+var mars_orbit_angle: float = 0.0
+var mars_orbit_path_mesh: MeshInstance3D = null
 
 # Procedural Visual Nodes
 var starfield_mesh: MultiMeshInstance3D = null
@@ -546,10 +549,31 @@ func _update_simulation_physics(delta: float) -> void:
 		velocity_kms = sqrt(mu_sun * (2.0 / r_km - 1.0 / a_km))
 		
 	# 8. Update 3D World Spatial Scene & Map
-	_update_3d_spatial_scene()
+	_update_3d_spatial_scene(delta)
 	_update_orbital_map_markers()
 
-func _update_3d_spatial_scene() -> void:
+func _update_3d_spatial_scene(delta: float = 0.016) -> void:
+	if current_phase == FlightPhase.MARS_ORBIT_ACHIEVED:
+		# Visible circular/elliptical orbital flight around Mars!
+		mars_orbit_angle += delta * 0.45 * time_warp_scale
+		var r_orbit := 16.0
+		var sx := cos(mars_orbit_angle) * r_orbit
+		var sz := sin(mars_orbit_angle) * r_orbit
+		var sy := sin(mars_orbit_angle * 1.5) * 2.2 # Slight 15° orbital inclination
+		if spacecraft_rig:
+			spacecraft_rig.position = Vector3(sx, sy, sz)
+			spacecraft_rig.rotation.y = -mars_orbit_angle + PI * 0.5
+			spacecraft_rig.rotation.x = -0.1
+		if mars_system:
+			mars_system.visible = true
+			mars_system.position = Vector3.ZERO
+			mars_system.scale = Vector3(1.25, 1.25, 1.25)
+		if cam_mars_cinematic and current_camera_mode == CameraMode.MARS_CINEMATIC:
+			var cam_angle := mars_orbit_angle * 0.22 + 0.8
+			cam_mars_cinematic.position = Vector3(cos(cam_angle) * 34.0, 16.0, sin(cam_angle) * 34.0)
+			cam_mars_cinematic.look_at(Vector3.ZERO, Vector3.UP)
+		return
+
 	var p := trajectory_progress
 	
 	# Spacecraft 3D coordinate along the visual cruise corridor
@@ -629,6 +653,8 @@ func _process_cameras(delta: float) -> void:
 					cam_exterior.position.z = lerpf(cam_exterior.position.z, ext_orbit_dist, delta * 6.0)
 
 func get_telemetry_data() -> Dictionary:
+	var err := get_attitude_alignment_error()
+	var align_pct := clampf((1.0 - (err / PI)) * 100.0, 0.0, 100.0)
 	return {
 		"phase_id": current_phase,
 		"phase_name": get_phase_name(),
@@ -660,11 +686,13 @@ func get_telemetry_data() -> Dictionary:
 		"maneuver_missed": maneuver_missed,
 		"target_cutoff_velocity_kms": target_cutoff_velocity_kms,
 		"attitude_alignment_error": attitude_alignment_error,
+		"alignment_pct": align_pct,
 		"is_attitude_aligned": is_attitude_aligned,
 		"target_moi_pitch_deg": rad_to_deg(target_moi_attitude.x),
 		"target_moi_yaw_deg": rad_to_deg(target_moi_attitude.y),
 		"current_pitch_deg": rad_to_deg(craft_rotation.x),
-		"current_yaw_deg": rad_to_deg(craft_rotation.y)
+		"current_yaw_deg": rad_to_deg(craft_rotation.y),
+		"mars_orbit_angle": mars_orbit_angle
 	}
 
 func _get_telemetry_data() -> Dictionary:
@@ -934,12 +962,29 @@ func _setup_mars_orbit_achieved_state() -> void:
 	mission_day = total_transit_days
 	trajectory_progress = 1.0
 	distance_to_mars_km = 300.0
+	mars_orbit_angle = 0.0
 	
 	if mars_system:
 		mars_system.visible = true
-		mars_system.position = Vector3(0, -18.0, 0.0)
-		mars_system.scale = Vector3(1.15, 1.15, 1.15)
+		mars_system.position = Vector3.ZERO
+		mars_system.scale = Vector3(1.25, 1.25, 1.25)
 		
+	if mars_orbit_path_mesh == null:
+		mars_orbit_path_mesh = MeshInstance3D.new()
+		mars_orbit_path_mesh.name = "MarsOrbitPath"
+		var torus := TorusMesh.new()
+		torus.inner_radius = 15.8
+		torus.outer_radius = 16.2
+		torus.rings = 64
+		var mat := StandardMaterial3D.new()
+		mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+		mat.albedo_color = Color(0.2, 0.9, 1.0, 0.65)
+		mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		mars_orbit_path_mesh.mesh = torus
+		mars_orbit_path_mesh.material_override = mat
+		add_child(mars_orbit_path_mesh)
+	mars_orbit_path_mesh.visible = true
+	
 	set_camera_view(CameraMode.MARS_CINEMATIC)
 	burn_completed.emit("MARS ORBIT INSERTION (MOI)")
 

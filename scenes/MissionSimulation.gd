@@ -96,6 +96,7 @@ func _get_gm() -> Node:
 
 @onready var banner_orbit_achieved: PanelContainer = $MarginContainer/VBoxContainer/MainBody/OverlayHUD/BannerOrbitAchieved
 @onready var btn_continue_mars: Button = $MarginContainer/VBoxContainer/MainBody/OverlayHUD/BannerOrbitAchieved/Margin/VBox/BtnContinueMars
+@onready var guidance_hud: Control = $MarginContainer/VBoxContainer/MainBody/OverlayHUD/GuidanceHUD
 
 # Simulation Controller State
 var is_propulsion_armed: bool = false
@@ -205,17 +206,32 @@ func _initialize_mission_data() -> void:
 		# Initial mission control radio transmission
 		_broadcast_radio("FLIGHT DIRECTOR (HOUSTON)", "Earth orbital insertion confirmed. Spacecraft systems nominal. Prepare for Trans-Mars Injection (TMI).")
 		
-		# Show initial departure dialog
-		modal_departure.visible = true
+		# Set non-intrusive upper-left guidance (no blocking center modal!)
+		modal_departure.visible = false
+		if guidance_hud:
+			guidance_hud.set_guidance(
+				"STEP 1/5",
+				"TRANS-MARS INJECTION (TMI)",
+				"Press SPACE or click EXECUTE BURN to fire main engine.",
+				"Escape Earth orbit and accelerate to 11.2 km/s towards Mars.",
+				20.0,
+				"Trans-Mars Injection (TMI) is the primary burn to leave Earth parking orbit.\nControls:\n- Press SPACE or click EXECUTE BURN on flight console.\n- W/S: Adjust throttle.\n- C: Cycle camera views."
+			)
 
 func _unhandled_input(event: InputEvent) -> void:
 	# Flight controls keyboard shortcuts
 	if event is InputEventKey and event.pressed and not event.echo:
 		match event.keycode:
 			KEY_W, KEY_UP:
-				_step_throttle(0.05)
+				if space_3d and (space_3d.current_phase == 4 or space_3d.is_orientation_mode):
+					space_3d.apply_pitch_input(1.0)
+				else:
+					_step_throttle(0.05)
 			KEY_S, KEY_DOWN:
-				_step_throttle(-0.05)
+				if space_3d and (space_3d.current_phase == 4 or space_3d.is_orientation_mode):
+					space_3d.apply_pitch_input(-1.0)
+				else:
+					_step_throttle(-0.05)
 			KEY_A, KEY_LEFT:
 				if space_3d: space_3d.apply_yaw_input(1.0)
 			KEY_D, KEY_RIGHT:
@@ -224,11 +240,23 @@ func _unhandled_input(event: InputEvent) -> void:
 				if space_3d: space_3d.apply_roll_input(1.0)
 			KEY_E:
 				if space_3d: space_3d.apply_roll_input(-1.0)
+			KEY_R:
+				if space_3d and space_3d.maneuver_window_active:
+					_on_retrograde_burn_pressed()
 			KEY_C:
 				if space_3d: space_3d.cycle_camera_view()
 			KEY_SPACE:
-				if is_propulsion_armed:
+				if space_3d and space_3d.current_phase == 0:
+					_on_confirm_departure_pressed()
+				elif space_3d and space_3d.current_phase == 4:
+					if space_3d.is_attitude_aligned or is_moi_armed:
+						_on_execute_moi_pressed()
+					else:
+						_on_align_attitude_helper_pressed()
+				elif is_propulsion_armed:
 					_on_execute_burn_pressed()
+			KEY_H, KEY_F1:
+				if guidance_hud: guidance_hud.toggle_help()
 			KEY_1:
 				if space_3d: space_3d.set_camera_view(0)
 			KEY_2:
@@ -329,9 +357,50 @@ func _on_3d_telemetry_changed(data: Dictionary) -> void:
 		if btn_arm_moi and not is_moi_armed:
 			btn_arm_moi.disabled = false
 
+	# Dynamic Guidance HUD feedback
+	var man_active: bool = data.get("maneuver_window_active", false)
+	if man_active and guidance_hud:
+		var cd: float = data.get("maneuver_countdown_s", 0.0)
+		guidance_hud.show_warning("⚠ RETROGRADE MANEUVER WINDOW ACTIVE • T-MINUS: %.1fs" % cd)
+	elif not man_active and guidance_hud and space_3d and space_3d.current_phase != 4:
+		guidance_hud.hide_warning()
+		
+	if space_3d and space_3d.current_phase == 4 and guidance_hud:
+		var align_pct: float = data.get("alignment_pct", 0.0)
+		var is_aligned: bool = data.get("is_attitude_aligned", false)
+		if is_aligned or is_moi_armed:
+			guidance_hud.set_guidance(
+				"STEP 4/5",
+				"EXECUTE MARS ORBIT INSERTION BURN",
+				"Attitude Aligned (%.0f%%)! Press SPACE or click EXECUTE MOI BURN." % align_pct,
+				"Decelerate into stable circular Mars orbit.",
+				90.0,
+				"Mars Orbit Insertion:\n- Main engine will ignite for 3.5 seconds.\n- Decelerates spacecraft from 5.62 km/s to 3.42 km/s.\n- Traps spacecraft into Mars gravity."
+			)
+		else:
+			guidance_hud.set_guidance(
+				"STEP 4/5",
+				"MARS RETROGRADE ATTITUDE ALIGNMENT",
+				"Steer with A/D (Yaw), W/S (Pitch), Q/E (Roll). Alignment: %.0f%% (Aim for >= 90%%)." % align_pct,
+				"Lock attitude to enable MOI burn.",
+				80.0,
+				"Attitude Alignment Controls:\n- A / D: Yaw craft left / right.\n- W / S: Pitch nose up / down.\n- Q / E: Roll craft.\n- Alignment indicator turns green at 90%."
+			)
+
 func _on_3d_phase_advanced(phase: int) -> void:
 	if badge_phase and space_3d:
 		badge_phase.text = "PHASE: " + space_3d.get_phase_name()
+		
+	if phase == 6 and guidance_hud: # MARS_ORBIT_ACHIEVED
+		guidance_hud.show_completion_toast("MARS ORBIT ACHIEVED • CAPTURE CERTIFIED!")
+		guidance_hud.set_guidance(
+			"STEP 5/5",
+			"MARS ORBITAL RECONNAISSANCE",
+			"Click 'PROCEED TO MARS EXPLORATION' to select landing site.",
+			"Reconnaissance of Jezero, Gale, or Elysium Planitia.",
+			100.0,
+			"You have entered stable orbit around Mars! The spacecraft is travelling along the orbital path.\n- Inspect the planet from orbit.\n- Proceed to Mars Exploration to begin landing reconnaissance."
+		)
 
 func _on_3d_burn_started(burn_name: String) -> void:
 	_broadcast_radio("FLIGHT DYNAMICS", "Main engine burn initiated: %s. Telemetry active." % burn_name)
@@ -445,6 +514,17 @@ func _complete_maneuver_burn() -> void:
 		space_3d.set_flight_phase(2) # INTERPLANETARY_CRUISE
 	if modal_maneuver:
 		modal_maneuver.visible = false
+	if guidance_hud:
+		guidance_hud.hide_warning()
+		guidance_hud.show_completion_toast("RETROGRADE BRAKE COMPLETE • TRAJECTORY REALIGNED")
+		guidance_hud.set_guidance(
+			"STEP 2/5",
+			"INTERPLANETARY HOHMANN CRUISE",
+			"Monitor systems and advance time warp (Press 10x or Warp to Event).",
+			"Maintain trajectory toward Mars approach window.",
+			40.0,
+			"Spacecraft is now coasting along the transfer ellipse toward Mars.\nControls:\n- 10x / Warp to Event buttons: Advance mission timeline.\n- C key: Switch camera views."
+		)
 	_broadcast_radio("FLIGHT DIRECTOR", "Retrograde maneuver cutoff confirmed! Spacecraft has entered deep space Hohmann cruise.")
 	
 	# Complete Level 04 Task 1 in GameManager
@@ -477,6 +557,15 @@ func _trigger_midcourse_correction() -> void:
 	if space_3d:
 		space_3d.set_flight_phase(3) # MIDCOURSE_CORRECTION
 	modal_midcourse.visible = true
+	if guidance_hud:
+		guidance_hud.set_guidance(
+			"STEP 3/5",
+			"MID-COURSE TRAJECTORY CORRECTION",
+			"Select a correction trim option below (Option 1 Recommended).",
+			"Realign Mars periapsis trajectory.",
+			60.0,
+			"Trajectory Correction Maneuver (TCM-1):\n- Compensates for subtle gravitational drift.\n- Option 1 is nominal for standard Hohmann capture."
+		)
 	_broadcast_radio("FLIGHT DYNAMICS", "Navigation deviation detected at Day 35. Mid-course correction (TCM-1) required.")
 	if space_3d and space_3d.audio_alarm:
 		space_3d.audio_alarm.play()
@@ -485,6 +574,8 @@ func _on_mcc_choice_selected(dv: float, fuel: float) -> void:
 	modal_midcourse.visible = false
 	if space_3d:
 		space_3d.execute_midcourse_burn(dv, fuel)
+	if guidance_hud:
+		guidance_hud.show_completion_toast("TCM-1 BURN COMPLETE • TRAJECTORY REALIGNED")
 	_broadcast_radio("CAPCOM", "Executing TCM-1 burn: %.1f m/s (%.1f kg hydrazine). Trajectory realigned." % [dv, fuel])
 	
 	# Submit Task 04_02
@@ -606,6 +697,16 @@ func _on_execute_moi_pressed() -> void:
 			modal_mars_arrival.visible = false
 		if banner_orbit_achieved:
 			banner_orbit_achieved.visible = true
+		if guidance_hud:
+			guidance_hud.show_completion_toast("MARS ORBIT ACHIEVED • CAPTURE CERTIFIED!")
+			guidance_hud.set_guidance(
+				"STEP 5/5",
+				"MARS ORBITAL RECONNAISSANCE",
+				"Click 'PROCEED TO MARS EXPLORATION' to select landing site.",
+				"Reconnaissance of Jezero, Gale, or Elysium Planitia.",
+				100.0,
+				"You have entered stable orbit around Mars! The spacecraft is travelling along the orbital path.\n- Inspect the planet from orbit.\n- Proceed to Mars Exploration to begin landing reconnaissance."
+			)
 		btn_nav_next.disabled = false
 		level_04_completed = true
 		_broadcast_radio("FLIGHT DIRECTOR", "HOUSTON CONFIRMS MARS ORBIT INSERTION! MARS ORBIT ACHIEVED! LEVEL 04 COMPLETE!")
