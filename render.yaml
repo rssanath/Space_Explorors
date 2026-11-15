@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: mars-deep
+    runtime: static
+    buildCommand: ""
+    staticPublishPath: ./build/web
+    headers:
+      - path: /*
+        name: Cross-Origin-Opener-Policy
+        value: same-origin
+      - path: /*
+        name: Cross-Origin-Embedder-Policy
+        value: require-corp
+      - path: /*
+        name: Access-Control-Allow-Origin
+        value: "*"
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

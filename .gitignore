@@ -3,10 +3,13 @@
 *.translation
 
 # Export binaries & packs (exceeds GitHub limits and are generated artifacts)
-build/
+build/*
+!build/web/
+!build/web/**
 bin/
 *.exe
 *.pck
+!build/web/*.pck
 !web/*.pck
 *.zip
 
